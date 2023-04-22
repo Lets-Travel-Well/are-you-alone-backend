@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -23,6 +24,10 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public Post findById(Long id) {
+        Optional<Post> post = postRepository.findById(id);
+        if(post.isPresent()){
+            return post.get();
+        }
         return null;
     }
 
