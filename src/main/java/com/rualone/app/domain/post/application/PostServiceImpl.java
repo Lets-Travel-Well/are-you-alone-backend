@@ -3,6 +3,7 @@ package com.rualone.app.domain.post.application;
 import com.rualone.app.domain.post.Post;
 import com.rualone.app.domain.post.dao.PostRepository;
 import com.rualone.app.domain.post.dto.PostCreateDto;
+import com.rualone.app.domain.post.dto.PostUpdateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -37,8 +38,10 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public Post modifyPost() {
-        return null;
+    public Post updatePost(PostUpdateDto postUpdateDto) {
+        Post post = findById(postUpdateDto.getId());
+        post.update(postUpdateDto);
+        return post;
     }
 
     @Override
