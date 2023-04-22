@@ -1,7 +1,9 @@
 package com.rualone.app.domain.post.application;
 
 import com.rualone.app.domain.post.Post;
+import com.rualone.app.domain.post.dao.PostRepository;
 import com.rualone.app.domain.post.dto.PostCreateDto;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -9,14 +11,14 @@ import java.util.List;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class PostServiceImpl implements PostService{
+
+    private final PostRepository postRepository;
     @Override
     public Post save(PostCreateDto postCreateDto) {
         // 테스트를 통과 시키기 위해서 만들어둔 부분
-        Post post = Post.builder()
-                .id(1L)
-                .build();
-        return post;
+        return postRepository.save(postCreateDto.toEntity());
     }
 
     @Override
