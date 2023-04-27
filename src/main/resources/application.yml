@@ -5,3 +5,7 @@ spring:
     active: local
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+    cache-duration: PT1H
