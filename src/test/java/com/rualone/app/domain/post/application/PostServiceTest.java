@@ -11,10 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-//@Transactional
+@Transactional
 @ActiveProfiles("test")
 class PostServiceTest {
     @Autowired
@@ -22,12 +26,13 @@ class PostServiceTest {
 
     @Autowired
     private PostRepository postRepository;
-
-    private static long lastPostDataId;
-
+    private Post post;
     @BeforeEach
     void beforeEach(){
-        init();
+        post = postRepository.save(Post.builder()
+                        .subject("postTest1")
+                        .content("postContent1")
+                        .build());
     }
 
     @AfterEach
@@ -35,29 +40,22 @@ class PostServiceTest {
         
     }
 
-    private void init() {
-        createData();
-        lastPostDataId = 0;
-    }
-
-    private void createData() {
-
-    }
 
     @Test
     @DisplayName("1. 게시글 등록")
     void test1(){
         // Given
-        PostCreateRequest postDto1 = PostCreateRequest.builder()
+        PostCreateRequest postDto = PostCreateRequest.builder()
                 .subject("testSubject")
                 .content("testContent")
                 .build();
 
         // When
-        Post post1 = postService.save(postDto1);
+        Post post = postService.save(postDto);
 
         //Then
-        assertThat(post1.getId()).isEqualTo(lastPostDataId + 1);
+        Optional<Post> findPost = postRepository.findById(post.getId());
+        assertThat(findPost).isPresent();
     }
 
     @Test
@@ -66,20 +64,33 @@ class PostServiceTest {
         // Given
 
         // When
+        Post findPost = postService.findById(post.getId());
 
         // Then
+        assertThat(findPost.getContent()).isEqualTo("postContent1");
     }
     
     @Test
     @DisplayName("3. 게시글 전체 조회")
     void test3(){
+        // Given
 
+        // When
+        List<Post> posts = postService.findAll();
+
+        // Then
+        assertThat(posts.size()).isEqualTo(1);
     }
 
     @Test
     @DisplayName("4. 게시글 수정")
     void test4(){
+        // Given
+        Post findPost = postService.findById(post.getId());
 
+        // When
+
+        // Then
     }
 
     @Test
