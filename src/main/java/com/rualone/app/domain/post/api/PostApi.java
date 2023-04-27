@@ -1,6 +1,7 @@
 package com.rualone.app.domain.post.api;
 
 import com.rualone.app.domain.post.Post;
+import com.rualone.app.domain.post.application.CommentService;
 import com.rualone.app.domain.post.application.PostService;
 import com.rualone.app.domain.post.dto.request.PostCreateRequest;
 import com.rualone.app.domain.post.dto.response.PostResponse;
@@ -17,6 +18,8 @@ import static com.rualone.app.global.api.ApiResult.OK;
 @Slf4j
 public class PostApi {
     private final PostService postService;
+
+    private final CommentService commentService;
 
     @PostMapping("/post")
     public ApiResult<?> savePost(@RequestBody PostCreateRequest postCreateRequest){
