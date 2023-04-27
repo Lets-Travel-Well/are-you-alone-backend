@@ -1,13 +1,16 @@
-package com.rualone.app.domain.post.dto;
+package com.rualone.app.domain.post.dto.request;
 
 import com.rualone.app.domain.post.Post;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class PostCreateDto {
+public class PostCreateRequest {
     private String subject;
     private String content;
     // TODO : member 추가되면 추가 시켜야함

@@ -2,7 +2,7 @@ package com.rualone.app.domain.post.application;
 
 import com.rualone.app.domain.post.Post;
 import com.rualone.app.domain.post.dao.PostRepository;
-import com.rualone.app.domain.post.dto.PostCreateDto;
+import com.rualone.app.domain.post.dto.request.PostCreateRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,10 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 //@Transactional
@@ -50,7 +48,7 @@ class PostServiceTest {
     @DisplayName("1. 게시글 등록")
     void test1(){
         // Given
-        PostCreateDto postDto1 = PostCreateDto.builder()
+        PostCreateRequest postDto1 = PostCreateRequest.builder()
                 .subject("testSubject")
                 .content("testContent")
                 .build();
