@@ -2,8 +2,10 @@ package com.rualone.app.domain.post.application;
 
 import com.rualone.app.domain.post.Post;
 import com.rualone.app.domain.post.dao.PostRepository;
-import com.rualone.app.domain.post.dto.PostCreateDto;
+import com.rualone.app.domain.post.dto.request.PostCreateRequest;
 import com.rualone.app.domain.post.dto.PostUpdateDto;
+import com.rualone.app.global.error.AlreadyExistException;
+import com.rualone.app.global.error.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,18 +20,13 @@ public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
     @Override
-    public Post save(PostCreateDto postCreateDto) {
-        // 테스트를 통과 시키기 위해서 만들어둔 부분
-        return postRepository.save(postCreateDto.toEntity());
+    public Post save(PostCreateRequest postCreateRequest) {
+        return postRepository.save(postCreateRequest.toEntity());
     }
 
     @Override
     public Post findById(Long id) {
-        Optional<Post> post = postRepository.findById(id);
-        if(post.isPresent()){
-            return post.get();
-        }
-        return null;
+        return postRepository.findById(id).orElseThrow(() -> new NotFoundException(Post.class, id));
     }
 
     @Override
