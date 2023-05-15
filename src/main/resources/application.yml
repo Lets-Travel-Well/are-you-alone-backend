@@ -3,6 +3,8 @@ server:
 spring:
   profiles:
     active: local
+    include:
+      - secret
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
   messages:
