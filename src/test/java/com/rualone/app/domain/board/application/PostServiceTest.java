@@ -1,8 +1,8 @@
-package com.rualone.app.domain.post.application;
+package com.rualone.app.domain.board.application;
 
-import com.rualone.app.domain.post.Post;
-import com.rualone.app.domain.post.dao.PostRepository;
-import com.rualone.app.domain.post.dto.request.PostCreateRequest;
+import com.rualone.app.domain.board.Post;
+import com.rualone.app.domain.board.dao.PostRepository;
+import com.rualone.app.domain.board.dto.request.PostCreateRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

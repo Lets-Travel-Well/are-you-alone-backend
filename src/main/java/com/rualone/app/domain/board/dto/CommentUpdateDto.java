@@ -1,9 +1,7 @@
-package com.rualone.app.domain.post.dto;
+package com.rualone.app.domain.board.dto;
 
-import com.rualone.app.domain.post.Post;
+import com.rualone.app.domain.board.Post;
 import lombok.Data;
-
-import java.lang.reflect.Member;
 
 @Data
 public class CommentUpdateDto {

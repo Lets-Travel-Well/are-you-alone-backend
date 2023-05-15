@@ -1,6 +1,6 @@
-package com.rualone.app.domain.post;
+package com.rualone.app.domain.board;
 
-import com.rualone.app.domain.post.dto.CommentUpdateDto;
+import com.rualone.app.domain.board.dto.CommentUpdateDto;
 import com.rualone.app.global.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

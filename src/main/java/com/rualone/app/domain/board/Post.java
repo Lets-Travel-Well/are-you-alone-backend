@@ -1,6 +1,6 @@
-package com.rualone.app.domain.post;
+package com.rualone.app.domain.board;
 
-import com.rualone.app.domain.post.dto.PostUpdateDto;
+import com.rualone.app.domain.board.dto.request.PostUpdateRequest;
 import com.rualone.app.global.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,8 +18,8 @@ public class Post extends BaseEntity {
     private int hit;
     // TODO : member 추가되면 추가 시켜야함
 //    private Member member;
-    public void update(PostUpdateDto postUpdateDto){
-        this.subject = postUpdateDto.getSubject();
-        this.content = postUpdateDto.getContent();
+    public void update(PostUpdateRequest postUpdateRequest){
+        this.subject = postUpdateRequest.getSubject();
+        this.content = postUpdateRequest.getContent();
     }
 }

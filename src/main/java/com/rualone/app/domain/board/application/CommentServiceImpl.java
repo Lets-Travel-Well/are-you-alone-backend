@@ -1,9 +1,9 @@
-package com.rualone.app.domain.post.application;
+package com.rualone.app.domain.board.application;
 
-import com.rualone.app.domain.post.Comment;
-import com.rualone.app.domain.post.dao.CommentRepository;
-import com.rualone.app.domain.post.dto.CommentUpdateDto;
-import com.rualone.app.domain.post.dto.request.CommentCreateRequest;
+import com.rualone.app.domain.board.Comment;
+import com.rualone.app.domain.board.dao.CommentRepository;
+import com.rualone.app.domain.board.dto.CommentUpdateDto;
+import com.rualone.app.domain.board.dto.request.CommentCreateRequest;
 import com.rualone.app.global.error.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

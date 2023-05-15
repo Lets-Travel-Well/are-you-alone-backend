@@ -1,8 +1,8 @@
-package com.rualone.app.domain.post.application;
+package com.rualone.app.domain.board.application;
 
-import com.rualone.app.domain.post.Comment;
-import com.rualone.app.domain.post.dto.CommentUpdateDto;
-import com.rualone.app.domain.post.dto.request.CommentCreateRequest;
+import com.rualone.app.domain.board.Comment;
+import com.rualone.app.domain.board.dto.CommentUpdateDto;
+import com.rualone.app.domain.board.dto.request.CommentCreateRequest;
 
 import java.util.List;
 

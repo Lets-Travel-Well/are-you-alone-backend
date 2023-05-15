@@ -1,9 +1,9 @@
-package com.rualone.app.domain.post.api;
+package com.rualone.app.domain.board.api;
 
-import com.rualone.app.domain.post.Comment;
-import com.rualone.app.domain.post.application.CommentService;
-import com.rualone.app.domain.post.dto.request.CommentCreateRequest;
-import com.rualone.app.domain.post.dto.response.CommentResponse;
+import com.rualone.app.domain.board.Comment;
+import com.rualone.app.domain.board.application.CommentService;
+import com.rualone.app.domain.board.dto.request.CommentCreateRequest;
+import com.rualone.app.domain.board.dto.response.CommentResponse;
 import com.rualone.app.global.api.ApiResult;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

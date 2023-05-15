@@ -1,7 +1,7 @@
-package com.rualone.app.domain.post.dto.response;
+package com.rualone.app.domain.board.dto.response;
 
-import com.rualone.app.domain.post.Comment;
-import com.rualone.app.domain.post.Post;
+import com.rualone.app.domain.board.Comment;
+import com.rualone.app.domain.board.Post;
 import lombok.Data;
 
 @Data

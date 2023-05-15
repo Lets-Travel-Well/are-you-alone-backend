@@ -1,6 +1,6 @@
-package com.rualone.app.domain.post.dao;
+package com.rualone.app.domain.board.dao;
 
-import com.rualone.app.domain.post.Post;
+import com.rualone.app.domain.board.Post;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

@@ -1,21 +1,21 @@
-package com.rualone.app.domain.post.application;
+package com.rualone.app.domain.board.application;
 
-import com.rualone.app.domain.post.Post;
-import com.rualone.app.domain.post.dao.PostRepository;
-import com.rualone.app.domain.post.dto.request.PostCreateRequest;
-import com.rualone.app.domain.post.dto.PostUpdateDto;
-import com.rualone.app.global.error.AlreadyExistException;
+import com.rualone.app.domain.board.Post;
+import com.rualone.app.domain.board.dao.PostRepository;
+import com.rualone.app.domain.board.dto.request.PostCreateRequest;
+import com.rualone.app.domain.board.dto.request.PostUpdateRequest;
 import com.rualone.app.global.error.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
+@Transactional
 public class PostServiceImpl implements PostService{
 
     private final PostRepository postRepository;
@@ -35,9 +35,9 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public Post updatePost(PostUpdateDto postUpdateDto) {
-        Post post = findById(postUpdateDto.getId());
-        post.update(postUpdateDto);
+    public Post updatePost(PostUpdateRequest postUpdateRequest) {
+        Post post = findById(postUpdateRequest.getId());
+        post.update(postUpdateRequest);
         return post;
     }
 
