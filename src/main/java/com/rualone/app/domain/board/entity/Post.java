@@ -1,4 +1,4 @@
-package com.rualone.app.domain.board;
+package com.rualone.app.domain.board.entity;
 
 import com.rualone.app.domain.board.dto.request.PostUpdateRequest;
 import com.rualone.app.global.entity.BaseEntity;

@@ -1,4 +1,4 @@
-package com.rualone.app.domain.board;
+package com.rualone.app.domain.board.entity;
 
 import com.rualone.app.domain.board.dto.CommentUpdateDto;
 import com.rualone.app.global.entity.BaseEntity;

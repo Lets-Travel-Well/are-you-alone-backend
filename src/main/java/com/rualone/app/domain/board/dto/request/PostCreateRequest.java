@@ -1,6 +1,6 @@
 package com.rualone.app.domain.board.dto.request;
 
-import com.rualone.app.domain.board.Post;
+import com.rualone.app.domain.board.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

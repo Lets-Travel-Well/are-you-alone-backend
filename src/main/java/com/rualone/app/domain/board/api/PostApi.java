@@ -1,6 +1,5 @@
 package com.rualone.app.domain.board.api;
 
-import com.rualone.app.domain.board.Post;
 import com.rualone.app.domain.board.application.CommentService;
 import com.rualone.app.domain.board.application.PostService;
 import com.rualone.app.domain.board.dto.request.PostCreateRequest;

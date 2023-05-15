@@ -1,6 +1,6 @@
 package com.rualone.app.domain.board.api;
 
-import com.rualone.app.domain.board.Comment;
+import com.rualone.app.domain.board.entity.Comment;
 import com.rualone.app.domain.board.application.CommentService;
 import com.rualone.app.domain.board.dto.request.CommentCreateRequest;
 import com.rualone.app.domain.board.dto.response.CommentResponse;

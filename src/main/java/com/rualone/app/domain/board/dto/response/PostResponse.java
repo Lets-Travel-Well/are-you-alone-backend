@@ -1,12 +1,10 @@
 package com.rualone.app.domain.board.dto.response;
 
-import com.rualone.app.domain.board.Comment;
-import com.rualone.app.domain.board.Post;
+import com.rualone.app.domain.board.entity.Post;
 import lombok.Data;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 public class PostResponse {

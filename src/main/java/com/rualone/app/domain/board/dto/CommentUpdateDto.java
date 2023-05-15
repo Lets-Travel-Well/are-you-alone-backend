@@ -1,6 +1,6 @@
 package com.rualone.app.domain.board.dto;
 
-import com.rualone.app.domain.board.Post;
+import com.rualone.app.domain.board.entity.Post;
 import lombok.Data;
 
 @Data
