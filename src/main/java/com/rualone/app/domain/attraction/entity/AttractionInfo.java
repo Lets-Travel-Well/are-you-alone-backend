@@ -2,8 +2,9 @@ package com.rualone.app.domain.attraction.entity;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -11,8 +12,8 @@ import javax.persistence.Id;
 @ToString
 public class AttractionInfo {
     @Id
-    private int contentId;
-    private int contentTypeId;
+    private Integer contentId;
+    private Integer contentTypeId;
     private String title;
     private String addr1;
     private String addr2;
@@ -20,10 +21,15 @@ public class AttractionInfo {
     private String tel;
     private String firstImage;
     private String firstImage2;
-    private int readCount;
-    private int sidoCode;
-    private int gugunCode;
-    private double latitude;
-    private double longitude;
+    @Column(name = "readcount")
+    private Integer readCount;
+    private Double latitude;
+    private Double longitude;
     private String mlevel;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "sido_code")
+    private Sido sido;
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "gugun_code")
+    private Gugun gugun;
 }

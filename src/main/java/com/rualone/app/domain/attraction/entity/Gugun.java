@@ -4,6 +4,10 @@ import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -11,7 +15,11 @@ import javax.persistence.Id;
 @ToString
 public class Gugun {
 	@Id
-	private int gugunCode;
+	private Integer gugunCode;
+
 	private String gugunName;
-	private int sidoCode;
+
+	@ManyToOne(fetch = LAZY)
+	@JoinColumn(name = "sido_code")
+	private Sido sido;
 }
