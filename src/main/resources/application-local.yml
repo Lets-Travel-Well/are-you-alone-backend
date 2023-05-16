@@ -5,7 +5,7 @@ spring:
     password: rualone
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
 #    defer-datasource-initialization: true
 #  sql:
 #    init:
