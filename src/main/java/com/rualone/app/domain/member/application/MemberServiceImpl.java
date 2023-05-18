@@ -30,20 +30,20 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member findById(String loginId) {
+    public Member findByLoginId(String loginId) {
         Member loginMember = memberRepository.findByLoginId(loginId).get();
         return loginMember;
     }
 
     @Override
     public void modify(MemberModifyRequest memberModifyRequest) {
-        Member findMember = findById(memberModifyRequest.getLoginId());
+        Member findMember = findByLoginId(memberModifyRequest.getLoginId());
         findMember.modify(memberModifyRequest);
     }
 
     @Override
     public void delete(String loginId) {
-        Member findMember = findById(loginId);
+        Member findMember = findByLoginId(loginId);
         memberRepository.delete(findMember);
     }
 

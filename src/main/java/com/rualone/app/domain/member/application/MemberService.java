@@ -8,7 +8,7 @@ import com.rualone.app.domain.member.entity.Member;
 public interface MemberService {
     Boolean checkLoginId(String loginId);
     void join(MemberCreateRequest memberCreateRequest);
-    Member findById(String loginId);
+    Member findByLoginId(String loginId);
     void modify(MemberModifyRequest memberModifyRequest);
     void delete(String loginId);
 

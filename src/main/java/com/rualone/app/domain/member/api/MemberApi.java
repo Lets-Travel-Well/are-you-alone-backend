@@ -35,7 +35,7 @@ public class MemberApi {
     }
     @GetMapping("/user/{loginId}")
     public ApiResult<MemberResponse> findMemberByLoginId(@PathVariable("loginId") String loginId){
-        MemberResponse loginMember = new MemberResponse(memberService.findById(loginId));
+        MemberResponse loginMember = new MemberResponse(memberService.findByLoginId(loginId));
         return OK(loginMember);
     }
     @PutMapping("/modify")
