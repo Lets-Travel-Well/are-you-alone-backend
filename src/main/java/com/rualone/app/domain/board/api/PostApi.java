@@ -6,6 +6,8 @@ import com.rualone.app.domain.board.dto.request.PostCreateRequest;
 import com.rualone.app.domain.board.dto.request.PostUpdateRequest;
 import com.rualone.app.domain.board.dto.response.PostDetailResponse;
 import com.rualone.app.domain.board.dto.response.PostResponse;
+import com.rualone.app.domain.member.application.MemberService;
+import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.api.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -25,11 +27,14 @@ public class PostApi {
     private final PostService postService;
 
     private final CommentService commentService;
+    private final MemberService memberService;
 
     @Operation(summary = "post 생성", description = "post를 생성하는 API입니다")
     @PostMapping("/create")
     public ApiResult<Void> savePost(@RequestBody PostCreateRequest postCreateRequest){
-        postService.save(postCreateRequest);
+        Long memberId = 1L;
+        Member findMember = memberService.findById(memberId);
+        postService.save(postCreateRequest, findMember);
         return OK(null);
     }
 

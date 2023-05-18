@@ -1,13 +1,17 @@
 package com.rualone.app.domain.board.entity;
 
 import com.rualone.app.domain.board.dto.CommentUpdateDto;
+import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -15,11 +19,15 @@ import javax.persistence.ManyToOne;
 @SuperBuilder
 public class Comment extends BaseEntity {
     private String content;
-    @ManyToOne
-    private Post post;
-    // TODO : member 추가되면 추가 시켜야함
-//    private Member  memberId;
 
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    // TODO : member
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
     public void update(CommentUpdateDto commentUpdateDto){
         this.content = commentUpdateDto.getContent();
