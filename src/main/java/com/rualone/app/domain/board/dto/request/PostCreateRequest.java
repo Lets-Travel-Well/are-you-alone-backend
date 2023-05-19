@@ -1,6 +1,7 @@
 package com.rualone.app.domain.board.dto.request;
 
 import com.rualone.app.domain.board.entity.Post;
+import com.rualone.app.domain.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,12 +15,12 @@ public class PostCreateRequest {
     private String subject;
     private String content;
     // TODO : member 추가되면 추가 시켜야함
-    public Post toEntity(){
+    public Post toEntity(Member loginMember){
         return Post.builder()
                 .subject(subject)
                 .content(content)
                 .hit(0)
-//                .member()
+                .member(loginMember)
                 .build();
     }
 }

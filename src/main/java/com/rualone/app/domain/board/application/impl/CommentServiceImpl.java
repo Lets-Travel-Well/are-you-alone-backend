@@ -1,5 +1,6 @@
-package com.rualone.app.domain.board.application;
+package com.rualone.app.domain.board.application.impl;
 
+import com.rualone.app.domain.board.application.CommentService;
 import com.rualone.app.domain.board.entity.Comment;
 import com.rualone.app.domain.board.dao.CommentRepository;
 import com.rualone.app.domain.board.dto.CommentUpdateDto;
@@ -13,7 +14,7 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
 

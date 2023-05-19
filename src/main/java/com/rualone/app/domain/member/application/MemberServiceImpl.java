@@ -5,6 +5,7 @@ import com.rualone.app.domain.member.dto.request.MemberCreateRequest;
 import com.rualone.app.domain.member.dto.request.MemberLoginRequest;
 import com.rualone.app.domain.member.dto.request.MemberModifyRequest;
 import com.rualone.app.domain.member.entity.Member;
+import com.rualone.app.global.error.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,20 +31,25 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Member findById(String loginId) {
+    public Member findById(Long id) {
+        return memberRepository.findById(id).orElseThrow(() -> new NotFoundException(Member.class, id));
+    }
+
+    @Override
+    public Member findByLoginId(String loginId) {
         Member loginMember = memberRepository.findByLoginId(loginId).get();
         return loginMember;
     }
 
     @Override
     public void modify(MemberModifyRequest memberModifyRequest) {
-        Member findMember = findById(memberModifyRequest.getLoginId());
+        Member findMember = findByLoginId(memberModifyRequest.getLoginId());
         findMember.modify(memberModifyRequest);
     }
 
     @Override
     public void delete(String loginId) {
-        Member findMember = findById(loginId);
+        Member findMember = findByLoginId(loginId);
         memberRepository.delete(findMember);
     }
 
