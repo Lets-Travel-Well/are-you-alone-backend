@@ -12,15 +12,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentCreateRequest {
-    private Post post;
+    private Long postId;
     private String content;
     //TODO : member 완성되면 추가
     //    private Member  memberId;
 
-    public Comment toEntity(){
+    public Comment toEntity(Post post){
         return Comment.builder()
                 .post(post)
-//                .member(member)
                 .content(content)
                 .build();
     }

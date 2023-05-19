@@ -29,7 +29,6 @@ public class PostApi {
     private final PostService postService;
     private final PostQueryService postQueryService;
 
-    private final CommentService commentService;
     private final MemberService memberService;
     private final PostLikeService postLikeService;
 
