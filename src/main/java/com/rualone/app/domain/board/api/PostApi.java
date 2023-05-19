@@ -1,6 +1,7 @@
 package com.rualone.app.domain.board.api;
 
 import com.rualone.app.domain.board.application.CommentService;
+import com.rualone.app.domain.board.application.PostQueryService;
 import com.rualone.app.domain.board.application.PostService;
 import com.rualone.app.domain.board.dto.request.PostCreateRequest;
 import com.rualone.app.domain.board.dto.request.PostUpdateRequest;
@@ -25,6 +26,7 @@ import static com.rualone.app.global.api.ApiResult.OK;
 @Slf4j
 public class PostApi {
     private final PostService postService;
+    private final PostQueryService postQueryService;
 
     private final CommentService commentService;
     private final MemberService memberService;
@@ -38,20 +40,21 @@ public class PostApi {
         return OK(null);
     }
 
-    @Operation(summary = "post 단건 조회", description = "post를 상세조회하는 API입니다. id는 해당 포스트의 id가 들어갑니다.")
-    @GetMapping("/{id}")
-    public ApiResult<PostDetailResponse> findPostById(@PathVariable("id") Long id){
-        // TODO: 2023/05/15 KCH : comment완성되면 수정 해야합니다.
-        return OK(new PostDetailResponse(postService.findById(id)));
-    }
+//    @Operation(summary = "post 단건 조회", description = "post를 상세조회하는 API입니다. id는 해당 포스트의 id가 들어갑니다.")
+//    @GetMapping("/{id}")
+//    public ApiResult<PostDetailResponse> findPostById(@PathVariable("id") Long id){
+//        // TODO: 2023/05/15 KCH : comment완성되면 수정 해야합니다.
+//        return OK(new PostDetailResponse(postService.findById(id)));
+//    }
 
     @Operation(summary = "post 전체 조회", description = "post전체 조회 API입니다")
     @GetMapping()
     public ApiResult<List<PostResponse>> findAll(){
         log.info("findAll");
-        List<PostResponse> list = postService.findAll().stream()
-                .map(PostResponse::new)
-                .collect(Collectors.toList());
+//        List<PostResponse> list = postService.findAll().stream()
+//                .map(PostResponse::new)
+//                .collect(Collectors.toList());
+        List<PostResponse> list = postQueryService.findAll();
         return OK(list);
     }
 
