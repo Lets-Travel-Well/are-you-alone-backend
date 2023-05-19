@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-@Transactional
+
+
 public interface PostService {
     Post save(PostCreateRequest postCreateRequest, Member member);
     Post updatePost(PostUpdateRequest postUpdateRequest);
