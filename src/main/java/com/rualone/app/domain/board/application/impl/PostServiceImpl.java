@@ -39,7 +39,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Transactional(readOnly = true)
-    private Post findById(Long id) {
+    public Post findById(Long id) {
         return postRepository.findById(id).orElseThrow(() -> new NotFoundException(Post.class, id));
     }
 }
