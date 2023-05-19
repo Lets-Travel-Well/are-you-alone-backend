@@ -9,31 +9,17 @@ import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.error.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
 @Slf4j
 @RequiredArgsConstructor
-@Transactional
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     @Override
     public Post save(PostCreateRequest postCreateRequest, Member member) {
         return postRepository.save(postCreateRequest.toEntity(member));
-    }
-
-    @Override
-    public Post findById(Long id) {
-        return postRepository.findById(id).orElseThrow(() -> new NotFoundException(Post.class, id));
-    }
-
-    @Override
-    public List<Post> findAll() {
-        return postRepository.findAll();
     }
 
     @Override
@@ -47,5 +33,8 @@ public class PostServiceImpl implements PostService {
     public void deletePost(Long id) {
         Post post = findById(id);
         postRepository.delete(post);
+    }
+    private Post findById(Long id) {
+        return postRepository.findById(id).orElseThrow(() -> new NotFoundException(Post.class, id));
     }
 }
