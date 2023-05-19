@@ -42,12 +42,12 @@ public class PostApi {
         return OK(null);
     }
 
-//    @Operation(summary = "post 단건 조회", description = "post를 상세조회하는 API입니다. id는 해당 포스트의 id가 들어갑니다.")
-//    @GetMapping("/{id}")
-//    public ApiResult<PostDetailResponse> findPostById(@PathVariable("id") Long id){
-//        // TODO: 2023/05/15 KCH : comment완성되면 수정 해야합니다.
-//        return OK(new PostDetailResponse(postService.findById(id)));
-//    }
+    @Operation(summary = "post 단건 조회", description = "post를 상세조회하는 API입니다. id는 해당 포스트의 id가 들어갑니다.")
+    @GetMapping("/{id}")
+    public ApiResult<PostDetailResponse> findPostById(@PathVariable("id") Long id){
+        // TODO: 2023/05/15 KCH : comment완성되면 수정 해야합니다.
+        return OK(new PostDetailResponse(postService.findById(id)));
+    }
 
     @Operation(summary = "post 전체 조회", description = "post전체 조회 API입니다")
     @GetMapping()
@@ -81,7 +81,6 @@ public class PostApi {
     @GetMapping("/{id}/like")
     public ApiResult<Boolean> changLike(@PathVariable("id") Long postId){
         Long memberId = 1L;
-
         return OK(postLikeService.changLike(memberId, postId));
     }
 }

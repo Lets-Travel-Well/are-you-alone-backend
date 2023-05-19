@@ -39,4 +39,8 @@ public class PostServiceImpl implements PostService {
         Post post = postValidator.findById(id);
         postRepository.delete(post);
     }
+    @Transactional(readOnly = true)
+    public Post findById(Long id) {
+        return postRepository.findById(id).orElseThrow(() -> new NotFoundException(Post.class, id));
+    }
 }
