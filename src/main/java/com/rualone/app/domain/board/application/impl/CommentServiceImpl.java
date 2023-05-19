@@ -6,6 +6,7 @@ import com.rualone.app.domain.board.entity.Comment;
 import com.rualone.app.domain.board.dao.CommentRepository;
 import com.rualone.app.domain.board.dto.request.CommentCreateRequest;
 import com.rualone.app.domain.board.entity.Post;
+import com.rualone.app.domain.board.validator.CommentValidator;
 import com.rualone.app.domain.board.validator.PostValidator;
 import com.rualone.app.global.error.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final PostValidator postValidator;
+    private final CommentValidator commentValidator;
     @Override
     public Comment save(CommentCreateRequest commentCreateRequest) {
         Post findPost = postValidator.findById(commentCreateRequest.getPostId());
@@ -40,14 +42,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment updateComment(CommentUpdateRequest commentUpdateRequest) {
-        Comment comment = findById(commentUpdateRequest.getId());
+        Comment comment = commentValidator.findById(commentUpdateRequest.getId());
         comment.update(commentUpdateRequest);
         return comment;
     }
 
     @Override
     public void deleteComment(Long id) {
-        Comment comment = findById(id);
+        Comment comment = commentValidator.findById(id);
         commentRepository.delete(comment);
     }
 }

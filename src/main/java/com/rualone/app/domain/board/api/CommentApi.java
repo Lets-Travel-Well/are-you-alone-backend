@@ -30,7 +30,7 @@ public class CommentApi {
     @Operation(summary = "comment 수정", description = "comment를 수정하는 API입니다. id는 해당 댓글의 id가 들어갑니다.")
     @PostMapping("/{id}/update")
     public ApiResult<Void> update(@PathVariable("id") Long id, @RequestBody CommentUpdateRequest commentUpdateRequest){
-        log.info("comment modify");
+        commentUpdateRequest.setId(id);
         commentService.updateComment(commentUpdateRequest);
         return OK(null);
     }
