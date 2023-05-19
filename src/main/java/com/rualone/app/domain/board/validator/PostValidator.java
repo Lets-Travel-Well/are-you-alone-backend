@@ -6,8 +6,6 @@ import com.rualone.app.global.error.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.NoSuchElementException;
-
 @Configuration
 @RequiredArgsConstructor
 public class PostValidator {

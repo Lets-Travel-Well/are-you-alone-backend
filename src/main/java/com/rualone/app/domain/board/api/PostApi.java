@@ -1,6 +1,7 @@
 package com.rualone.app.domain.board.api;
 
 import com.rualone.app.domain.board.application.CommentService;
+import com.rualone.app.domain.board.application.PostLikeService;
 import com.rualone.app.domain.board.application.PostQueryService;
 import com.rualone.app.domain.board.application.PostService;
 import com.rualone.app.domain.board.dto.request.PostCreateRequest;
@@ -30,6 +31,7 @@ public class PostApi {
 
     private final CommentService commentService;
     private final MemberService memberService;
+    private final PostLikeService postLikeService;
 
     @Operation(summary = "post 생성", description = "post를 생성하는 API입니다")
     @PostMapping("/create")
@@ -62,7 +64,6 @@ public class PostApi {
     @PostMapping("/{id}/update")
     public ApiResult<Void> update(@PathVariable("id") Long id, @RequestBody PostUpdateRequest postUpdateRequest){
         log.info("modify");
-        Long memberId = 0L;
         postUpdateRequest.setId(id);
         postService.updatePost(postUpdateRequest);
         return OK(null);
@@ -74,5 +75,13 @@ public class PostApi {
         log.info("delete");
         postService.deletePost(id);
         return OK(null);
+    }
+
+    @Operation(summary = "post 좋아요", description = "post 좋아요 API입니다. True시 좋아요를 누른 상태 False시 취소한 상태입니다.")
+    @GetMapping("/{id}/like")
+    public ApiResult<Boolean> changLike(@PathVariable("id") Long postId){
+        Long memberId = 1L;
+
+        return OK(postLikeService.changLike(memberId, postId));
     }
 }
