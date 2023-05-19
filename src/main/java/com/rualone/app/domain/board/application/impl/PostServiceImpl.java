@@ -1,5 +1,6 @@
-package com.rualone.app.domain.board.application;
+package com.rualone.app.domain.board.application.impl;
 
+import com.rualone.app.domain.board.application.PostService;
 import com.rualone.app.domain.board.entity.Post;
 import com.rualone.app.domain.board.dao.PostRepository;
 import com.rualone.app.domain.board.dto.request.PostCreateRequest;
@@ -17,7 +18,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @Transactional
-public class PostServiceImpl implements PostService{
+public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     @Override
