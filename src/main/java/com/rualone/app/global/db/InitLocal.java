@@ -35,15 +35,12 @@ public class InitLocal {
         memberService.join(memberCreateRequest2);
     }
     private void postInit(PostService postService) {
-        PostCreateRequest postCreateRequest1 = new PostCreateRequest("subject1", "content1");
-        PostCreateRequest postCreateRequest2 = new PostCreateRequest("subject22", "content22");
         Member member = Member.builder()
                 .id(1L)
                 .build();
-        postService.save(postCreateRequest1, member);
-        postService.save(postCreateRequest2, member);
+        for(int i = 0; i < 100; i++){
+            PostCreateRequest postCreateRequest = new PostCreateRequest("subject" + i, "content" + i);
+            postService.save(postCreateRequest, member);
+        }
     }
-
-
-
 }
