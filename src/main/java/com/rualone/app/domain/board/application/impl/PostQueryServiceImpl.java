@@ -5,7 +5,9 @@ import com.rualone.app.domain.board.dao.PostQueryRepository;
 import com.rualone.app.domain.board.dto.response.PostDetailResponse;
 import com.rualone.app.domain.board.dto.response.PostResponse;
 import com.rualone.app.domain.board.entity.Post;
+import com.rualone.app.domain.board.validator.PostValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,15 +18,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PostQueryServiceImpl implements PostQueryService {
     private final PostQueryRepository postQueryRepository;
-
+    private final PostValidator postValidator;
 
     @Override
+    @Transactional
     public PostDetailResponse findById(Long id) {
+        Post post = postValidator.findById(id);
+        // TODO : 로직 고민해보기
+        post.increaseHit();
         return postQueryRepository.findById(id);
     }
 
     @Override
-    public List<PostResponse> findAll() {
-        return postQueryRepository.findAll();
+    public List<PostResponse> findAll(Pageable pageable) {
+        return postQueryRepository.findAll(pageable);
     }
 }

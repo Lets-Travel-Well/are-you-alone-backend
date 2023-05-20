@@ -23,11 +23,15 @@ public class Post extends BaseEntity {
     private int hit;
 
     // TODO : member
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne()
     @JoinColumn(name = "member_id")
     private Member member;
     public void update(PostUpdateRequest postUpdateRequest){
         this.subject = postUpdateRequest.getSubject();
         this.content = postUpdateRequest.getContent();
+    }
+
+    public void increaseHit(){
+        this.hit++;
     }
 }

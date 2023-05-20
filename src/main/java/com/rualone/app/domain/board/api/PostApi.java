@@ -1,6 +1,7 @@
 package com.rualone.app.domain.board.api;
 
 import com.rualone.app.domain.board.application.CommentService;
+import com.rualone.app.domain.board.application.PostLikeService;
 import com.rualone.app.domain.board.application.PostQueryService;
 import com.rualone.app.domain.board.application.PostService;
 import com.rualone.app.domain.board.dto.request.PostCreateRequest;
@@ -13,6 +14,9 @@ import com.rualone.app.global.api.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,8 +32,8 @@ public class PostApi {
     private final PostService postService;
     private final PostQueryService postQueryService;
 
-    private final CommentService commentService;
     private final MemberService memberService;
+    private final PostLikeService postLikeService;
 
     @Operation(summary = "post 생성", description = "post를 생성하는 API입니다")
     @PostMapping("/create")
@@ -40,21 +44,22 @@ public class PostApi {
         return OK(null);
     }
 
-//    @Operation(summary = "post 단건 조회", description = "post를 상세조회하는 API입니다. id는 해당 포스트의 id가 들어갑니다.")
-//    @GetMapping("/{id}")
-//    public ApiResult<PostDetailResponse> findPostById(@PathVariable("id") Long id){
-//        // TODO: 2023/05/15 KCH : comment완성되면 수정 해야합니다.
-//        return OK(new PostDetailResponse(postService.findById(id)));
-//    }
+    @Operation(summary = "post 단건 조회", description = "post를 상세조회하는 API입니다. id는 해당 포스트의 id가 들어갑니다.")
+    @GetMapping("/{id}")
+    public ApiResult<PostDetailResponse> findPostById(@PathVariable("id") Long id){
+        // TODO: 2023/05/15 KCH : comment완성되면 수정 해야합니다.
+        return OK(postQueryService.findById(id));
+    }
 
-    @Operation(summary = "post 전체 조회", description = "post전체 조회 API입니다")
+    @Operation(summary = "post 전체 조회", description = "post전체 조회 API입니다, page = 페이지의 넘버, size = 한 페이지의 게시글 수, sort = 정렬 기준입니다.")
     @GetMapping()
-    public ApiResult<List<PostResponse>> findAll(){
+    public ApiResult<List<PostResponse>> findAll(@PageableDefault(sort="id", direction = Sort.Direction.DESC) Pageable pageable){
         log.info("findAll");
+        log.info(pageable.toString());
 //        List<PostResponse> list = postService.findAll().stream()
 //                .map(PostResponse::new)
 //                .collect(Collectors.toList());
-        List<PostResponse> list = postQueryService.findAll();
+        List<PostResponse> list = postQueryService.findAll(pageable);
         return OK(list);
     }
 
@@ -62,7 +67,6 @@ public class PostApi {
     @PostMapping("/{id}/update")
     public ApiResult<Void> update(@PathVariable("id") Long id, @RequestBody PostUpdateRequest postUpdateRequest){
         log.info("modify");
-        Long memberId = 0L;
         postUpdateRequest.setId(id);
         postService.updatePost(postUpdateRequest);
         return OK(null);
@@ -74,5 +78,12 @@ public class PostApi {
         log.info("delete");
         postService.deletePost(id);
         return OK(null);
+    }
+
+    @Operation(summary = "post 좋아요", description = "post 좋아요 API입니다. True시 좋아요를 누른 상태 False시 취소한 상태입니다.")
+    @GetMapping("/{id}/like")
+    public ApiResult<Boolean> changLike(@PathVariable("id") Long postId){
+        Long memberId = 1L;
+        return OK(postLikeService.changLike(memberId, postId));
     }
 }
