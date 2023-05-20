@@ -29,14 +29,11 @@ public class CommentApi {
 
     @Operation(summary = "comment 생성", description = "comment를 생성하는 API입니다")
     @PostMapping("/create")
-    public ApiResult<List<CommentResponse>> saveComment(@RequestBody CommentCreateRequest commentCreateRequest){
+    public ApiResult<Void> saveComment(@RequestBody CommentCreateRequest commentCreateRequest){
         Long memberId = 1L;
         Member findMember = memberService.findById(memberId);
         Comment createComment = commentService.save(commentCreateRequest, findMember);
-
-        return OK(commentService.findAll(commentCreateRequest.getPostId()).stream()
-                .map(CommentResponse::new)
-                .collect(Collectors.toList()));
+        return OK(null);
     }
 
     @Operation(summary = "comment 수정", description = "comment를 수정하는 API입니다. id는 해당 댓글의 id가 들어갑니다.")
@@ -52,5 +49,13 @@ public class CommentApi {
     public ApiResult<Void> delete(@PathVariable("id") Long id){
         commentService.deleteComment(id);
         return OK(null);
+    }
+
+    @Operation(summary = "comment 전체 조회", description = "post에 해당하는 comment전체 조회 API입니다.")
+    @GetMapping("/post/{id}")
+    public ApiResult<List<CommentResponse>> findAll(@PathVariable("id") Long postId){
+        return OK(commentService.findAll(postId).stream()
+                .map(CommentResponse::new)
+                .collect(Collectors.toList()));
     }
 }
