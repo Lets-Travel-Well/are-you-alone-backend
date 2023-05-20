@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Profile;
 @Profile({"local"})
 public class InitLocal {
     // true 일때 DB 넣음
-    private boolean initData = false;
+    private boolean initData = true;
 
     @Bean
     CommandLineRunner init(
