@@ -14,4 +14,10 @@ public class CommentResponse {
     private String content;
     private String authorName;
     private LocalDateTime createDate;
+    public CommentResponse(Comment comment){
+        this.id = comment.getId();
+        this.content = comment.getContent();
+        this.authorName = comment.getMember().getName();
+        this.createDate = comment.getCreateDate();
+    }
 }

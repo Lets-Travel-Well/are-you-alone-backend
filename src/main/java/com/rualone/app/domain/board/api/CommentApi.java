@@ -1,6 +1,7 @@
 package com.rualone.app.domain.board.api;
 
 import com.rualone.app.domain.board.dto.request.CommentUpdateRequest;
+import com.rualone.app.domain.board.dto.response.CommentResponse;
 import com.rualone.app.domain.board.entity.Comment;
 import com.rualone.app.domain.board.application.CommentService;
 import com.rualone.app.domain.board.dto.request.CommentCreateRequest;
@@ -11,6 +12,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.rualone.app.global.api.ApiResult.OK;
 
@@ -25,11 +29,14 @@ public class CommentApi {
 
     @Operation(summary = "comment 생성", description = "comment를 생성하는 API입니다")
     @PostMapping("/create")
-    public ApiResult<Void> saveComment(@RequestBody CommentCreateRequest commentCreateRequest){
+    public ApiResult<List<CommentResponse>> saveComment(@RequestBody CommentCreateRequest commentCreateRequest){
         Long memberId = 1L;
         Member findMember = memberService.findById(memberId);
         Comment createComment = commentService.save(commentCreateRequest, findMember);
-        return OK(null);
+
+        return OK(commentService.findAll(commentCreateRequest.getPostId()).stream()
+                .map(CommentResponse::new)
+                .collect(Collectors.toList()));
     }
 
     @Operation(summary = "comment 수정", description = "comment를 수정하는 API입니다. id는 해당 댓글의 id가 들어갑니다.")
