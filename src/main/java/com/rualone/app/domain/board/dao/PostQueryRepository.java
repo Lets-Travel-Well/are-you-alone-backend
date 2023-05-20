@@ -38,6 +38,7 @@ public class PostQueryRepository {
                         post.content,
                         post.hit,
                         post.member.name.as("authorName"),
+                        post.createDate,
                         ExpressionUtils.as(
                                 JPAExpressions.select(count(postLike.id))
                                         .from(postLike)
