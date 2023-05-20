@@ -7,9 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -21,7 +22,8 @@ public class Post extends BaseEntity {
     private String subject;
     private String content;
     private int hit;
-
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    List<Comment> commentList = new ArrayList<>();
     // TODO : member
     @ManyToOne()
     @JoinColumn(name = "member_id")
