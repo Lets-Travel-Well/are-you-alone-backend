@@ -12,6 +12,8 @@ import com.rualone.app.domain.board.dto.response.PostResponse;
 import com.rualone.app.domain.board.entity.Post;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
@@ -30,7 +32,7 @@ import static com.rualone.app.domain.board.entity.QPostLike.postLike;
 public class PostQueryRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
-    public List<PostResponse> findAll(Pageable pageable) {
+    public Page<PostResponse> findAll(Pageable pageable) {
         List<PostResponse> postResponses = jpaQueryFactory
                 .select(Projections.constructor(PostResponse.class,
                         post.id,
@@ -50,8 +52,12 @@ public class PostQueryRepository {
                 .limit(pageable.getPageSize())
                 .orderBy(postSort(pageable))
                 .fetch();
+        Long count = jpaQueryFactory
+                .select(post.count())
+                .from(post)
+                .fetchOne();
 
-        return postResponses;
+        return new PageImpl<>(postResponses, pageable, count);
     }
 
     public PostDetailResponse findById(Long id) {
