@@ -2,21 +2,16 @@ package com.rualone.app.domain.board.dto.response;
 
 import com.rualone.app.domain.board.entity.Comment;
 import com.rualone.app.domain.board.entity.Post;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
+@AllArgsConstructor
 public class CommentResponse {
     private Long id;
-    private Post post;
-    //Todo : member 완성되면 추가
-//    private Member member
     private String content;
-
-    public CommentResponse(Comment comment){
-        this.id = comment.getId();
-        this.post = comment.getPost();
-        //Todo : 멤버 완성되면 추가ㅓ
-//        this.member  = comment.getMember();
-        this.content = comment.getContent();
-    }
+    private String authorName;
+    private LocalDateTime createDate;
 }

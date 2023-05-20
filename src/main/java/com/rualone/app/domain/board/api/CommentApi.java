@@ -4,6 +4,8 @@ import com.rualone.app.domain.board.dto.request.CommentUpdateRequest;
 import com.rualone.app.domain.board.entity.Comment;
 import com.rualone.app.domain.board.application.CommentService;
 import com.rualone.app.domain.board.dto.request.CommentCreateRequest;
+import com.rualone.app.domain.member.application.MemberService;
+import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.api.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -19,11 +21,14 @@ import static com.rualone.app.global.api.ApiResult.OK;
 public class CommentApi {
 
     private final CommentService commentService;
+    private final MemberService memberService;
 
     @Operation(summary = "comment 생성", description = "comment를 생성하는 API입니다")
     @PostMapping("/create")
     public ApiResult<Void> saveComment(@RequestBody CommentCreateRequest commentCreateRequest){
-        Comment createComment = commentService.save(commentCreateRequest);
+        Long memberId = 1L;
+        Member findMember = memberService.findById(memberId);
+        Comment createComment = commentService.save(commentCreateRequest, findMember);
         return OK(null);
     }
 

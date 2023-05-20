@@ -45,7 +45,7 @@ public class PostApi {
     @GetMapping("/{id}")
     public ApiResult<PostDetailResponse> findPostById(@PathVariable("id") Long id){
         // TODO: 2023/05/15 KCH : comment완성되면 수정 해야합니다.
-        return OK(new PostDetailResponse(postService.findById(id)));
+        return OK(postQueryService.findById(id));
     }
 
     @Operation(summary = "post 전체 조회", description = "post전체 조회 API입니다")

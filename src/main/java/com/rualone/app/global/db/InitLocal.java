@@ -1,7 +1,10 @@
 package com.rualone.app.global.db;
 
+import com.rualone.app.domain.board.application.CommentService;
 import com.rualone.app.domain.board.application.PostService;
+import com.rualone.app.domain.board.dto.request.CommentCreateRequest;
 import com.rualone.app.domain.board.dto.request.PostCreateRequest;
+import com.rualone.app.domain.board.entity.Post;
 import com.rualone.app.domain.member.application.MemberService;
 import com.rualone.app.domain.member.dto.request.MemberCreateRequest;
 import com.rualone.app.domain.member.entity.Member;
@@ -18,7 +21,7 @@ public class InitLocal {
 
     @Bean
     CommandLineRunner init(
-            MemberService memberService, PostService postService
+            MemberService memberService, PostService postService, CommentService commentService
     ){
         return args -> {
             if(!initData){
@@ -26,8 +29,10 @@ public class InitLocal {
             }
             memberInit(memberService);
             postInit(postService);
+            commentInit(commentService);
         };
     }
+
     private void memberInit(MemberService memberService) {
         MemberCreateRequest memberCreateRequest1 = new MemberCreateRequest("loginId1", "name1", "pass1", "hashcode1", "email1", "domain1");
         MemberCreateRequest memberCreateRequest2 = new MemberCreateRequest("loginId2", "name2", "pass2", "hashcode2", "email2", "domain2");
@@ -41,6 +46,15 @@ public class InitLocal {
         for(int i = 0; i < 100; i++){
             PostCreateRequest postCreateRequest = new PostCreateRequest("subject" + i, "content" + i);
             postService.save(postCreateRequest, member);
+        }
+    }
+    private void commentInit(CommentService commentService) {
+        Member member = Member.builder()
+                .id(1L)
+                .build();
+        for(int i = 0; i < 4; i++){
+            CommentCreateRequest commentCreateRequest = new CommentCreateRequest(1L, "test" + i);
+            commentService.save(commentCreateRequest, member);
         }
     }
 }

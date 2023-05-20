@@ -20,12 +20,12 @@ import static javax.persistence.FetchType.LAZY;
 public class Comment extends BaseEntity {
     private String content;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne()
     @JoinColumn(name = "post_id")
     private Post post;
 
     // TODO : member
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne()
     @JoinColumn(name = "member_id")
     private Member member;
 
