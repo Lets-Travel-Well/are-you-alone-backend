@@ -64,6 +64,7 @@ public class PostQueryRepository {
         List<CommentResponse> commentResponses = jpaQueryFactory
                 .select(Projections.constructor(CommentResponse.class,
                         comment.id,
+                        comment.post.id,
                         comment.content,
                         comment.member.name.as("authorName"),
                         comment.createDate))
