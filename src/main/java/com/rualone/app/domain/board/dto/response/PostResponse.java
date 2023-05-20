@@ -15,6 +15,5 @@ public class PostResponse {
     private String content;
     private int hit;
     private String authorName;
-//    private int like;
-
+    private Long like;
 }
