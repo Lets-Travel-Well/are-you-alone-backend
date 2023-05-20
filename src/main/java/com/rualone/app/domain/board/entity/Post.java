@@ -30,4 +30,8 @@ public class Post extends BaseEntity {
         this.subject = postUpdateRequest.getSubject();
         this.content = postUpdateRequest.getContent();
     }
+
+    public void increaseHit(){
+        this.hit++;
+    }
 }

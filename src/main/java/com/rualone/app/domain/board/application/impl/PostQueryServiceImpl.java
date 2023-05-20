@@ -20,8 +20,11 @@ public class PostQueryServiceImpl implements PostQueryService {
     private final PostValidator postValidator;
 
     @Override
+    @Transactional
     public PostDetailResponse findById(Long id) {
-        postValidator.findById(id);
+        Post post = postValidator.findById(id);
+        // TODO : 로직 고민해보기
+        post.increaseHit();
         return postQueryRepository.findById(id);
     }
 
