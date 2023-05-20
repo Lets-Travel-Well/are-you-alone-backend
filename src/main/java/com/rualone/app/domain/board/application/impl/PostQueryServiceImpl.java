@@ -7,6 +7,7 @@ import com.rualone.app.domain.board.dto.response.PostResponse;
 import com.rualone.app.domain.board.entity.Post;
 import com.rualone.app.domain.board.validator.PostValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +30,7 @@ public class PostQueryServiceImpl implements PostQueryService {
     }
 
     @Override
-    public List<PostResponse> findAll() {
-        return postQueryRepository.findAll();
+    public List<PostResponse> findAll(Pageable pageable) {
+        return postQueryRepository.findAll(pageable);
     }
 }

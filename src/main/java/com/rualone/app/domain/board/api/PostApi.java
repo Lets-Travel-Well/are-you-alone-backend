@@ -14,6 +14,9 @@ import com.rualone.app.global.api.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -48,14 +51,15 @@ public class PostApi {
         return OK(postQueryService.findById(id));
     }
 
-    @Operation(summary = "post 전체 조회", description = "post전체 조회 API입니다")
+    @Operation(summary = "post 전체 조회", description = "post전체 조회 API입니다, page = 페이지의 넘버, size = 한 페이지의 게시글 수, sort = 정렬 기준입니다.")
     @GetMapping()
-    public ApiResult<List<PostResponse>> findAll(){
+    public ApiResult<List<PostResponse>> findAll(@PageableDefault(sort="id", direction = Sort.Direction.DESC) Pageable pageable){
         log.info("findAll");
+        log.info(pageable.toString());
 //        List<PostResponse> list = postService.findAll().stream()
 //                .map(PostResponse::new)
 //                .collect(Collectors.toList());
-        List<PostResponse> list = postQueryService.findAll();
+        List<PostResponse> list = postQueryService.findAll(pageable);
         return OK(list);
     }
 
