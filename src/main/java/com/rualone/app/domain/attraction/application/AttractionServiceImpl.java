@@ -1,5 +1,6 @@
 package com.rualone.app.domain.attraction.application;
 
+import com.rualone.app.domain.attraction.dao.AttractionInfoQueryRepository;
 import com.rualone.app.domain.attraction.dao.AttractionInfoRepository;
 import com.rualone.app.domain.attraction.dao.GugunRepository;
 import com.rualone.app.domain.attraction.dao.SidoRepository;
@@ -19,8 +20,7 @@ import java.util.List;
 @Slf4j
 @Transactional
 public class AttractionServiceImpl implements AttractionService{
-
-    private final AttractionInfoRepository attractionInfoRepository;
+    private final AttractionInfoQueryRepository attractionInfoQueryRepository;
     private final GugunRepository gugunRepository;
     private final SidoRepository sidoRepository;
     @Override
@@ -30,7 +30,7 @@ public class AttractionServiceImpl implements AttractionService{
 
     @Override
     public List<AttractionInfo> findAllByCriteria(Integer sidoCode, Integer gugunCode, Integer contentTypeId) {
-        return attractionInfoRepository.findAllByCriteria(sidoCode, gugunCode, contentTypeId);
+        return attractionInfoQueryRepository.findAllByCriteria(sidoCode, gugunCode, contentTypeId);
     }
 
     @Override
