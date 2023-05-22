@@ -39,4 +39,5 @@ public class KakaoInfoResponse implements OAuthInfoResponse {
     public OAuthProvider getOAuthProvider() {
         return OAuthProvider.KAKAO;
     }
+
 }

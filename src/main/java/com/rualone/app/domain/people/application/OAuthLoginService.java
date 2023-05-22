@@ -10,6 +10,7 @@ import com.rualone.app.domain.people.tokens.AuthTokensGenerator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,25 +20,28 @@ public class OAuthLoginService {
     private final AuthTokensGenerator authTokensGenerator;
     private final RequestOAuthInfoService requestOAuthInfoService;
 
+    @Transactional
     public AuthTokens login(OAuthLoginParams params) {
         OAuthInfoResponse oAuthInfoResponse = requestOAuthInfoService.request(params);
-        Long memberId = findOrCreateMember(oAuthInfoResponse);
-        return authTokensGenerator.generate(memberId);
-    }
 
-    private Long findOrCreateMember(OAuthInfoResponse oAuthInfoResponse) {
+        People people = findOrCreateMember(oAuthInfoResponse);
+
+        AuthTokens authTokens = authTokensGenerator.generate(people.getId());
+        people.updateRefreshToken(authTokens.getRefreshToken());
+
+        return authTokens;
+    }
+    private People findOrCreateMember(OAuthInfoResponse oAuthInfoResponse) {
         return memberRepository.findByEmail(oAuthInfoResponse.getEmail())
-                .map(People::getId)
                 .orElseGet(() -> newMember(oAuthInfoResponse));
     }
 
-    private Long newMember(OAuthInfoResponse oAuthInfoResponse) {
+    private People newMember(OAuthInfoResponse oAuthInfoResponse) {
         People people = People.builder()
                 .email(oAuthInfoResponse.getEmail())
                 .nickname(oAuthInfoResponse.getNickname())
                 .oAuthProvider(oAuthInfoResponse.getOAuthProvider())
                 .build();
-
-        return memberRepository.save(people).getId();
+        return memberRepository.save(people);
     }
 }
