@@ -13,4 +13,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class JourneyServiceImpl implements JourneyService {
     private final JourneyRepository journeyRepository;
+
 }
