@@ -16,7 +16,9 @@ public class JourneyApprove extends BaseEntity {
     @ManyToOne()
     @JoinColumn(name = "participant_id")
     private Member participant;
-
+    @ManyToOne
+    @JoinColumn(name = "journey_id")
+    private Journey journey;
     @Enumerated(EnumType.STRING)
     @Column
     private ParticipationStatus status;
