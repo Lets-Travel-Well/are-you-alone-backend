@@ -12,6 +12,7 @@ import com.rualone.app.domain.member.application.MemberService;
 import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.api.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,8 +41,8 @@ public class PostApi {
 
     @Operation(summary = "post 생성", description = "post를 생성하는 API입니다")
     @PostMapping("/create")
-    public ApiResult<Void> savePost(@RequestBody PostCreateRequest postCreateRequest){
-        Long memberId = 1L;
+    public ApiResult<Void> savePost(@RequestBody PostCreateRequest postCreateRequest, @Parameter(hidden = true) @AuthenticationPrincipal User user){
+        Long memberId = Long.parseLong(user.getUsername());
         Member findMember = memberService.findById(memberId);
         postService.save(postCreateRequest, findMember);
         return OK(null);
