@@ -9,6 +9,7 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -23,6 +24,6 @@ public class Journey extends BaseEntity {
     private String content;
     private Boolean visibility;
     private int travelerCnt;
-    private LocalDateTime deadLine;
-    private LocalDateTime startDay;
+    private LocalDate deadLine;
+    private LocalDate startDay;
 }

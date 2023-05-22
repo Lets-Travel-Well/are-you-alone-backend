@@ -3,7 +3,10 @@ package com.rualone.app.domain.journey.api;
 import com.rualone.app.domain.journey.application.JourneyQueryService;
 import com.rualone.app.domain.journey.application.JourneyService;
 import com.rualone.app.domain.journey.dto.request.AttractionInfoPathRequest;
+import com.rualone.app.domain.journey.dto.request.JourneyCreateRequest;
 import com.rualone.app.domain.journey.dto.response.AttractionInfoPathResponse;
+import com.rualone.app.domain.member.application.MemberService;
+import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.api.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +28,7 @@ import static com.rualone.app.global.api.ApiResult.OK;
 public class JourneyApi {
     private final JourneyService journeyService;
     private final JourneyQueryService journeyQueryService;
+    private final MemberService memberService;
 
     @Operation(summary = "최단경로 생성", description = "최단경로 만드는 API입니다.")
     @PostMapping("/path")
@@ -33,17 +37,14 @@ public class JourneyApi {
 
         return OK(journeyQueryService.findShortestPath(attractionInfoPathRequest));
     }
-//    @PostMapping("/journey/path")
-//    public ApiResult<List<JourneyPlacePathDto>> findShortestPath(@RequestBody List<JourneyPlacePathCreateRequest> journeyPlacePathCreateRequest){
-//        List<JourneyPlacePathDto> journeyPlacePathDto = journeyPlacePathCreateRequest.stream()
-//                .map(temp -> new JourneyPlacePathDto(attractionService.findByContentId(temp.getContentId())))
-//                .collect(Collectors.toList());
-//        return OK(journeyService.findShortestPath(journeyPlacePathDto));
-//    }
 
     @Operation(summary = "journey 생성", description = "journey를 생성하는 API입니다.")
     @PostMapping("/create")
-    public ApiResult<Void> saveJourney(){
+    public ApiResult<Void> saveJourney(@RequestBody JourneyCreateRequest journeyCreateRequest){
+        Long memberId = 1L;
+        Member findMember = memberService.findById(memberId);
+        log.info("{}", journeyCreateRequest.toString());
+        journeyService.save(journeyCreateRequest, findMember);
         return OK(null);
     }
 }
