@@ -1,7 +1,7 @@
-package com.rualone.app.domain.memberOrigin.entity;
+package com.rualone.app.domain.member.entity;
 
 import com.rualone.app.domain.auth.application.OAuthProvider;
-import com.rualone.app.domain.memberOrigin.dto.request.MemberModifyRequest;
+import com.rualone.app.domain.member.dto.request.MemberModifyRequest;
 import com.rualone.app.global.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @SuperBuilder
 // 회원 정보를 담을 Entity
-public class People extends BaseEntity {
+public class Member extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,15 +24,15 @@ public class People extends BaseEntity {
     @Column(unique = true)
     private String email;
 
-    private String nickname;
+    private String nickName;
     private OAuthProvider oAuthProvider;
     private String refreshToken;
     private Long footage;
 
     @Builder
-    public People(String email, String nickname, OAuthProvider oAuthProvider) {
+    public Member(String email, String nickName, OAuthProvider oAuthProvider) {
         this.email = email;
-        this.nickname = nickname;
+        this.nickName = nickName;
         this.oAuthProvider = oAuthProvider;
     }
 
@@ -42,6 +42,6 @@ public class People extends BaseEntity {
 
     public void modify(MemberModifyRequest memberModifyRequest){
         //getNickName으로 수정
-        this.nickname = memberModifyRequest.getEmail();
+        this.nickName = memberModifyRequest.getEmail();
     }
 }

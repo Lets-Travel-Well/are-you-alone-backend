@@ -1,24 +1,22 @@
-package com.rualone.app.domain.memberOrigin.dto.request;
+package com.rualone.app.domain.member.dto.request;
 
-import com.rualone.app.domain.memberOrigin.entity.Member;
+import com.rualone.app.domain.member.entity.Member;
 import lombok.*;
-
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString
 public class MemberModifyRequest {
     private String loginId;
+    private String nickName;
     private String email;
-    private String domain;
+
 
     public Member toEntity(){
         return Member.builder()
-                .loginId(this.loginId)
                 .email(this.email)
-                .domain(this.domain)
+                .nickName(this.nickName)
+                .email(this.email)
                 .build();
     }
 }

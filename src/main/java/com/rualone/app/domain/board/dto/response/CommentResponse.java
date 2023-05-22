@@ -1,7 +1,6 @@
 package com.rualone.app.domain.board.dto.response;
 
 import com.rualone.app.domain.board.entity.Comment;
-import com.rualone.app.domain.board.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -19,7 +18,7 @@ public class CommentResponse {
         this.id = comment.getId();
         this.postId = comment.getPost().getId();
         this.content = comment.getContent();
-        this.authorName = comment.getMember().getName();
+        this.authorName = comment.getMember().getNickName();
         this.createDate = comment.getCreateDate();
     }
 }

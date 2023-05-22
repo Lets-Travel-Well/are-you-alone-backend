@@ -1,7 +1,7 @@
-package com.rualone.app.domain.memberOrigin.validator;
+package com.rualone.app.domain.member.validator;
 
-import com.rualone.app.domain.memberOrigin.dao.MemberRepository;
-import com.rualone.app.domain.memberOrigin.entity.Member;
+import com.rualone.app.domain.member.dao.MemberRepository;
+import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.error.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

@@ -39,7 +39,7 @@ public class PostQueryRepository {
                         post.subject,
                         post.content,
                         post.hit,
-                        post.member.name.as("authorName"),
+                        post.member.nickName.as("authorName"),
                         post.createDate,
                         ExpressionUtils.as(
                                 JPAExpressions.select(count(postLike.id))
@@ -66,7 +66,7 @@ public class PostQueryRepository {
                         comment.id,
                         comment.post.id,
                         comment.content,
-                        comment.member.name.as("authorName"),
+                        comment.member.nickName.as("authorName"),
                         comment.createDate))
                 .from(comment)
                 .where(comment.post.id.eq(id))
@@ -78,7 +78,7 @@ public class PostQueryRepository {
                         post.subject,
                         post.content,
                         post.hit,
-                        post.member.name.as("authorName"),
+                        post.member.nickName.as("authorName"),
                         post.createDate))
                 .from(post)
                 .where(post.id.eq(id))

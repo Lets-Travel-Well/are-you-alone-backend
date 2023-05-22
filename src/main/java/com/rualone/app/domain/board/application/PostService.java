@@ -3,7 +3,7 @@ package com.rualone.app.domain.board.application;
 import com.rualone.app.domain.board.entity.Post;
 import com.rualone.app.domain.board.dto.request.PostCreateRequest;
 import com.rualone.app.domain.board.dto.request.PostUpdateRequest;
-import com.rualone.app.domain.memberOrigin.entity.Member;
+import com.rualone.app.domain.member.entity.Member;
 
 
 public interface PostService {

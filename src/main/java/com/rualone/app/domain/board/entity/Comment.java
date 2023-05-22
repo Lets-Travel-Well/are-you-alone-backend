@@ -1,7 +1,7 @@
 package com.rualone.app.domain.board.entity;
 
 import com.rualone.app.domain.board.dto.request.CommentUpdateRequest;
-import com.rualone.app.domain.memberOrigin.entity.Member;
+import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
