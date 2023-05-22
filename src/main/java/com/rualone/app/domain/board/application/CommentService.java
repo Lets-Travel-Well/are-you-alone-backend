@@ -3,7 +3,7 @@ package com.rualone.app.domain.board.application;
 import com.rualone.app.domain.board.dto.request.CommentUpdateRequest;
 import com.rualone.app.domain.board.entity.Comment;
 import com.rualone.app.domain.board.dto.request.CommentCreateRequest;
-import com.rualone.app.domain.member.entity.Member;
+import com.rualone.app.domain.memberOrigin.entity.Member;
 
 import java.util.List;
 

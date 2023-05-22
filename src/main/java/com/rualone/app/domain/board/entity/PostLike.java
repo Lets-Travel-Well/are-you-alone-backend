@@ -1,6 +1,6 @@
 package com.rualone.app.domain.board.entity;
 
-import com.rualone.app.domain.member.entity.Member;
+import com.rualone.app.domain.memberOrigin.entity.Member;
 import com.rualone.app.global.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

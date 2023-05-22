@@ -1,6 +1,5 @@
 package com.rualone.app.domain.board.api;
 
-import com.rualone.app.domain.board.application.CommentService;
 import com.rualone.app.domain.board.application.PostLikeService;
 import com.rualone.app.domain.board.application.PostQueryService;
 import com.rualone.app.domain.board.application.PostService;
@@ -8,8 +7,8 @@ import com.rualone.app.domain.board.dto.request.PostCreateRequest;
 import com.rualone.app.domain.board.dto.request.PostUpdateRequest;
 import com.rualone.app.domain.board.dto.response.PostDetailResponse;
 import com.rualone.app.domain.board.dto.response.PostResponse;
-import com.rualone.app.domain.member.application.MemberService;
-import com.rualone.app.domain.member.entity.Member;
+import com.rualone.app.domain.memberOrigin.application.MemberService;
+import com.rualone.app.domain.memberOrigin.entity.Member;
 import com.rualone.app.global.api.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -22,9 +21,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.rualone.app.global.api.ApiResult.OK;
 

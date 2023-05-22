@@ -6,7 +6,7 @@ import com.rualone.app.domain.board.dao.PostRepository;
 import com.rualone.app.domain.board.dto.request.PostCreateRequest;
 import com.rualone.app.domain.board.dto.request.PostUpdateRequest;
 import com.rualone.app.domain.board.validator.PostValidator;
-import com.rualone.app.domain.member.entity.Member;
+import com.rualone.app.domain.memberOrigin.entity.Member;
 import com.rualone.app.global.error.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
