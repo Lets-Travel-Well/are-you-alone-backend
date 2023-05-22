@@ -46,6 +46,9 @@ dependencies {
 
 	// validation 의존성 추가
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// gpt 의존성 추가
+	implementation 'io.github.flashvayne:chatgpt-spring-boot-starter:1.0.4'
 }
 
 tasks.named('test') {
