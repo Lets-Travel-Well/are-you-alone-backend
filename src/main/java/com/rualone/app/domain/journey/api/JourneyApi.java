@@ -62,4 +62,15 @@ public class JourneyApi {
         journeyApproveService.save(journeyJoinRequest, findMember);
         return OK(null);
     }
+
+    @Operation(summary = "동행을 승인하는 API", description = "동행을 AGREE하는 API입니다")
+    @PostMapping("/agree")
+    public ApiResult<Void> agreeJourney(){
+        return OK(null);
+    }
+    @Operation(summary = "동행을 승인하는 API", description = "동행을 AGREE하는 API입니다")
+    @PostMapping("/disagree")
+    public ApiResult<Void> disAgreeJourney(){
+        return OK(null);
+    }
 }
