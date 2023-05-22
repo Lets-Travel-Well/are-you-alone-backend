@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     private final OAuthLoginService oAuthLoginService;
 
+    //Todo : ResponseEntity 수정
     @PostMapping("/kakao")
     public ResponseEntity<AuthTokens> loginKakao(@RequestBody KakaoLoginParams params) {
         return ResponseEntity.ok(oAuthLoginService.login(params));
