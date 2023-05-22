@@ -6,10 +6,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +20,12 @@ public class TestApi {
     @PostMapping
     public ResponseEntity<String> save(@RequestBody TestCreateRequest testCreateRequest){
         testService.createTest(testCreateRequest);
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<String> test(@AuthenticationPrincipal User user){
+        log.info(user.toString());
         return new ResponseEntity<>("success", HttpStatus.OK);
     }
 }
