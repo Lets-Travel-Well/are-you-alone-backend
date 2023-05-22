@@ -20,7 +20,7 @@ public class JourneyCreateRequest {
     private LocalDate deadLine;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDay;
-    List<AttractionInfoPathRequest> attractionInfoPathRequestList;
+    List<JourneyPlaceCreateRequest> journeyPlaceCreateRequests;
 
     public Journey toEntity(Member member){
         return Journey.builder()

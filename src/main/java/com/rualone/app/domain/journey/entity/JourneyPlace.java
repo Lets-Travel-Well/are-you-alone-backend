@@ -18,6 +18,10 @@ public class JourneyPlace extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "attraction_info")
     private AttractionInfo attractionInfo;
+    @ManyToOne
+    @JoinColumn(name = "journey_id")
+    private Journey journey;
     private String content;
-    private Integer order;
+    private Integer sequence;
+    private String review;
 }
