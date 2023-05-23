@@ -1,4 +1,4 @@
-package com.rualone.app.domain.people.tokens;
+package com.rualone.app.domain.auth.tokens;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

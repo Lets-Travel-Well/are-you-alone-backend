@@ -1,8 +1,7 @@
-package com.rualone.app.domain.people.config;
+package com.rualone.app.global.config;
 
-import com.rualone.app.domain.people.tokens.AuthTokens;
-import com.rualone.app.domain.people.tokens.JwtAuthenticationFilter;
-import com.rualone.app.domain.people.tokens.JwtTokenProvider;
+import com.rualone.app.domain.auth.tokens.JwtAuthenticationFilter;
+import com.rualone.app.domain.auth.tokens.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

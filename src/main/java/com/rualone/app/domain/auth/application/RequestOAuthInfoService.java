@@ -1,9 +1,8 @@
-package com.rualone.app.domain.people.infoResponse;
+package com.rualone.app.domain.auth.application;
 
-import com.rualone.app.domain.people.ApiClient.OAuthApiClient;
-import com.rualone.app.domain.people.api.OAuthLoginParams;
-import com.rualone.app.domain.people.entity.OAuthProvider;
-import com.rualone.app.domain.people.infoResponse.OAuthInfoResponse;
+import com.rualone.app.domain.auth.apiClient.OAuthApiClient;
+import com.rualone.app.domain.auth.dto.infoResponse.OAuthInfoResponse;
+import com.rualone.app.domain.auth.params.OAuthLoginParams;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;

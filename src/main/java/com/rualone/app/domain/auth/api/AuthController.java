@@ -1,7 +1,9 @@
-package com.rualone.app.domain.people.api;
+package com.rualone.app.domain.auth.api;
 
-import com.rualone.app.domain.people.application.OAuthLoginService;
-import com.rualone.app.domain.people.tokens.AuthTokens;
+import com.rualone.app.domain.auth.params.KakaoLoginParams;
+import com.rualone.app.domain.auth.params.NaverLoginParams;
+import com.rualone.app.domain.auth.application.OAuthLoginService;
+import com.rualone.app.domain.auth.tokens.AuthTokens;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

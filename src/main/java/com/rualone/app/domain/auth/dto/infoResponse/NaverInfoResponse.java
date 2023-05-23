@@ -1,8 +1,8 @@
-package com.rualone.app.domain.people.infoResponse;
+package com.rualone.app.domain.auth.dto.infoResponse;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.rualone.app.domain.people.entity.OAuthProvider;
+import com.rualone.app.domain.auth.application.OAuthProvider;
 import lombok.Getter;
 
 @Getter

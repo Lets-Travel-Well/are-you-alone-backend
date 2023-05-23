@@ -1,6 +1,6 @@
-package com.rualone.app.domain.people.infoResponse;
+package com.rualone.app.domain.auth.dto.infoResponse;
 
-import com.rualone.app.domain.people.entity.OAuthProvider;
+import com.rualone.app.domain.auth.application.OAuthProvider;
 
 public interface OAuthInfoResponse {
     String getEmail();

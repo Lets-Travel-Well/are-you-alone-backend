@@ -1,4 +1,4 @@
-package com.rualone.app.domain.people.tokens;
+package com.rualone.app.domain.auth.tokens;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

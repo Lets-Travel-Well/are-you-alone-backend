@@ -1,4 +1,4 @@
-package com.rualone.app.domain.people.config;
+package com.rualone.app.global.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
