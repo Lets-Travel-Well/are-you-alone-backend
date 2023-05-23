@@ -6,6 +6,8 @@ import com.rualone.app.domain.board.dto.response.PostDetailResponse;
 import com.rualone.app.domain.board.dto.response.PostResponse;
 import com.rualone.app.domain.board.entity.Post;
 import com.rualone.app.domain.board.validator.PostValidator;
+import com.rualone.app.domain.member.entity.Member;
+import com.rualone.app.domain.member.validator.MemberValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,18 +22,24 @@ import java.util.List;
 public class PostQueryServiceImpl implements PostQueryService {
     private final PostQueryRepository postQueryRepository;
     private final PostValidator postValidator;
-
+    private final MemberValidator memberValidator;
     @Override
     @Transactional
-    public PostDetailResponse findById(Long id) {
+    public PostDetailResponse findById(Long id, Long memberId) {
         Post post = postValidator.findById(id);
-        // TODO : 로직 고민해보기
+        Member member = memberValidator.findById(memberId);
+
+        PostDetailResponse postDetailResponse = postQueryRepository.findById(id);
+
+        postDetailResponse.setMyBoard(member.getNickName().equals(postDetailResponse.getAuthorName()));
+
         post.increaseHit();
-        return postQueryRepository.findById(id);
+        return postDetailResponse;
     }
 
     @Override
     public Page<PostResponse> findAll(Pageable pageable) {
         return postQueryRepository.findAll(pageable);
     }
+
 }
