@@ -10,8 +10,11 @@ import com.rualone.app.domain.member.application.MemberService;
 import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.api.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,7 +58,8 @@ public class CommentApi {
 
     @Operation(summary = "comment 전체 조회", description = "post에 해당하는 comment전체 조회 API입니다.")
     @GetMapping("/post/{id}")
-    public ApiResult<List<CommentResponse>> findAll(@PathVariable("id") Long postId){
-        return OK(commentQueryService.findAll(postId));
+    public ApiResult<List<CommentResponse>> findAll(@PathVariable("id") Long postId, @Parameter(hidden = true) @AuthenticationPrincipal User user){
+        Long memberId = Long.parseLong(user.getUsername());
+        return OK(commentQueryService.findAll(postId, memberId));
     }
 }

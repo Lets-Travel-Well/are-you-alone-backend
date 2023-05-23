@@ -35,7 +35,6 @@ public class PostQueryServiceImpl implements PostQueryService {
 
         postDetailResponse.setMyBoard(member.getNickName().equals(postDetailResponse.getAuthorName()));
 
-
         postDetailResponse.getCommentList().forEach(commentResponse -> {
             if(commentResponse.getAuthorName().equals(member.getNickName())){
                 log.info("{}",commentResponse);

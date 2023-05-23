@@ -6,5 +6,5 @@ import com.rualone.app.domain.board.entity.Comment;
 import java.util.List;
 
 public interface CommentQueryService {
-    List<CommentResponse> findAll(Long postId);
+    List<CommentResponse> findAll(Long postId, Long memberId);
 }
