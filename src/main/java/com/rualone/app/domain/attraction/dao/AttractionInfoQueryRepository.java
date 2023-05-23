@@ -1,19 +1,19 @@
-package com.rualone.app.domain.attraction.dao.impl;
+package com.rualone.app.domain.attraction.dao;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.rualone.app.domain.attraction.dao.AttractionInfoRepositoryCustom;
 import com.rualone.app.domain.attraction.entity.AttractionInfo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 import static com.rualone.app.domain.attraction.entity.QAttractionInfo.attractionInfo;
 
+@Repository
 @RequiredArgsConstructor
-public class AttractionInfoRepositoryImpl implements AttractionInfoRepositoryCustom {
+public class AttractionInfoQueryRepository {
     private final JPAQueryFactory jpaQueryFactory;
-    @Override
     public List<AttractionInfo> findAllByCriteria(Integer sidoCode, Integer gugunCode, Integer contentTypeId) {
         List<AttractionInfo> attractionInfos = jpaQueryFactory
                 .select(attractionInfo)
