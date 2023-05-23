@@ -37,4 +37,17 @@ public class HotPlaceQueryRepository {
                 .fetch();
         return hotPlaceResponses;
     }
+
+    public Boolean isMyHotPlace(Integer contentId, Long memberId) {
+        Integer fetchOne = jpaQueryFactory
+                .selectOne()
+                .from(hotPlace)
+                .where(
+                        hotPlace.attractionInfo.contentId.eq(contentId),
+                        hotPlace.member.id.eq(memberId)
+                        )
+                .fetchFirst(); // limit 1
+
+        return fetchOne != null;
+    }
 }
