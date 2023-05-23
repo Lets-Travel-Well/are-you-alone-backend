@@ -1,7 +1,6 @@
 package com.rualone.app.domain.board.dto.response;
 
 import com.rualone.app.domain.board.entity.Comment;
-import com.rualone.app.domain.board.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,7 +10,17 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CommentResponse {
     private Long id;
+    private Long postId;
     private String content;
     private String authorName;
     private LocalDateTime createDate;
+    private Boolean myComment;
+    public CommentResponse(Long id, Long postId, String content, String authorName, LocalDateTime createDate){
+        this.id = id;
+        this.postId = postId;
+        this.content = content;
+        this.authorName = authorName;
+        this.createDate = createDate;
+        this.myComment = false;
+    }
 }

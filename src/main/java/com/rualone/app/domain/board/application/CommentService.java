@@ -11,6 +11,9 @@ public interface CommentService {
     Comment save(CommentCreateRequest commentCreateRequest, Member member);
     Comment findById(Long id);
     List<Comment> findAll();
+
+    // TODO: 2023/05/20 :CQRS로 변경 필요 
+    List<Comment> findAll(Long postId);
     Comment updateComment(CommentUpdateRequest commentUpdateRequest);
     void deleteComment(Long id);
 }

@@ -12,6 +12,8 @@ import com.rualone.app.domain.board.dto.response.PostResponse;
 import com.rualone.app.domain.board.entity.Post;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
@@ -30,14 +32,14 @@ import static com.rualone.app.domain.board.entity.QPostLike.postLike;
 public class PostQueryRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
-    public List<PostResponse> findAll(Pageable pageable) {
+    public Page<PostResponse> findAll(Pageable pageable) {
         List<PostResponse> postResponses = jpaQueryFactory
                 .select(Projections.constructor(PostResponse.class,
                         post.id,
                         post.subject,
                         post.content,
                         post.hit,
-                        post.member.name.as("authorName"),
+                        post.member.nickName.as("authorName"),
                         post.createDate,
                         ExpressionUtils.as(
                                 JPAExpressions.select(count(postLike.id))
@@ -50,16 +52,21 @@ public class PostQueryRepository {
                 .limit(pageable.getPageSize())
                 .orderBy(postSort(pageable))
                 .fetch();
+        Long count = jpaQueryFactory
+                .select(post.count())
+                .from(post)
+                .fetchOne();
 
-        return postResponses;
+        return new PageImpl<>(postResponses, pageable, count);
     }
 
     public PostDetailResponse findById(Long id) {
         List<CommentResponse> commentResponses = jpaQueryFactory
                 .select(Projections.constructor(CommentResponse.class,
                         comment.id,
+                        comment.post.id,
                         comment.content,
-                        comment.member.name.as("authorName"),
+                        comment.member.nickName.as("authorName"),
                         comment.createDate))
                 .from(comment)
                 .where(comment.post.id.eq(id))
@@ -71,7 +78,7 @@ public class PostQueryRepository {
                         post.subject,
                         post.content,
                         post.hit,
-                        post.member.name.as("authorName"),
+                        post.member.nickName.as("authorName"),
                         post.createDate))
                 .from(post)
                 .where(post.id.eq(id))

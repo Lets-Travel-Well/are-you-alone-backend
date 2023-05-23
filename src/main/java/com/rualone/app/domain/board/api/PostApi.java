@@ -1,6 +1,5 @@
 package com.rualone.app.domain.board.api;
 
-import com.rualone.app.domain.board.application.CommentService;
 import com.rualone.app.domain.board.application.PostLikeService;
 import com.rualone.app.domain.board.application.PostQueryService;
 import com.rualone.app.domain.board.application.PostService;
@@ -12,15 +11,16 @@ import com.rualone.app.domain.member.application.MemberService;
 import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.api.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.rualone.app.global.api.ApiResult.OK;
 
@@ -37,8 +37,8 @@ public class PostApi {
 
     @Operation(summary = "post 생성", description = "post를 생성하는 API입니다")
     @PostMapping("/create")
-    public ApiResult<Void> savePost(@RequestBody PostCreateRequest postCreateRequest){
-        Long memberId = 1L;
+    public ApiResult<Void> savePost(@RequestBody PostCreateRequest postCreateRequest, @Parameter(hidden = true) @AuthenticationPrincipal User user){
+        Long memberId = Long.parseLong(user.getUsername());
         Member findMember = memberService.findById(memberId);
         postService.save(postCreateRequest, findMember);
         return OK(null);
@@ -46,20 +46,20 @@ public class PostApi {
 
     @Operation(summary = "post 단건 조회", description = "post를 상세조회하는 API입니다. id는 해당 포스트의 id가 들어갑니다.")
     @GetMapping("/{id}")
-    public ApiResult<PostDetailResponse> findPostById(@PathVariable("id") Long id){
-        // TODO: 2023/05/15 KCH : comment완성되면 수정 해야합니다.
-        return OK(postQueryService.findById(id));
+    public ApiResult<PostDetailResponse> findPostById(@PathVariable("id") Long id, @Parameter(hidden = true) @AuthenticationPrincipal User user){
+        Long memberId = Long.parseLong(user.getUsername());
+        return OK(postQueryService.findById(id,memberId));
     }
 
     @Operation(summary = "post 전체 조회", description = "post전체 조회 API입니다, page = 페이지의 넘버, size = 한 페이지의 게시글 수, sort = 정렬 기준입니다.")
     @GetMapping()
-    public ApiResult<List<PostResponse>> findAll(@PageableDefault(sort="id", direction = Sort.Direction.DESC) Pageable pageable){
+    public ApiResult<Page<PostResponse>> findAll(@PageableDefault(sort="id", direction = Sort.Direction.DESC) Pageable pageable){
         log.info("findAll");
         log.info(pageable.toString());
 //        List<PostResponse> list = postService.findAll().stream()
 //                .map(PostResponse::new)
 //                .collect(Collectors.toList());
-        List<PostResponse> list = postQueryService.findAll(pageable);
+        Page<PostResponse> list = postQueryService.findAll(pageable);
         return OK(list);
     }
 

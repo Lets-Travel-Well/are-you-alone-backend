@@ -8,18 +8,14 @@ import lombok.ToString;
 @Getter
 public class MemberResponse {
     private Long id;
-    private String loginId;
-    private String name;
+    private String nickName;
     private String email;
-    private String domain;
     private Long footage;
 
     public  MemberResponse(Member member){
         this.id = member.getId();
-        this.loginId = member.getLoginId();
-        this.name = member.getName();
+        this.nickName = member.getNickName();
         this.email=member.getEmail();
-        this.domain=member.getDomain();
-        this.footage = member.getFootage();
+        this.footage=member.getFootage();
     }
 }

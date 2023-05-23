@@ -1,8 +1,6 @@
 package com.rualone.app.domain.member.application;
 
 import com.rualone.app.domain.member.dao.MemberRepository;
-import com.rualone.app.domain.member.dto.request.MemberCreateRequest;
-import com.rualone.app.domain.member.dto.request.MemberLoginRequest;
 import com.rualone.app.domain.member.dto.request.MemberModifyRequest;
 import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.error.NotFoundException;
@@ -20,41 +18,26 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
 
     @Override
-    public Boolean checkLoginId(String loginId) {
-        return memberRepository.existsByLoginId(loginId).isPresent();
-    }
-
-    @Override
-    public void join(MemberCreateRequest memberCreateRequest) {
-        Member joinMember = memberCreateRequest.toEntity();
-        memberRepository.save(joinMember);
-    }
-
-    @Override
     public Member findById(Long id) {
         return memberRepository.findById(id).orElseThrow(() -> new NotFoundException(Member.class, id));
     }
 
     @Override
-    public Member findByLoginId(String loginId) {
-        Member loginMember = memberRepository.findByLoginId(loginId).get();
+    public Member findByEmail(String email) {
+        Member loginMember = memberRepository.findByEmail(email).get();
         return loginMember;
     }
 
     @Override
     public void modify(MemberModifyRequest memberModifyRequest) {
-        Member findMember = findByLoginId(memberModifyRequest.getLoginId());
+        Member findMember = findByEmail(memberModifyRequest.getEmail());
         findMember.modify(memberModifyRequest);
     }
 
     @Override
     public void delete(String loginId) {
-        Member findMember = findByLoginId(loginId);
+        Member findMember = findByEmail(loginId);
         memberRepository.delete(findMember);
     }
 
-    @Override
-    public Member login(MemberLoginRequest memberLoginRequest) {
-        return memberRepository.findByLoginIdAndPassword(memberLoginRequest.getLoginId(), memberLoginRequest.getPassword()).get();
-    }
 }

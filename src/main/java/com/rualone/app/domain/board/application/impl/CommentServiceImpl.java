@@ -42,6 +42,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public List<Comment> findAll(Long postId) {
+        Post findPost = postValidator.findById(postId);
+        return commentRepository.findAllByPost(findPost);
+    }
+
+    @Override
     public Comment updateComment(CommentUpdateRequest commentUpdateRequest) {
         Comment comment = commentValidator.findById(commentUpdateRequest.getId());
         comment.update(commentUpdateRequest);

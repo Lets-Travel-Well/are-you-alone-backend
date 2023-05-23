@@ -16,9 +16,10 @@ public class PostDetailResponse {
     private Long id;
     private String subject;
     private String content;
-    private int hit;
+    private Integer hit;
     private String authorName;
     private LocalDateTime createDate;
+    private Boolean myBoard;
     private List<CommentResponse> commentList = new ArrayList<>();
     public PostDetailResponse(Long id, String subject, String content, int hit, String authorName, LocalDateTime createDate){
         this.id = id;

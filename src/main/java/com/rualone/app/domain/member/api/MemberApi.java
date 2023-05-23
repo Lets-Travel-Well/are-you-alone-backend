@@ -1,8 +1,6 @@
 package com.rualone.app.domain.member.api;
 
 import com.rualone.app.domain.member.application.MemberService;
-import com.rualone.app.domain.member.dto.request.MemberCreateRequest;
-import com.rualone.app.domain.member.dto.request.MemberLoginRequest;
 import com.rualone.app.domain.member.dto.request.MemberModifyRequest;
 import com.rualone.app.domain.member.dto.response.MemberResponse;
 import com.rualone.app.global.api.ApiResult;
@@ -22,20 +20,9 @@ import static com.rualone.app.global.api.ApiResult.OK;
 public class MemberApi {
     private final MemberService memberService;
 
-    @GetMapping("/check/{loginId}")
-    public ApiResult<Boolean> checkLoginId(@PathVariable("loginId") String loginId){
-        Boolean result = memberService.checkLoginId(loginId);
-        return OK(result);
-    }
-    @PostMapping("/join")
-    public ApiResult<Void> join(@RequestBody MemberCreateRequest memberCreateRequest){
-        log.info(memberCreateRequest.toString());
-        memberService.join(memberCreateRequest);
-        return OK(null);
-    }
-    @GetMapping("/user/{loginId}")
-    public ApiResult<MemberResponse> findMemberByLoginId(@PathVariable("loginId") String loginId){
-        MemberResponse loginMember = new MemberResponse(memberService.findByLoginId(loginId));
+    @GetMapping("/user/{email}")
+    public ApiResult<MemberResponse> findMemberByEmail(@PathVariable("email") String email){
+        MemberResponse loginMember = new MemberResponse(memberService.findByEmail(email));
         return OK(loginMember);
     }
     @PutMapping("/modify")
@@ -47,13 +34,6 @@ public class MemberApi {
     @DeleteMapping("/user/{loginId}")
     public ApiResult<Void> delete(@PathVariable("loginId")String loginId){
         memberService.delete(loginId);
-        return OK(null);
-    }
-
-    @PostMapping("/login")
-    public ApiResult<Void> login(MemberLoginRequest memberLoginRequest, HttpSession session){
-        MemberResponse loginInfo = new MemberResponse(memberService.login(memberLoginRequest));
-        session.setAttribute("userInfo",loginInfo);
         return OK(null);
     }
 
