@@ -46,9 +46,9 @@ public class PostApi {
 
     @Operation(summary = "post 단건 조회", description = "post를 상세조회하는 API입니다. id는 해당 포스트의 id가 들어갑니다.")
     @GetMapping("/{id}")
-    public ApiResult<PostDetailResponse> findPostById(@PathVariable("id") Long id){
-        // TODO: 2023/05/15 KCH : comment완성되면 수정 해야합니다.
-        return OK(postQueryService. findById(id));
+    public ApiResult<PostDetailResponse> findPostById(@PathVariable("id") Long id, @Parameter(hidden = true) @AuthenticationPrincipal User user){
+        Long memberId = Long.parseLong(user.getUsername());
+        return OK(postQueryService.findById(id,memberId));
     }
 
     @Operation(summary = "post 전체 조회", description = "post전체 조회 API입니다, page = 페이지의 넘버, size = 한 페이지의 게시글 수, sort = 정렬 기준입니다.")

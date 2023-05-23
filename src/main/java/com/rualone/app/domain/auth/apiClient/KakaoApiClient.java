@@ -49,7 +49,7 @@ public class KakaoApiClient implements OAuthApiClient {
         MultiValueMap<String, String> body = params.makeBody();
         body.add("grant_type", GRANT_TYPE);
         body.add("client_id", clientId);
-        body.add("redirect_uri", "http://localhost:8080");
+        body.add("redirect_uri", "http://localhost:8080/oauth2/redirect");
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, httpHeaders);
 
         KakaoTokens response = restTemplate.postForObject(url, request, KakaoTokens.class);
