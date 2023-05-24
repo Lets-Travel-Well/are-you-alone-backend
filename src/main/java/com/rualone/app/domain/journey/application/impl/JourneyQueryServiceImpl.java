@@ -5,6 +5,7 @@ import com.rualone.app.domain.journey.application.JourneyQueryService;
 import com.rualone.app.domain.journey.dao.JourneyQueryRepository;
 import com.rualone.app.domain.journey.dto.request.AttractionInfoPathRequest;
 import com.rualone.app.domain.journey.dto.response.AttractionInfoPathResponse;
+import com.rualone.app.domain.journey.dto.response.JourneyDetailResponse;
 import com.rualone.app.domain.journey.dto.response.JourneyResponse;
 import com.rualone.app.global.util.MakeMapUtils;
 import lombok.RequiredArgsConstructor;
@@ -38,5 +39,10 @@ public class JourneyQueryServiceImpl implements JourneyQueryService {
             journeyResponse.setImage(journeyQueryRepository.findImage(journeyResponse.getId()));
         });
         return journeyResponses;
+    }
+
+    @Override
+    public JourneyDetailResponse findJourneyById(Long journeyId, Long memberId) {
+        return journeyQueryRepository.findJourneyById(journeyId, memberId);
     }
 }

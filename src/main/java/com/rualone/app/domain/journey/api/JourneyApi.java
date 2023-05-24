@@ -7,17 +7,17 @@ import com.rualone.app.domain.journey.dto.request.AttractionInfoPathRequest;
 import com.rualone.app.domain.journey.dto.request.JourneyCreateRequest;
 import com.rualone.app.domain.journey.dto.request.JourneyJoinRequest;
 import com.rualone.app.domain.journey.dto.response.AttractionInfoPathResponse;
+import com.rualone.app.domain.journey.dto.response.JourneyDetailResponse;
 import com.rualone.app.domain.journey.dto.response.JourneyResponse;
 import com.rualone.app.domain.member.application.MemberService;
 import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.api.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.User;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -55,6 +55,13 @@ public class JourneyApi {
     @GetMapping()
     public ApiResult<List<JourneyResponse>> findAllJourney(){
         return OK(journeyQueryService.findAll());
+    }
+    @Operation(summary = "journey 단건 조회", description = "journey을 단건 조회하는 API입니다")
+    @GetMapping("/{id}")
+    public ApiResult<JourneyDetailResponse> findJourneyById(@PathVariable("id") Long journeyId, @Parameter(hidden = true) @AuthenticationPrincipal User user){
+        log.info(user.getUsername());
+        Long memberId = Long.parseLong(user.getUsername());
+        return OK(journeyQueryService.findJourneyById(journeyId, memberId));
     }
 
     @Operation(summary = "동행 신청하는 API", description = "동행신청하는 API입니다.")

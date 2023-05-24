@@ -21,11 +21,11 @@ public class Journey extends BaseEntity {
     private Member leader;
     private String subject;
     private String content;
-    private Boolean visibility;
     private Long travelerAllCnt;
-    // true 면 끝
-    private Boolean complete;
     private LocalDate deadLine;
     private LocalDate startDay;
+    // true 면 끝
+    private Boolean visibility;
+    private Boolean complete;
     private String review;
 }
