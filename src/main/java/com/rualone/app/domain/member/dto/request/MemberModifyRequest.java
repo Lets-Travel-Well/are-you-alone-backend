@@ -11,7 +11,7 @@ public class MemberModifyRequest {
     private String nickName;
     private String email;
 
-
+    // TODO: 2023-05-24 : entity 비지니스 로직으로 만들기 고려해보기  
     public Member toEntity(){
         return Member.builder()
                 .email(this.email)
