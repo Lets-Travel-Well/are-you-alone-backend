@@ -6,6 +6,7 @@ import com.rualone.app.domain.board.application.PostService;
 import com.rualone.app.domain.board.dao.PostRepository;
 import com.rualone.app.domain.board.dto.request.CommentCreateRequest;
 import com.rualone.app.domain.board.dto.request.PostCreateRequest;
+import com.rualone.app.domain.hotplace.application.HotPlaceService;
 import com.rualone.app.domain.member.dao.MemberRepository;
 import com.rualone.app.domain.member.entity.Member;
 import lombok.extern.slf4j.Slf4j;
@@ -19,11 +20,11 @@ import org.springframework.context.annotation.Profile;
 @Slf4j
 public class InitLocal {
     // true 일때 DB 넣음
-    private boolean initData = true;
+    private boolean initData = false;
 
     @Bean
     CommandLineRunner init(
-            MemberRepository memberRepository, PostService postService, CommentService commentService, PostLikeService postLikeService
+            MemberRepository memberRepository, PostService postService, CommentService commentService, PostLikeService postLikeService, HotPlaceService hotPlaceService
     ){
         return args -> {
             if(!initData){
@@ -65,6 +66,17 @@ public class InitLocal {
                     int check = (int) (Math.random() * 2);
                     if(check == 1){
                         postLikeService.changLike((long)j, (long)i);
+                    }
+                }
+            }
+
+            // attraction like
+            Integer[] attractionLike = {125406, 125451, 125510, 125556, 125661, 125707, 125758, 125820, 125848, 126294, 126352, 126450, 126514, 126511, 126498, 126490};
+            for(Integer contentId : attractionLike){
+                for(int i = 1; i <= 50; i++){
+                    int check = (int) (Math.random() * 2);
+                    if(check == 1){
+                        hotPlaceService.changeHotPlace((long)i, contentId);
                     }
                 }
             }
