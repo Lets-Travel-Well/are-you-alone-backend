@@ -79,6 +79,12 @@ public class PostQueryRepository {
                         post.content,
                         post.hit,
                         post.member.nickName.as("authorName"),
+                        ExpressionUtils.as(
+                                JPAExpressions.select(count(postLike.id))
+                                        .from(postLike)
+                                        .where(postLike.post.eq(post)),
+                                "like"
+                        ),
                         post.createDate))
                 .from(post)
                 .where(post.id.eq(id))

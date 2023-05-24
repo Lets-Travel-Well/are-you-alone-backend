@@ -18,15 +18,17 @@ public class PostDetailResponse {
     private String content;
     private Integer hit;
     private String authorName;
+    private Long like;
     private LocalDateTime createDate;
     private Boolean myBoard;
     private List<CommentResponse> commentList = new ArrayList<>();
-    public PostDetailResponse(Long id, String subject, String content, int hit, String authorName, LocalDateTime createDate){
+    public PostDetailResponse(Long id, String subject, String content, int hit, String authorName, Long like, LocalDateTime createDate){
         this.id = id;
         this.subject = subject;
         this.content = content;
         this.hit = hit;
         this.authorName = authorName;
+        this.like = like;
         this.createDate = createDate;
     }
 }
