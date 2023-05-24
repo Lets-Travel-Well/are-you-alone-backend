@@ -41,7 +41,7 @@ public class PostQueryServiceImpl implements PostQueryService {
                 commentResponse.setMyComment(true);
             }
         });
-
+        postDetailResponse.setLike(postQueryRepository.isLike(id, memberId));
         post.increaseHit();
         return postDetailResponse;
     }

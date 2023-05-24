@@ -83,7 +83,7 @@ public class PostQueryRepository {
                                 JPAExpressions.select(count(postLike.id))
                                         .from(postLike)
                                         .where(postLike.post.eq(post)),
-                                "like"
+                                "likeCnt"
                         ),
                         post.createDate))
                 .from(post)
@@ -106,5 +106,15 @@ public class PostQueryRepository {
         return null;
     }
     // 좋아요 갯수를 가져오는 메소드
-
+    public Boolean isLike(Long postId, Long memberId){
+        Integer fetchOne = jpaQueryFactory
+                .selectOne()
+                .from(postLike)
+                .where(
+                        postLike.post.id.eq(postId),
+                        postLike.member.id.eq(memberId)
+                )
+                .fetchFirst();
+        return fetchOne != null;
+    }
 }

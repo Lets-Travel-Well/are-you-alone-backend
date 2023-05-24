@@ -82,8 +82,8 @@ public class PostApi {
 
     @Operation(summary = "post 좋아요", description = "post 좋아요 API입니다. True시 좋아요를 누른 상태 False시 취소한 상태입니다.")
     @GetMapping("/{id}/like")
-    public ApiResult<Boolean> changLike(@PathVariable("id") Long postId){
-        Long memberId = 1L;
+    public ApiResult<Boolean> changLike(@PathVariable("id") Long postId, @Parameter(hidden = true) @AuthenticationPrincipal User user){
+        Long memberId = Long.parseLong(user.getUsername());
         return OK(postLikeService.changLike(memberId, postId));
     }
 }
