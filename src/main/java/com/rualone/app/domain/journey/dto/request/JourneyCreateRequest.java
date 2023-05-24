@@ -31,6 +31,7 @@ public class JourneyCreateRequest {
                 .content(content)
                 .visibility(visibility)
                 .travelerCnt(travelerCnt)
+                .complete(false)
                 .deadLine(deadLine)
                 .startDay(startDay)
                 .build();

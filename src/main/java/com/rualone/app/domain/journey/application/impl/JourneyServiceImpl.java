@@ -6,7 +6,6 @@ import com.rualone.app.domain.journey.application.JourneyService;
 import com.rualone.app.domain.journey.dao.JourneyApproveRepository;
 import com.rualone.app.domain.journey.dao.JourneyPlaceRepository;
 import com.rualone.app.domain.journey.dao.JourneyRepository;
-import com.rualone.app.domain.journey.dto.request.AttractionInfoPathRequest;
 import com.rualone.app.domain.journey.dto.request.JourneyCreateRequest;
 import com.rualone.app.domain.journey.dto.request.JourneyPlaceCreateRequest;
 import com.rualone.app.domain.journey.entity.Journey;
