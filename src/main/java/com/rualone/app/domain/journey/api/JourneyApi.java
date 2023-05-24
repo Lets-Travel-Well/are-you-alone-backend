@@ -7,11 +7,13 @@ import com.rualone.app.domain.journey.dto.request.AttractionInfoPathRequest;
 import com.rualone.app.domain.journey.dto.request.JourneyCreateRequest;
 import com.rualone.app.domain.journey.dto.request.JourneyJoinRequest;
 import com.rualone.app.domain.journey.dto.response.AttractionInfoPathResponse;
+import com.rualone.app.domain.journey.dto.response.JourneyResponse;
 import com.rualone.app.domain.member.application.MemberService;
 import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.api.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
@@ -49,11 +51,11 @@ public class JourneyApi {
         return OK(null);
     }
     // TODO: 2023-05-22 : 동행부터 구하기
-//    @Operation(summary = "journey 전체보기", description = "journey들을 보는 API입니다")
-//    public ApiResult<Void> findAllJourney(){
-//        journeyQueryService.findAll();
-//        return OK(null);
-//    }
+    @Operation(summary = "journey 전체보기", description = "journey들을 보는 API입니다")
+    @GetMapping()
+    public ApiResult<List<JourneyResponse>> findAllJourney(){
+        return OK(journeyQueryService.findAll());
+    }
 
     @Operation(summary = "동행 신청하는 API", description = "동행신청하는 API입니다.")
     @PostMapping("/apply")
