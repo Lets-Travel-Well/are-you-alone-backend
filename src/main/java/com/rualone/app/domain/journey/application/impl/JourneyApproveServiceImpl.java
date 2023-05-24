@@ -30,8 +30,8 @@ public class JourneyApproveServiceImpl implements JourneyApproveService {
         Journey journey = journeyValidator.findById(journeyJoinRequest.getJourneyId());
         // 인원 수 다 찾는가 확인하기
         List<JourneyApprove> journeyApproves = journeyApproveRepository.findByJourney(journey);
-        if(journey.getTravelerCntAll() <= journeyApproves.size()){
-            throw new OutOfNumberException(JourneyApprove.class, journeyApproves.size(), journey.getTravelerCntAll());
+        if(journey.getTravelerAllCnt() <= journeyApproves.size()){
+            throw new OutOfNumberException(JourneyApprove.class, journeyApproves.size(), journey.getTravelerAllCnt());
         }
         // 해당 건에 대해 요청 했는가 확인
         Optional<JourneyApprove> findJourneyApprove = journeyApproveRepository.findByJourneyAndParticipant(journey, member);

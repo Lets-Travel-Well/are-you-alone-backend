@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -23,7 +22,7 @@ public class Journey extends BaseEntity {
     private String subject;
     private String content;
     private Boolean visibility;
-    private Long travelerCntAll;
+    private Long travelerAllCnt;
     // true 면 끝
     private Boolean complete;
     private LocalDate deadLine;

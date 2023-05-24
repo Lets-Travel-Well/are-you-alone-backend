@@ -30,7 +30,7 @@ public class JourneyCreateRequest {
                 .subject(subject)
                 .content(content)
                 .visibility(visibility)
-                .travelerCntAll(travelerCnt)
+                .travelerAllCnt(travelerCnt)
                 .complete(false)
                 .deadLine(deadLine)
                 .startDay(startDay)

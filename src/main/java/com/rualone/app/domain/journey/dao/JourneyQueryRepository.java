@@ -31,7 +31,7 @@ public class JourneyQueryRepository {
                         journey.content,
                         journey.deadLine,
                         journey.startDay,
-                        journey.travelerCntAll
+                        journey.travelerAllCnt
                         ))
                 .from(journey)
                 .fetch();
@@ -59,6 +59,7 @@ public class JourneyQueryRepository {
                         journey.id,
                         journey.subject,
                         journey.content,
+                        journey.travelerAllCnt,
                         journey.deadLine,
                         journey.startDay
                         ))
