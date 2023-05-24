@@ -14,7 +14,7 @@ public class HotPlaceResponse {
     private double latitude;
     private double longitude;
     private Long likeCnt;
-    private Boolean myHotPlace;
+    private Boolean myPlace;
     public HotPlaceResponse(int contentId, String title, String addr1, String tel, String firstImage, double latitude, double longitude, Long likeCnt){
         this.contentId = contentId;
         this.title = title;
@@ -24,10 +24,10 @@ public class HotPlaceResponse {
         this.latitude = latitude;
         this.longitude = longitude;
         this.likeCnt = likeCnt;
-        this.myHotPlace = false;
+        this.myPlace = false;
     }
-    public void isMyHotPlace(Boolean myHotPlace){
-        System.out.println(myHotPlace);
-        this.myHotPlace = myHotPlace;
+    public void isMyHotPlace(Boolean myPlace){
+        
+        this.myPlace = myPlace;
     }
 }
