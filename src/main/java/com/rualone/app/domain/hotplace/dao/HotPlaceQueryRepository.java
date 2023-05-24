@@ -33,7 +33,7 @@ public class HotPlaceQueryRepository {
                 .on(hotPlace.attractionInfo.eq(attractionInfo))
                 .groupBy(attractionInfo.contentId)
                 .orderBy(new OrderSpecifier(Order.DESC, count(attractionInfo.contentId)))
-                .limit(10)
+                .limit(8)
                 .fetch();
         return hotPlaceResponses;
     }
