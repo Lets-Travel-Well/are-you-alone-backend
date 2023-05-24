@@ -11,8 +11,11 @@ import com.rualone.app.domain.member.application.MemberService;
 import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.api.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,11 +42,10 @@ public class JourneyApi {
     }
     @Operation(summary = "journey 생성", description = "journey를 생성하는 API입니다.")
     @PostMapping("/create")
-    public ApiResult<Void> saveJourney(@RequestBody JourneyCreateRequest journeyCreateRequest){
-        Long memberId = 1L;
-        Member findMember = memberService.findById(memberId);
+    public ApiResult<Void> saveJourney(@RequestBody JourneyCreateRequest journeyCreateRequest, @Parameter(hidden = true) @AuthenticationPrincipal User user){
+        Long memberId = Long.parseLong(user.getUsername());
         log.info("{}", journeyCreateRequest.toString());
-        journeyService.save(journeyCreateRequest, findMember);
+        journeyService.save(journeyCreateRequest, memberId);
         return OK(null);
     }
     // TODO: 2023-05-22 : 동행부터 구하기

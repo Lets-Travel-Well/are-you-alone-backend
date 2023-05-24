@@ -7,6 +7,9 @@ import com.rualone.app.domain.board.dao.PostRepository;
 import com.rualone.app.domain.board.dto.request.CommentCreateRequest;
 import com.rualone.app.domain.board.dto.request.PostCreateRequest;
 import com.rualone.app.domain.hotplace.application.HotPlaceService;
+import com.rualone.app.domain.journey.application.JourneyService;
+import com.rualone.app.domain.journey.dto.request.JourneyCreateRequest;
+import com.rualone.app.domain.journey.dto.request.JourneyPlaceCreateRequest;
 import com.rualone.app.domain.member.dao.MemberRepository;
 import com.rualone.app.domain.member.entity.Member;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +17,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @Profile({"local"})
@@ -24,7 +31,12 @@ public class InitLocal {
 
     @Bean
     CommandLineRunner init(
-            MemberRepository memberRepository, PostService postService, CommentService commentService, PostLikeService postLikeService, HotPlaceService hotPlaceService
+            MemberRepository memberRepository,
+            PostService postService,
+            CommentService commentService,
+            PostLikeService postLikeService,
+            HotPlaceService hotPlaceService,
+            JourneyService journeyService
     ){
         return args -> {
             if(!initData){
@@ -80,6 +92,27 @@ public class InitLocal {
                     }
                 }
             }
+
+            // Journey create - 단건 저장
+            List<JourneyPlaceCreateRequest> journeyPlaceCreateRequests = new ArrayList<>();
+            for(int i = 0; i < 5; i++){
+                JourneyPlaceCreateRequest journeyPlaceCreateRequest = JourneyPlaceCreateRequest.builder()
+                        .contentId(attractionLike[i])
+                        .content("content" + i)
+                        .build();
+                journeyPlaceCreateRequests.add(journeyPlaceCreateRequest);
+            }
+            JourneyCreateRequest journeyCreateRequest = JourneyCreateRequest.builder()
+                    .subject("JourneySubject")
+                    .content("JourneyContent")
+                    .visibility(true)
+                    .travelerCnt(4)
+                    .deadLine(LocalDate.parse("2023-06-01"))
+                    .startDay(LocalDate.parse("2023-07-01"))
+                    .journeyPlaceCreateRequests(journeyPlaceCreateRequests)
+                    .build();
+            journeyService.save(journeyCreateRequest, 1L);
+
         };
     }
 
