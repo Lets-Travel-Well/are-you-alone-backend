@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
@@ -14,6 +16,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @SuperBuilder
+@DynamicInsert
 // 회원 정보를 담을 Entity
 public class Member extends BaseEntity {
 
@@ -27,14 +30,8 @@ public class Member extends BaseEntity {
     private String nickName;
     private OAuthProvider oAuthProvider;
     private String refreshToken;
+    @ColumnDefault("0")
     private Long footage;
-
-    @Builder
-    public Member(String email, String nickName, OAuthProvider oAuthProvider) {
-        this.email = email;
-        this.nickName = nickName;
-        this.oAuthProvider = oAuthProvider;
-    }
 
     public void updateRefreshToken(String refreshToken){
         this.refreshToken = refreshToken;
