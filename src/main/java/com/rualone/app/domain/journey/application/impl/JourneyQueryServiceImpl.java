@@ -43,6 +43,13 @@ public class JourneyQueryServiceImpl implements JourneyQueryService {
 
     @Override
     public JourneyDetailResponse findJourneyById(Long journeyId, Long memberId) {
-        return journeyQueryRepository.findJourneyById(journeyId, memberId);
+        // TODO: 2023/05/24 : query 튜닝이 진짜진짜진짜 필요함 
+        JourneyDetailResponse journeyDetailResponse = journeyQueryRepository.findJourneyById(journeyId, memberId);
+        journeyDetailResponse.setTravelerCnt(journeyQueryRepository.findTravelerCnt(journeyId));
+        journeyDetailResponse.setMyJourney(journeyQueryRepository.isMine(journeyId, memberId));
+        journeyDetailResponse.setJourneyPlaceResponseList(journeyQueryRepository.findJourneyPlace(journeyId));
+        journeyDetailResponse.setLeader(journeyQueryRepository.findLeaderInfo(journeyId));
+        journeyDetailResponse.setFuddy(journeyQueryRepository.findFuddy(journeyId));
+        return journeyDetailResponse;
     }
 }

@@ -3,6 +3,8 @@ package com.rualone.app.domain.journey.dao;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.rualone.app.domain.journey.dto.response.JourneyDetailResponse;
+import com.rualone.app.domain.journey.dto.response.JourneyParticipantResponse;
+import com.rualone.app.domain.journey.dto.response.JourneyPlaceResponse;
 import com.rualone.app.domain.journey.dto.response.JourneyResponse;
 import com.rualone.app.domain.journey.entity.ParticipationStatus;
 import lombok.RequiredArgsConstructor;
@@ -67,5 +69,57 @@ public class JourneyQueryRepository {
                 .where(journey.id.eq(journeyId))
                 .fetchOne();
         return journeyDetailResponse;
+    }
+
+    public Boolean isMine(Long journeyId, Long memberId){
+        Integer fetchOne = jpaQueryFactory
+                .selectOne()
+                .from(journeyApprove)
+                .where(
+                        journeyApprove.participant.id.eq(memberId),
+                        journeyApprove.journey.id.eq((journeyId)),
+                        journeyApprove.status.eq(ParticipationStatus.AGREE)
+                )
+                .fetchOne();
+        return fetchOne != null;
+    }
+
+    public List<JourneyPlaceResponse> findJourneyPlace(Long journeyId) {
+        List<JourneyPlaceResponse> journeyPlaceResponseList = jpaQueryFactory
+                .select(Projections.constructor(JourneyPlaceResponse.class,
+                        journeyPlace.attractionInfo.title,
+                        journeyPlace.attractionInfo.contentId,
+                        journeyPlace.attractionInfo.firstImage,
+                        journeyPlace.content
+                        ))
+                .from(journeyPlace)
+                .where(journey.id.eq(journeyId))
+                .orderBy(journeyPlace.sequence.asc())
+                .fetch();
+        return journeyPlaceResponseList;
+    }
+
+    public JourneyParticipantResponse findLeaderInfo(Long journeyId) {
+        JourneyParticipantResponse journeyParticipantResponse = jpaQueryFactory
+                .select(Projections.constructor(JourneyParticipantResponse.class,
+                        journey.leader.nickName,
+                        journey.leader.footage
+                        ))
+                .from(journey)
+                .where(journey.id.eq(journeyId))
+                .fetchOne();
+        return journeyParticipantResponse;
+    }
+
+    public List<JourneyParticipantResponse> findFuddy(Long journeyId) {
+        List<JourneyParticipantResponse> journeyParticipantResponses = jpaQueryFactory
+                .select(Projections.constructor(JourneyParticipantResponse.class,
+                        journeyApprove.participant.nickName,
+                        journeyApprove.participant.footage
+                ))
+                .from(journeyApprove)
+                .where(journeyApprove.journey.id.eq(journeyId))
+                .fetch();
+        return journeyParticipantResponses;
     }
 }
