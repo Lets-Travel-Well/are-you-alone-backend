@@ -94,25 +94,45 @@ public class InitLocal {
             }
 
             // Journey create - 단건 저장
-            List<JourneyPlaceCreateRequest> journeyPlaceCreateRequests = new ArrayList<>();
+            // 1
+            List<JourneyPlaceCreateRequest> journeyPlaceCreateRequests1 = new ArrayList<>();
             for(int i = 0; i < 5; i++){
                 JourneyPlaceCreateRequest journeyPlaceCreateRequest = JourneyPlaceCreateRequest.builder()
                         .contentId(attractionLike[i])
                         .content("content" + i)
                         .build();
-                journeyPlaceCreateRequests.add(journeyPlaceCreateRequest);
+                journeyPlaceCreateRequests1.add(journeyPlaceCreateRequest);
             }
-            JourneyCreateRequest journeyCreateRequest = JourneyCreateRequest.builder()
-                    .subject("JourneySubject")
-                    .content("JourneyContent")
+            JourneyCreateRequest journeyCreateRequest1 = JourneyCreateRequest.builder()
+                    .subject("JourneySubject1")
+                    .content("JourneyContent1")
                     .visibility(true)
                     .travelerCnt(4)
                     .deadLine(LocalDate.parse("2023-06-01"))
                     .startDay(LocalDate.parse("2023-07-01"))
-                    .journeyPlaceCreateRequests(journeyPlaceCreateRequests)
+                    .journeyPlaceCreateRequests(journeyPlaceCreateRequests1)
                     .build();
-            journeyService.save(journeyCreateRequest, 1L);
+            journeyService.save(journeyCreateRequest1, 1L);
 
+            // 2
+            List<JourneyPlaceCreateRequest> journeyPlaceCreateRequests2 = new ArrayList<>();
+            for(int i = 5; i < 9; i++){
+                JourneyPlaceCreateRequest journeyPlaceCreateRequest = JourneyPlaceCreateRequest.builder()
+                        .contentId(attractionLike[i])
+                        .content("content" + i)
+                        .build();
+                journeyPlaceCreateRequests2.add(journeyPlaceCreateRequest);
+            }
+            JourneyCreateRequest journeyCreateRequest2 = JourneyCreateRequest.builder()
+                    .subject("JourneySubject2")
+                    .content("JourneyContent2")
+                    .visibility(true)
+                    .travelerCnt(3)
+                    .deadLine(LocalDate.parse("2023-08-01"))
+                    .startDay(LocalDate.parse("2023-09-01"))
+                    .journeyPlaceCreateRequests(journeyPlaceCreateRequests2)
+                    .build();
+            journeyService.save(journeyCreateRequest2, 1L);
         };
     }
 
