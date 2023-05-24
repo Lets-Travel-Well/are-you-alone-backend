@@ -14,10 +14,10 @@ public class JourneyResponse {
     private String content;
     private LocalDate deadLine;
     private LocalDate startDay;
-    private Integer travelerAllCnt;
+    private Long travelerAllCnt;
     private Long travelerCnt;
     private String image;
-    public JourneyResponse(Long id, String leaderName, String subject, String content, LocalDate deadLine, LocalDate startDay, Integer travelerCnt){
+    public JourneyResponse(Long id, String leaderName, String subject, String content, LocalDate deadLine, LocalDate startDay, Long travelerCnt){
         this.id = id;
         this.leaderName = leaderName;
         this.subject = subject;

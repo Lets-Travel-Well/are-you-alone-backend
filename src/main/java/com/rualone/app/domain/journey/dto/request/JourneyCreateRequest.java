@@ -17,7 +17,7 @@ public class JourneyCreateRequest {
     private String subject;
     private String content;
     private Boolean visibility;
-    private int travelerCnt;
+    private Long travelerCnt;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate deadLine;
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -30,7 +30,7 @@ public class JourneyCreateRequest {
                 .subject(subject)
                 .content(content)
                 .visibility(visibility)
-                .travelerCnt(travelerCnt)
+                .travelerCntAll(travelerCnt)
                 .complete(false)
                 .deadLine(deadLine)
                 .startDay(startDay)

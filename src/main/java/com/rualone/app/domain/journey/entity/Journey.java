@@ -23,7 +23,7 @@ public class Journey extends BaseEntity {
     private String subject;
     private String content;
     private Boolean visibility;
-    private int travelerCnt;
+    private Long travelerCntAll;
     // true 면 끝
     private Boolean complete;
     private LocalDate deadLine;

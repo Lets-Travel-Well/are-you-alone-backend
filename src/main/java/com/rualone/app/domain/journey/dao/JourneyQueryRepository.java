@@ -2,6 +2,7 @@ package com.rualone.app.domain.journey.dao;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.rualone.app.domain.journey.dto.response.JourneyDetailResponse;
 import com.rualone.app.domain.journey.dto.response.JourneyResponse;
 import com.rualone.app.domain.journey.entity.ParticipationStatus;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class JourneyQueryRepository {
                         journey.content,
                         journey.deadLine,
                         journey.startDay,
-                        journey.travelerCnt
+                        journey.travelerCntAll
                         ))
                 .from(journey)
                 .fetch();
@@ -51,5 +52,19 @@ public class JourneyQueryRepository {
                 .from(journeyPlace)
                 .where(journeyPlace.journey.id.eq(journeyId))
                 .fetchFirst();
+    }
+    public JourneyDetailResponse findJourneyById(Long journeyId, Long memberId){
+        JourneyDetailResponse journeyDetailResponse = jpaQueryFactory
+                .select(Projections.constructor(JourneyDetailResponse.class,
+                        journey.id,
+                        journey.subject,
+                        journey.content,
+                        journey.deadLine,
+                        journey.startDay
+                        ))
+                .from(journey)
+                .where(journey.id.eq(journeyId))
+                .fetchOne();
+        return journeyDetailResponse;
     }
 }
