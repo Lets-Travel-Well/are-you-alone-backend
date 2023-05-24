@@ -27,7 +27,7 @@ public class HotPlaceResponse {
         this.myPlace = false;
     }
     public void isMyHotPlace(Boolean myPlace){
-        
+
         this.myPlace = myPlace;
     }
 }

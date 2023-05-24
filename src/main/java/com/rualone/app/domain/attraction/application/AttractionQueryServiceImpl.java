@@ -1,13 +1,13 @@
 package com.rualone.app.domain.attraction.application;
 
 import com.rualone.app.domain.attraction.dao.AttractionInfoQueryRepository;
-import com.rualone.app.domain.attraction.dao.AttractionInfoRepository;
 import com.rualone.app.domain.attraction.dao.GugunRepository;
 import com.rualone.app.domain.attraction.dao.SidoRepository;
 import com.rualone.app.domain.attraction.dto.response.AttractionInfoResponse;
 import com.rualone.app.domain.attraction.entity.AttractionInfo;
 import com.rualone.app.domain.attraction.entity.Gugun;
 import com.rualone.app.domain.attraction.entity.Sido;
+import com.rualone.app.domain.hotplace.dao.HotPlaceQueryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Transactional
-public class AttractionServiceImpl implements AttractionService{
+public class AttractionQueryServiceImpl implements AttractionQueryService{
     private final AttractionInfoQueryRepository attractionInfoQueryRepository;
     private final GugunRepository gugunRepository;
     private final SidoRepository sidoRepository;
@@ -29,8 +29,15 @@ public class AttractionServiceImpl implements AttractionService{
     }
 
     @Override
-    public List<AttractionInfo> findAllByCriteria(Integer sidoCode, Integer gugunCode, Integer contentTypeId) {
-        return attractionInfoQueryRepository.findAllByCriteria(sidoCode, gugunCode, contentTypeId);
+    public List<AttractionInfoResponse> findAllByCriteria(Integer sidoCode, Integer gugunCode, Integer contentTypeId, Long memberId) {
+        List<AttractionInfoResponse> findAttractions = attractionInfoQueryRepository.findAllByCriteria(sidoCode, gugunCode, contentTypeId);
+        // TODO: 2023-05-24 : 긴급 쿼리를 엄청나게 보냄 꼮 쿼리 튜닝이 필요함
+        for(AttractionInfoResponse attractionInfoResponse : findAttractions){
+            attractionInfoResponse.isMyHotPlace(attractionInfoQueryRepository.isMyPlace(attractionInfoResponse.getContentId(), memberId));
+            attractionInfoResponse.setLikeCnt(attractionInfoQueryRepository.checkLikeCnt(attractionInfoResponse.getContentId()));
+        }
+
+        return findAttractions;
     }
 
     @Override

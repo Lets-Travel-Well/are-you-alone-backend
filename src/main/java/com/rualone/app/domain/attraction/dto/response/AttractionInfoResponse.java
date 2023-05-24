@@ -1,11 +1,13 @@
 package com.rualone.app.domain.attraction.dto.response;
 
 import com.rualone.app.domain.attraction.entity.AttractionInfo;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 
-@ToString
-@Getter
+@Data
+@AllArgsConstructor
 public class AttractionInfoResponse {
     private int contentId;
     private String title;
@@ -15,13 +17,25 @@ public class AttractionInfoResponse {
     private double latitude;
     private double longitude;
 
-    public AttractionInfoResponse(AttractionInfo attractionInfo){
-        this.contentId = attractionInfo.getContentId();
-        this.title = attractionInfo.getTitle();
-        this.addr1 = attractionInfo.getAddr1();
-        this.tel = attractionInfo.getTel();
-        this.firstImage = attractionInfo.getFirstImage();
-        this.latitude = attractionInfo.getLatitude();
-        this.longitude = attractionInfo.getLongitude();
+    private Long likeCnt;
+    private Boolean myPlace;
+    public AttractionInfoResponse(int contentId, String title, String addr1, String tel, String firstImage, double latitude, double longitude, Long likeCnt){
+        this.contentId = contentId;
+        this.title = title;
+        this.addr1 = addr1;
+        this.tel = tel;
+        this.firstImage = firstImage;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.likeCnt = likeCnt;
+        this.myPlace = false;
+    }
+    public void isMyHotPlace(Boolean myPlace){
+        this.myPlace = myPlace;
+    }
+    public void setLikeCnt(Boolean zero){
+        if(zero){
+            likeCnt = 0L;
+        }
     }
 }
