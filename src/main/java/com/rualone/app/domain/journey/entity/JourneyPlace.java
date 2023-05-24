@@ -23,5 +23,4 @@ public class JourneyPlace extends BaseEntity {
     private Journey journey;
     private String content;
     private Integer sequence;
-    private String review;
 }

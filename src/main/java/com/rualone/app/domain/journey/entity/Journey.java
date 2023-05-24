@@ -28,4 +28,5 @@ public class Journey extends BaseEntity {
     private Boolean complete;
     private LocalDate deadLine;
     private LocalDate startDay;
+    private String review;
 }
