@@ -1,4 +1,4 @@
-package com.rualone.app.domain.chat.application;
+package com.rualone.app.domain.gpt.application;
 
 import io.github.flashvayne.chatgpt.service.ChatgptService;
 import lombok.RequiredArgsConstructor;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class ChatService {
+public class GptService {
 
     private final ChatgptService chatgptService;
 
