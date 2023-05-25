@@ -32,11 +32,15 @@ public class HotPlaceApi {
         Long memberId = Long.parseLong(user.getUsername());
         return OK(hotPlaceService.changeHotPlace(memberId, contentId));
     }
+//    @Operation(summary = "hotplace 보기", description = "hotplace 상위 10개 보여주는 API입니다.")
+//    @GetMapping()
+//    public ApiResult<List<HotPlaceResponse>> showHotPlace(@Parameter(hidden = true) @AuthenticationPrincipal User user){
+//        Long memberId = Long.parseLong(user.getUsername());
+//        return OK(hotPlaceQueryService.findTopAttractionInfo(memberId));
+//    }
     @Operation(summary = "hotplace 보기", description = "hotplace 상위 10개 보여주는 API입니다.")
     @GetMapping()
-    public ApiResult<List<HotPlaceResponse>> showHotPlace(@Parameter(hidden = true) @AuthenticationPrincipal User user){
-        Long memberId = Long.parseLong(user.getUsername());
-        return OK(hotPlaceQueryService.findTopAttractionInfo(memberId));
+    public ApiResult<List<HotPlaceResponse>> showHotPlace(){
+        return OK(hotPlaceQueryService.findTopAttractionInfo());
     }
-
 }
