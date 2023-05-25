@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-@AllArgsConstructor
+//@AllArgsConstructor
 public class HotPlaceResponse {
     private int contentId;
     private String title;
@@ -14,7 +14,7 @@ public class HotPlaceResponse {
     private double latitude;
     private double longitude;
     private Long likeCnt;
-    private Boolean myPlace;
+//    private Boolean myPlace;
     public HotPlaceResponse(int contentId, String title, String addr1, String tel, String firstImage, double latitude, double longitude, Long likeCnt){
         this.contentId = contentId;
         this.title = title;
@@ -24,10 +24,10 @@ public class HotPlaceResponse {
         this.latitude = latitude;
         this.longitude = longitude;
         this.likeCnt = likeCnt;
-        this.myPlace = false;
+//        this.myPlace = false;
     }
-    public void isMyHotPlace(Boolean myPlace){
-
-        this.myPlace = myPlace;
-    }
+//    public void isMyHotPlace(Boolean myPlace){
+//
+//        this.myPlace = myPlace;
+//    }
 }

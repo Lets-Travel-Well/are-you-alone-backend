@@ -42,7 +42,7 @@ public class SecurityConfig { //WebSecurityConfigurerAdapter was deprecated
                 .formLogin().disable()
                 .httpBasic().disable()
                 .authorizeRequests()
-                .antMatchers("/api/user","/api/auth/kakao").permitAll()
+                .antMatchers("/api/user","/api/auth/kakao", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/api/hotplace-management/hotplace", "/api/attraction-management/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

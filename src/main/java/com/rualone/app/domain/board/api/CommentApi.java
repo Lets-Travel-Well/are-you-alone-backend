@@ -18,7 +18,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.rualone.app.global.api.ApiResult.OK;
 
@@ -34,10 +33,10 @@ public class CommentApi {
 
     @Operation(summary = "comment 생성", description = "comment를 생성하는 API입니다")
     @PostMapping("/create")
-    public ApiResult<Void> saveComment(@RequestBody CommentCreateRequest commentCreateRequest){
-        Long memberId = 1L;
+    public ApiResult<Void> saveComment(@RequestBody CommentCreateRequest commentCreateRequest, @Parameter(hidden = true) @AuthenticationPrincipal User user){
+        Long memberId = Long.parseLong(user.getUsername());
         Member findMember = memberService.findById(memberId);
-        Comment createComment = commentService.save(commentCreateRequest, findMember);
+        commentService.save(commentCreateRequest, findMember);
         return OK(null);
     }
 
