@@ -4,9 +4,11 @@ import com.rualone.app.domain.attraction.entity.AttractionInfo;
 import com.rualone.app.domain.journey.entity.Journey;
 import com.rualone.app.domain.journey.entity.JourneyPlace;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 @AllArgsConstructor
 public class JourneyPlaceCreateRequest {
     private int contentId;

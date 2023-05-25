@@ -9,23 +9,14 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.time.LocalDate;
 
 @Entity
 @Getter
 @NoArgsConstructor
 @SuperBuilder
-public class Journey extends BaseEntity {
+public class JourneyComment extends BaseEntity {
     @ManyToOne()
-    @JoinColumn(name = "leader_id")
-    private Member leader;
-    private String subject;
+    @JoinColumn(name = "participant_id")
+    private Member participant;
     private String content;
-    private Long travelerAllCnt;
-    private LocalDate deadLine;
-    private LocalDate startDay;
-    // true 면 끝
-    private Boolean visibility;
-    private Boolean complete;
-    private String review;
 }
