@@ -3,7 +3,6 @@ package com.rualone.app.global.db;
 import com.rualone.app.domain.board.application.CommentService;
 import com.rualone.app.domain.board.application.PostLikeService;
 import com.rualone.app.domain.board.application.PostService;
-import com.rualone.app.domain.board.dao.PostRepository;
 import com.rualone.app.domain.board.dto.request.CommentCreateRequest;
 import com.rualone.app.domain.board.dto.request.PostCreateRequest;
 import com.rualone.app.domain.hotplace.application.HotPlaceService;
@@ -83,7 +82,7 @@ public class InitLocal {
             }
 
             // attraction like
-            Integer[] attractionLike = {125406, 125451, 125510, 125556, 125661, 125707, 125758, 125820, 125848, 126294, 126352, 126450, 126514, 126511, 126498, 126490};
+            Integer[] attractionLike = {125406, 125452, 125484, 125510, 125555, 125661, 125662, 125709, 125761, 125821, 125850, 125945, 126220, 126300, 126301, 126450, 126511, 126514};
             for(Integer contentId : attractionLike){
                 for(int i = 1; i <= 50; i++){
                     int check = (int) (Math.random() * 2);
