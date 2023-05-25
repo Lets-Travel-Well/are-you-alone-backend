@@ -14,12 +14,12 @@ import static com.rualone.app.global.api.ApiResult.OK;
 @RequiredArgsConstructor
 @RestController
 @Slf4j
-@RequestMapping("/api/v1/chat-gpt")
+@RequestMapping("/api/gpt-management")
 public class GptController {
     private final GptService gptService;
 
     //chat-gpt 와 간단한 채팅 서비스 소스
-    @PostMapping("")
+    @PostMapping("/review")
     public ApiResult<String> test(@RequestBody String question) {
         return OK(gptService.getChatResponse(question));
     }
