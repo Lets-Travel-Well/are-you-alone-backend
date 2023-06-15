@@ -2,7 +2,7 @@ server:
   port: 80
 spring:
   profiles:
-    active: local
+    active: dev
     include:
       - secret
   datasource:
