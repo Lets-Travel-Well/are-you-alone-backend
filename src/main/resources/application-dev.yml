@@ -1,8 +1,6 @@
 spring:
   datasource:
     url: jdbc:mysql://database-1.cazncike7szl.ap-northeast-2.rds.amazonaws.com/rualone_dev
-    username: admin
-    password: ssafyssafy
   jpa:
     hibernate:
       ddl-auto: none
