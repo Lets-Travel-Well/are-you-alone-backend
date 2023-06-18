@@ -1,31 +1,3 @@
-server:
-  port: 80
 spring:
   profiles:
     active: local
-    include:
-      - secret
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  messages:
-    basename: i18n/messages
-    encoding: UTF-8
-    cache-duration: PT1H
-
-
-#jwt token 발급을 위한 세팅
-jwt:
-  secret-key: Z29nby10bS1zZXJ2ZXItZGxyamVvYW9yb3JodG9kZ290c3Atam9vbmdhbmduaW0teWVvbHNpbWhpaGFsZ2VveW8K
-
-oauth:
-  kakao:
-    client-id: 75704a9f2561ed081d5538850a2ad394
-    url:
-      auth: https://kauth.kakao.com
-      api: https://kapi.kakao.com
-  naver:
-    secret: W_2DmcLfYU
-    client-id: Y2i4SlApP7A1KZsUoott
-    url:
-      auth: https://nid.naver.com
-      api: https://openapi.naver.com
