@@ -11,5 +11,4 @@ public interface FollowService {
 
     void create(FollowCreateRequest followCreateRequest);
 
-    List<Follow> read(Long followee);
 }

@@ -1,5 +1,6 @@
 package com.rualone.app.domain.follow.application;
 
+import com.rualone.app.domain.follow.dao.FollowQueryRepository;
 import com.rualone.app.domain.follow.dao.FollowRepository;
 import com.rualone.app.domain.follow.dto.request.FollowCreateRequest;
 import com.rualone.app.domain.follow.dto.request.FollowDeleteRequest;
@@ -32,15 +33,7 @@ public class FollowServiceImpl implements FollowService{
         followRepository.save(followCreateRequest.toEntity(followCreateRequest));
     }
 
-    @Override
-    public List<Follow> read(Long followee) {
-        log.info("followServiceImpl의 read접속 완료");
-        log.info(String.valueOf(followee));
-        List<Follow> list = followRepository.findByFollowee(followee);
-        log.info("followServiceImpl의 list 사이즈 출력");
-        log.info(String.valueOf(list.size()));
-        return list;
-    }
+
     /*
     1. dto => entity
     2. follow 말고 현재 로그인 사용자로 정보가져올 수 있음

@@ -1,5 +1,6 @@
 package com.rualone.app.domain.follow.api;
 
+import com.rualone.app.domain.follow.application.FollowQueryService;
 import com.rualone.app.domain.follow.application.FollowService;
 import com.rualone.app.domain.follow.dto.request.FollowCreateRequest;
 import com.rualone.app.domain.follow.dto.request.FollowDeleteRequest;
@@ -21,6 +22,7 @@ import static com.rualone.app.global.api.ApiResult.OK;
 @Slf4j
 public class FollowApi {
     private final FollowService followService;
+    private final FollowQueryService followQueryService;
 
     @Operation(summary = "팔로우 등록", description = "팔로우를 등록하는 API입니다.")
     @PostMapping("/follow")
@@ -45,7 +47,7 @@ public class FollowApi {
     @GetMapping("/follow")
     public ApiResult<List<Long>> read(@RequestParam("followee") Long followee){
         log.info("팔로우 목록 조회 접속");
-        List<Follow> list = followService.read(followee);
+        List<Follow> list = followQueryService.read(followee);
         log.info("리스트 사이즈");
         log.info(String.valueOf(list.size()));
         log.info(list.get(0).toString());

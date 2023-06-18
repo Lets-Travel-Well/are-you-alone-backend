@@ -10,5 +10,4 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     Follow save(Follow follow);
     void delete(Follow follow);
 
-    List<Follow> findByFollowee(Long followee);
 }
