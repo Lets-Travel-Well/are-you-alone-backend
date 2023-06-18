@@ -1,10 +1,14 @@
 package com.rualone.app.domain.follow.dao;
 
-import com.rualone.app.domain.follow.dto.request.FollowDeleteRequest;
 import com.rualone.app.domain.follow.entity.Follow;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface FollowRepository extends JpaRepository<Follow, Long> {
+import java.util.List;
 
-    void delete(FollowDeleteRequest followDeleteRequest);
+// YHJ : CUD 할 때 쓸 repository
+public interface FollowRepository extends JpaRepository<Follow, Long> {
+    Follow save(Follow follow);
+    void delete(Follow follow);
+
+    List<Follow> findByFollowee(Long followee);
 }
