@@ -1,8 +1,9 @@
 spring:
-  datasource:
-    url: jdbc:mysql://49.50.162.100:3306/rualone_dev?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false
-    username: {id}
-    password: { password }
-  jpa:
-    hibernate:
-      ddl-auto: create
+  config:
+    import: "optional:configserver:https://config.rualone.site/" #config server uri
+  cloud:
+    config:
+      name: application #참고하고자 하는 yml 파일의 이름 앞부분
+      profile: dev #참고하고자 하는 yml 파일의 이름 뒷부분 (실제 파일에서 -로 구분됌)
+encrypt:
+  key:
