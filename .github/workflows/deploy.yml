@@ -14,35 +14,35 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      - name: checkout
-        uses: actions/checkout@v3
+#       - name: checkout
+#         uses: actions/checkout@v3
 
-      - name: Set up JDK 8
-        uses: actions/setup-java@v3
-        with:
-          java-version: '8'
-          distribution: 'temurin'
+#       - name: Set up JDK 8
+#         uses: actions/setup-java@v3
+#         with:
+#           java-version: '8'
+#           distribution: 'temurin'
 
-      - name: Make gradlew executable
-        run: chmod +x ./gradlew
+#       - name: Make gradlew executable
+#         run: chmod +x ./gradlew
       
-      ## gradle build
-      - name: Build with Gradle
-        run: ./gradlew bootJar
+#       ## gradle build
+#       - name: Build with Gradle
+#         run: ./gradlew bootJar
       
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-            username: ${{ secrets.DOCKERHUB_USERNAME }}
-            password: ${{ secrets.DOCKERHUB_PASSWORD }}
+#       - name: Login to DockerHub
+#         uses: docker/login-action@v2
+#         with:
+#             username: ${{ secrets.DOCKERHUB_USERNAME }}
+#             password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: web docker build and push
-        run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_BACKEND_SERVER }} .
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_BACKEND_SERVER }}
+#       - name: web docker build and push
+#         run: |
+#           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_BACKEND_SERVER }} .
+#           docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_BACKEND_SERVER }}
 
 
-      - name: executing remote ssh commands using password
+      - name: executing remote ssh commands using passphrase
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.BACKEND_SERVER_HOST }}
