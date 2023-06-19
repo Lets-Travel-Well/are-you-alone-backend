@@ -84,7 +84,7 @@ public class FollowApi {
 
     @Operation(summary = "팔로우 여부 체크", description = "팔로우를 확인하는 api")
     @GetMapping("/followcheck")
-    public ApiResult<Boolean> getFollowCheck(@Parameter(hidden = true) @AuthenticationPrincipal User user, @RequestParam Long followeeId){
+    public ApiResult<Boolean> getFollowCheck(@Parameter(hidden = true) @AuthenticationPrincipal User user, @RequestParam(value="followeeId") Long followeeId){
         log.info("아오");
         Member follower = memberValidator.findById(Long.valueOf(user.getUsername()));
         Member followee = memberValidator.findById(followeeId);
