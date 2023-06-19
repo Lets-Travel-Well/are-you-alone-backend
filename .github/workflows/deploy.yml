@@ -53,5 +53,5 @@ jobs:
           script: |
             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_BACKEND_SERVER }}
             sudo docker stop ${{ secrets.DOCKERHUB_BACKEND_SERVER }}
-            sudo docker run --name=${{ secrets.DOCKERHUB_BACKEND_SERVER }} -p 8080:8080 -e JAVA_OPTS=-Dencryt.key=${{ secrets.CONFIG_ENCRYPT_KEY }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_BACKEND_SERVER }}
+            sudo docker run --name=${{ secrets.DOCKERHUB_BACKEND_SERVER }} -p 8080:8080 -e JAVA_OPTS=-Dencrypt.key=${{ secrets.CONFIG_ENCRYPT_KEY }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_BACKEND_SERVER }}
             sudo docker image prune -f
