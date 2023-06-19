@@ -2,6 +2,7 @@ package com.rualone.app.domain.member.entity;
 
 import com.rualone.app.domain.auth.application.OAuthProvider;
 import com.rualone.app.domain.member.dto.request.MemberModifyRequest;
+import com.rualone.app.domain.member.dto.request.ProfileImgModifyRequest;
 import com.rualone.app.global.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class Member extends BaseEntity {
     private String email;
 
     private String nickName;
+    private String profileImg;
     private OAuthProvider oAuthProvider;
     private String refreshToken;
     @ColumnDefault("0")
@@ -41,4 +43,9 @@ public class Member extends BaseEntity {
         //getNickName으로 수정
         this.nickName = memberModifyRequest.getEmail();
     }
+
+    public void modifyProfileImg(String imgPath) {
+        this.profileImg = imgPath;
+    }
+
 }
