@@ -1,10 +1,10 @@
 name: Java CI with Gradle
 
-#on:
-#  push:
-#    branches: dev
-#   pull_request:
-#     branches: dev
+on:
+  push:
+    branches: main
+  pull_request:
+     branches: main
 
 permissions:
   contents: read
@@ -25,31 +25,31 @@ jobs:
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-
+      
       ## gradle build
       - name: Build with Gradle
         run: ./gradlew bootJar
-
+      
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: web docker build and push
-        run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.BACKEND_PROJECT_NAME }} .
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.BACKEND_PROJECT_NAME }}
+#       - name: web docker build and push
+#         run: |
+#           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.BACKEND_PROJECT_NAME }} .
+#           docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.BACKEND_PROJECT_NAME }}
 
 
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.BACKEND_HOST }}
-          username: ${{ secrets.BACKEND_USERNAME }}
-          key: ${{ secrets.BACKEND_KEY }}
-          script: |
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.BACKEND_PROJECT_NAME }}
-            sudo docker stop ${{ secrets.BACKEND_PROJECT_NAME }}
-            sudo docker run --name=${{ secrets.BACKEND_PROJECT_NAME }} -d --rm -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME  }}/${{ secrets.BACKEND_PROJECT_NAME }}
-            sudo docker image prune -f
+#       - name: executing remote ssh commands using password
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.BACKEND_HOST }}
+#           username: ${{ secrets.BACKEND_USERNAME }}
+#           key: ${{ secrets.BACKEND_KEY }}
+#           script: |
+#             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.BACKEND_PROJECT_NAME }}
+#             sudo docker stop ${{ secrets.BACKEND_PROJECT_NAME }}
+#             sudo docker run --name=${{ secrets.BACKEND_PROJECT_NAME }} -d --rm -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME  }}/${{ secrets.BACKEND_PROJECT_NAME }}
+#             sudo docker image prune -f
