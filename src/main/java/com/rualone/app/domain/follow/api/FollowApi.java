@@ -41,8 +41,8 @@ public class FollowApi {
     @PostMapping("/follow")
     public ApiResult<Void> create(FollowCreateRequest followCreateRequest, @Parameter(hidden = true) @AuthenticationPrincipal User user){
         log.info("팔로우 등록 접속");
-//        Long follwerId = Long.parseLong(user.getUsername());
-        Long followerId = Long.valueOf("1");
+        Long followerId = Long.parseLong(user.getUsername());
+//        Long followerId = Long.valueOf("1");
         followService.create(followCreateRequest, followerId);
         return OK(null);
     }
@@ -51,9 +51,9 @@ public class FollowApi {
     @Operation(summary = "팔로우 삭제", description = "팔로우를 삭제하는 API입니다.(팔로우 취소)")
     @DeleteMapping("/follow")
     public ApiResult<Void> delete(FollowDeleteRequest followDeleteRequest, @Parameter(hidden = true) @AuthenticationPrincipal User user) {
-//        Long followerId = Long.valueOf(user.getUsername());
+        Long followerId = Long.valueOf(user.getUsername());
         log.info("팔로우 삭제 접속");
-        Long followerId = Long.valueOf("1");
+//        Long followerId = Long.valueOf("1");
         followService.delete(followDeleteRequest, followerId);
         return OK(null);
     }
@@ -74,8 +74,8 @@ public class FollowApi {
     @GetMapping("/followee")
     public ApiResult<List<FolloweeResponse>> getFolloweeList(@Parameter(hidden = true) @AuthenticationPrincipal User user){
         log.info("팔로잉 목록 조회 접속");
-//        Long followerId = Long.valueOf(user.getUsername());
-        Long followerId = Long.valueOf("1");
+        Long followerId = Long.valueOf(user.getUsername());
+//        Long followerId = Long.valueOf("1");
         List<FolloweeResponse> list = followQueryService.findByFollower(followerId);
         log.info(list.toString());
 
@@ -85,10 +85,10 @@ public class FollowApi {
     @Operation(summary = "팔로우 여부 체크", description = "팔로우를 확인하는 api")
     @GetMapping("/followcheck")
     public ApiResult<Boolean> getFollowCheck(@Parameter(hidden = true) @AuthenticationPrincipal User user, @RequestParam Long followeeId){
-//        Member follower = memberValidator.findById(Long.valueOf(user.getUsername()));
-//        Member followee = memberValidator.findById(followeeId);
-        Member follower = memberValidator.findById(Long.valueOf(4));
-        Member followee = memberValidator.findById(Long.valueOf(5));
+        Member follower = memberValidator.findById(Long.valueOf(user.getUsername()));
+        Member followee = memberValidator.findById(followeeId);
+//        Member follower = memberValidator.findById(Long.valueOf(4));
+//        Member followee = memberValidator.findById(Long.valueOf(5));
         Follow check = followValidator.findByFollowerAndFollowee(follower, followee);
         log.info(check.toString());
         return OK(null);
