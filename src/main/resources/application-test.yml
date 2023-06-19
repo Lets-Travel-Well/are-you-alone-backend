@@ -1,16 +1,9 @@
 spring:
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/rualone_test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false
-    username: rualone
-    password: rualone
-  jpa:
-    hibernate:
-      ddl-auto: update # 어플리케이션을 시작할 때 데이터베이스를 초기화하고 다시 테이블 생성
-    properties:
-      hibernate:
-        format_sql: true # 실행되는 query를 보여줌
-  devtools:
-    livereload:
-      enabled: true
-    restart:
-      enabled: true
+  config:
+    import: "optional:configserver:https://config.rualone.site/" #config server uri
+  cloud:
+    config:
+      name: application #참고하고자 하는 yml 파일의 이름 앞부분
+      profile: test #참고하고자 하는 yml 파일의 이름 뒷부분 (실제 파일에서 -로 구분됌)
+encrypt:
+  key:
