@@ -7,8 +7,8 @@ import com.rualone.app.domain.follow.entity.Follow;
 import java.util.List;
 
 public interface FollowService {
-    void delete(FollowDeleteRequest followDeleteRequest);
 
-    void create(FollowCreateRequest followCreateRequest);
+    void create(FollowCreateRequest followCreateRequest, Long follwerId);
 
+    void delete(FollowDeleteRequest followDeleteRequest, Long followerId);
 }
