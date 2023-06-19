@@ -37,7 +37,7 @@ public class MemberApi {
         return OK(null);
     }
 
-    @PutMapping("/images/profileImg")
+    @PostMapping("/images/update/profileImg")
     public ApiResult<Void> updateProfileImg(@RequestPart MultipartFile profileImg, @Parameter(hidden = true) @AuthenticationPrincipal User user) {
 //    public ApiResult<Void> updateProfileImg(MultipartFile profileImg, String userId) {
         memberService.updateProfileImg(profileImg, Long.parseLong(user.getUsername()));
@@ -45,7 +45,7 @@ public class MemberApi {
         return OK(null);
     }
 
-    @DeleteMapping("/images/profileImg")
+    @PostMapping("/images/delete/profileImg")
     public ApiResult<Void> removeProfileImg(@Parameter(hidden = true) @AuthenticationPrincipal User user) {
 //    public ApiResult<Void> removeProfileImg(String userId) {
         log.info("Controller entered");
