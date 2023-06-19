@@ -42,14 +42,14 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_BACKEND_SERVER }}
 
 
-#       - name: executing remote ssh commands using password
-#         uses: appleboy/ssh-action@master
-#         with:
-#           host: ${{ secrets.BACKEND_HOST }}
-#           username: ${{ secrets.BACKEND_USERNAME }}
-#           key: ${{ secrets.BACKEND_KEY }}
-#           script: |
-#             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.BACKEND_PROJECT_NAME }}
-#             sudo docker stop ${{ secrets.BACKEND_PROJECT_NAME }}
-#             sudo docker run --name=${{ secrets.BACKEND_PROJECT_NAME }} -d --rm -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME  }}/${{ secrets.BACKEND_PROJECT_NAME }}
-#             sudo docker image prune -f
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.BACKEND_SERVER_HOST }}
+          username: ${{ secrets.BACKEND_SERVER_USERNAME }}
+          key: ${{ secrets.BACKEND_SERVER_KEY }}
+          port: ${{ secrets.BACKEND_SERVER_PORT }}
+          passphrase: ${{ secrets.BACKEND_SERVER_PASSPHRASE }}
+          script: |
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_BACKEND_SERVER }}
+            sudo docker stop ${{secrets.DOCKERHUB_BACKEND_SERVER}}
