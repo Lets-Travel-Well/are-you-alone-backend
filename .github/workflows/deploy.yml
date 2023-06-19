@@ -50,6 +50,6 @@ jobs:
           key: ${{ secrets.BACKEND_SERVER_KEY }}
           port: ${{ secrets.BACKEND_SERVER_PORT }}
           passphrase: ${{ secrets.BACKEND_SERVER_PASSPHRASE }}
-#           script: |
-#             sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_BACKEND_SERVER }}
-#             sudo docker stop ${{secrets.DOCKERHUB_BACKEND_SERVER}}
+          script: |
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_BACKEND_SERVER }}
+            sudo docker stop ${{secrets.DOCKERHUB_BACKEND_SERVER}}
