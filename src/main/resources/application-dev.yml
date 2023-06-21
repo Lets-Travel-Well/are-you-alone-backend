@@ -1,9 +1,10 @@
 spring:
   config:
-    import: "optional:configserver:https://config.rualone.site/" #config server uri
+    import: "optional:configserver:https://config.rualone.site" #config server uri
+#    import: "optional:configserver:http://localhost:8080"
   cloud:
     config:
-      name: application #참고하고자 하는 yml 파일의 이름 앞부분
+      name: backend #참고하고자 하는 yml 파일의 이름 앞부분
       profile: dev #참고하고자 하는 yml 파일의 이름 뒷부분 (실제 파일에서 -로 구분됌)
 encrypt:
   key:
