@@ -3,12 +3,15 @@ package com.rualone.app.domain.auth.params;
 import com.rualone.app.domain.auth.application.OAuthProvider;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 @Getter
 @NoArgsConstructor
+@ToString
 public class KakaoLoginParams implements OAuthLoginParams {
+
     private String authorizationCode;
 
     @Override

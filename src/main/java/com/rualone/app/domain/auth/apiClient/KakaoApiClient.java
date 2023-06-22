@@ -6,6 +6,7 @@ import com.rualone.app.domain.auth.dto.infoResponse.KakaoInfoResponse;
 import com.rualone.app.domain.auth.dto.infoResponse.OAuthInfoResponse;
 import com.rualone.app.domain.auth.tokens.KakaoTokens;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -17,6 +18,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 @Slf4j
+@ToString
 @Component
 @RequiredArgsConstructor
 public class KakaoApiClient implements OAuthApiClient {
@@ -71,7 +73,7 @@ public class KakaoApiClient implements OAuthApiClient {
         httpHeaders.set("Authorization", "Bearer " + accessToken);
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("property_keys", "[\"kakao_account.email\", \"kakao_account.profile\"]");
+        body.add("property_keys", "[\"kakao_account.email\", \"kakao_account.age_range\", \"kakao_account.gender\",\"kakao_account.birthday\", \"kakao_account.profile\"]");
 
         HttpEntity<?> request = new HttpEntity<>(body, httpHeaders);
 
