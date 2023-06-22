@@ -22,4 +22,12 @@ public class JourneyApprove extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column
     private ParticipationStatus status;
+
+    // 비지니스 로직
+    public void changeToAgree(){
+        status = ParticipationStatus.AGREE;
+    }
+    public void changeToDisAgree(){
+        status = ParticipationStatus.DISAGREE;
+    }
 }

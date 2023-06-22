@@ -1,5 +1,6 @@
 package com.rualone.app.global.api;
 
+import com.rualone.app.domain.journey.error.NotLeaderException;
 import com.rualone.app.global.error.AlreadyExistException;
 import com.rualone.app.global.error.NotFoundException;
 import com.rualone.app.global.error.ServiceRuntimeException;
@@ -27,7 +28,8 @@ public class GeneralExceptionHandler {
             return newResponse(e, HttpStatus.NOT_FOUND);
         if (e instanceof AlreadyExistException)
             return newResponse(e, HttpStatus.BAD_REQUEST);
-
+        if (e instanceof NotLeaderException)
+            return newResponse(e, HttpStatus.BAD_REQUEST);
         log.info("Unexpected service exception occurred: {}", e.getMessage(), e);
         return newResponse(e, HttpStatus.INTERNAL_SERVER_ERROR);
     }

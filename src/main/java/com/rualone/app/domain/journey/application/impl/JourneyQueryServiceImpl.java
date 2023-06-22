@@ -4,9 +4,7 @@ import com.rualone.app.domain.attraction.validator.AttractionInfoValidator;
 import com.rualone.app.domain.journey.application.JourneyQueryService;
 import com.rualone.app.domain.journey.dao.JourneyQueryRepository;
 import com.rualone.app.domain.journey.dto.request.AttractionInfoPathRequest;
-import com.rualone.app.domain.journey.dto.response.AttractionInfoPathResponse;
-import com.rualone.app.domain.journey.dto.response.JourneyDetailResponse;
-import com.rualone.app.domain.journey.dto.response.JourneyResponse;
+import com.rualone.app.domain.journey.dto.response.*;
 import com.rualone.app.global.util.MakeMapUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -50,6 +48,38 @@ public class JourneyQueryServiceImpl implements JourneyQueryService {
         journeyDetailResponse.setJourneyPlaceResponseList(journeyQueryRepository.findJourneyPlace(journeyId));
         journeyDetailResponse.setLeader(journeyQueryRepository.findLeaderInfo(journeyId));
         journeyDetailResponse.setFuddy(journeyQueryRepository.findFuddy(journeyId));
+        return journeyDetailResponse;
+    }
+
+    @Override
+    public List<JourneyResponse> findAllByLeaderId(Long leaderId) {
+        List<JourneyResponse> journeyResponses = journeyQueryRepository.findAllByLeaderId(leaderId);
+        journeyResponses.forEach(journeyResponse -> {
+            journeyResponse.setTravelerCnt(journeyQueryRepository.findTravelerCnt(journeyResponse.getId()));
+            journeyResponse.setImage(journeyQueryRepository.findImage(journeyResponse.getId()));
+        });
+        return journeyResponses;
+    }
+
+    @Override
+    public List<JourneyApplyResponse> findAllByMyApply(Long memberId) {
+        List<JourneyApplyResponse> journeyResponses = journeyQueryRepository.findAllByMyApply(memberId);
+        journeyResponses.forEach(journeyResponse -> {
+            journeyResponse.setTravelerCnt(journeyQueryRepository.findTravelerCnt(journeyResponse.getId()));
+            journeyResponse.setImage(journeyQueryRepository.findImage(journeyResponse.getId()));
+        });
+        return journeyResponses;
+    }
+
+    // TODO: 2023/06/22 KCH : query 튜닝
+    @Override
+    public JourneyLeaderDetailResponse findLeaderJourneyById(Long journeyId, Long leaderId) {
+        JourneyLeaderDetailResponse journeyDetailResponse = journeyQueryRepository.findLeaderJourneyById(journeyId, leaderId);
+        journeyDetailResponse.setTravelerCnt(journeyQueryRepository.findTravelerCnt(journeyId));
+        journeyDetailResponse.setMyJourney(journeyQueryRepository.isMine(journeyId, leaderId));
+        journeyDetailResponse.setJourneyPlaceResponseList(journeyQueryRepository.findJourneyPlace(journeyId));
+        journeyDetailResponse.setLeader(journeyQueryRepository.findLeaderInfo(journeyId));
+        journeyDetailResponse.setMemberApplyResponseList(journeyQueryRepository.findApplyMember(journeyId));
         return journeyDetailResponse;
     }
 }
