@@ -62,27 +62,25 @@ public class JourneyApi {
     // 내가 리더인 여행 목록 보기
     @Operation(summary = "내가 leader인 journey 전체 조회", description = "내가 leader인 journey들을 보는 API입니다")
     @GetMapping("/leader")
-    public ApiResult<List<JourneyResponse>> findAllByLeaderId(){
-        // TODO: 2023/06/22 : 로그인 사용자로 바꿔야함
-        Long memberId = 1L;
+    public ApiResult<List<JourneyResponse>> findAllByLeaderId(@Parameter(hidden = true) @AuthenticationPrincipal User user){
+        Long memberId = Long.parseLong(user.getUsername());
         return OK(journeyQueryService.findAllByLeaderId(memberId));
     }
 
     // 내가 리더인 여행 상세 조회
     @Operation(summary = "내가 리더인 journey 단건 조회", description = "내가 리더인 journey을 단건 조회하는 API입니다, id에는 여행 계획의 id가 들어갑니다")
     @GetMapping("/leader/{id}")
-    public ApiResult<JourneyLeaderDetailResponse> findLeaderJourneyById(@PathVariable("id") Long journeyId){
-//        Long leaderId = Long.parseLong(user.getUsername());
-        Long leaderId = 1L;
+    public ApiResult<JourneyLeaderDetailResponse> findLeaderJourneyById(@PathVariable("id") Long journeyId, @Parameter(hidden = true) @AuthenticationPrincipal User user){
+        Long leaderId = Long.parseLong(user.getUsername());
         return OK(journeyQueryService.findLeaderJourneyById(journeyId, leaderId));
     }
 
     // 내가 신청한 여행 목록 보기
     @Operation(summary = "내가 신청한 journey 전체 조회", description = "내가 신청한 journey들을 보는 API입니다")
     @GetMapping("/apply")
-    public ApiResult<List<JourneyApplyResponse>> findAllByMyApply(){
+    public ApiResult<List<JourneyApplyResponse>> findAllByMyApply(@Parameter(hidden = true) @AuthenticationPrincipal User user){
         // TODO: 2023/06/22 : 로그인 사용자로 바꿔야함
-        Long memberId = 1L;
+        Long memberId = Long.parseLong(user.getUsername());
         return OK(journeyQueryService.findAllByMyApply(memberId));
     }
 
@@ -98,16 +96,16 @@ public class JourneyApi {
     // 동행 승인, 거부에 대하여 리턴 값을 생각해야함, frontend 팀장님과 논의 필요
     @Operation(summary = "동행을 승인하는 API", description = "동행을 승인하는 API입니다")
     @PostMapping("/agree")
-    public ApiResult<Void> agreeJourney(@RequestBody JourneyAgreeRequest journeyAgreeRequest){
+    public ApiResult<Void> agreeJourney(@RequestBody JourneyAgreeRequest journeyAgreeRequest, @Parameter(hidden = true) @AuthenticationPrincipal User user){
         // TODO: 2023/06/22 : 로그인 사용자로 바꿔야함
-        Long leaderId = 1L;
+        Long leaderId = Long.parseLong(user.getUsername());
         journeyApproveService.changeStatusAgree(journeyAgreeRequest, leaderId);
         return OK(null);
     }
     @Operation(summary = "동행을 거절하는 API", description = "동행을 거절하는 API입니다")
     @PostMapping("/disagree")
-    public ApiResult<Void> disAgreeJourney(@RequestBody JourneyDisAgreeRequest journeyDisAgreeRequest){
-        Long leaderId = 1L;
+    public ApiResult<Void> disAgreeJourney(@RequestBody JourneyDisAgreeRequest journeyDisAgreeRequest, @Parameter(hidden = true) @AuthenticationPrincipal User user){
+        Long leaderId = Long.parseLong(user.getUsername());
         journeyApproveService.changeStatusDisAgree(journeyDisAgreeRequest, leaderId);
         return OK(null);
     }
