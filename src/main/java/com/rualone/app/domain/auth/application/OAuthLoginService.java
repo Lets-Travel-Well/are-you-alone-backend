@@ -29,7 +29,7 @@ public class OAuthLoginService {
 
         AuthTokens authTokens = authTokensGenerator.generate(member.getId());
         member.updateRefreshToken(authTokens.getRefreshToken());
-
+        log.info(authTokens.getAccessToken());
         return authTokens;
     }
     private Member findOrCreateMember(OAuthInfoResponse oAuthInfoResponse) {
