@@ -2,9 +2,12 @@ package com.rualone.app.domain.journey.application.impl;
 
 import com.rualone.app.domain.attraction.validator.AttractionInfoValidator;
 import com.rualone.app.domain.journey.application.JourneyQueryService;
+import com.rualone.app.domain.journey.dao.JourneyApproveRepository;
 import com.rualone.app.domain.journey.dao.JourneyQueryRepository;
 import com.rualone.app.domain.journey.dto.request.AttractionInfoPathRequest;
 import com.rualone.app.domain.journey.dto.response.*;
+import com.rualone.app.domain.journey.entity.JourneyApprove;
+import com.rualone.app.domain.journey.entity.ParticipationStatus;
 import com.rualone.app.global.util.MakeMapUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +21,7 @@ import java.util.List;
 public class JourneyQueryServiceImpl implements JourneyQueryService {
     private final AttractionInfoValidator attractionInfoValidator;
     private final JourneyQueryRepository journeyQueryRepository;
+    private final JourneyApproveRepository journeyApproveRepository;
 
     // TODO: 2023-05-22 : 여기 있는게 맞는 로직인가?(CQRS)
     @Override
@@ -48,6 +52,8 @@ public class JourneyQueryServiceImpl implements JourneyQueryService {
         journeyDetailResponse.setJourneyPlaceResponseList(journeyQueryRepository.findJourneyPlace(journeyId));
         journeyDetailResponse.setLeader(journeyQueryRepository.findLeaderInfo(journeyId));
         journeyDetailResponse.setFuddy(journeyQueryRepository.findFuddy(journeyId));
+
+        journeyDetailResponse.setStatus(journeyApproveRepository.findByJourney_IdAndParticipant_Id(journeyId, memberId).orElse(JourneyApprove.builder().status(ParticipationStatus.NOT_APPLY).build()).getStatus());
         return journeyDetailResponse;
     }
 

@@ -1,5 +1,6 @@
 package com.rualone.app.domain.journey.dto.response;
 
+import com.rualone.app.domain.journey.entity.ParticipationStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -21,6 +22,7 @@ public class JourneyDetailResponse {
     private List<JourneyPlaceResponse> journeyPlaceResponseList;
     private JourneyParticipantResponse leader;
     private List<JourneyParticipantResponse> fuddy;
+    private ParticipationStatus status;
     public JourneyDetailResponse(Long id, String subject, String content, Long travelerAllCnt, LocalDate deadLine, LocalDate startDay){
         this.id = id;
         this.subject = subject;
