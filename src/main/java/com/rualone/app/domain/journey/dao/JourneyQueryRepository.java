@@ -71,11 +71,13 @@ public class JourneyQueryRepository {
     public Boolean isMine(Long journeyId, Long memberId){
         Integer fetchOne = jpaQueryFactory
                 .selectOne()
-                .from(journeyApprove)
+                .from(journey)
                 .where(
-                        journeyApprove.participant.id.eq(memberId),
-                        journeyApprove.journey.id.eq((journeyId)),
-                        journeyApprove.status.eq(ParticipationStatus.AGREE)
+//                        journeyApprove.participant.id.eq(memberId),
+//                        journeyApprove.journey.id.eq((journeyId)),
+//                        journeyApprove.status.eq(ParticipationStatus.AGREE)
+                        journey.id.eq(journeyId),
+                        journey.leader.id.eq(memberId)
                 )
                 .fetchOne();
         return fetchOne != null;
