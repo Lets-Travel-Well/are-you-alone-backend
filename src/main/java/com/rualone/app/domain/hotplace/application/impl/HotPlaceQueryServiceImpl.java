@@ -25,7 +25,10 @@ public class HotPlaceQueryServiceImpl implements HotPlaceQueryService {
 
     @Override
     public List<MyPlaceResponse> findMyPlaceList(Long memberId) {
-        return hotPlaceQueryRepository.findMyPlaceList(memberId);
+        List<MyPlaceResponse> list = hotPlaceQueryRepository.findMyPlaceList(memberId);
+        log.info(list.toString());
+        log.info(memberId.toString());
+        return list;
     }
 //    private Boolean checkHotPlace(Integer contentId, Long memberId){
 //        return hotPlaceQueryRepository.isMyHotPlace(contentId, memberId);
