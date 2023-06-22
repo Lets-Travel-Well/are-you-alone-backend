@@ -7,6 +7,7 @@ import com.rualone.app.global.entity.BaseEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
@@ -18,6 +19,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @SuperBuilder
 @DynamicInsert
+@ToString
 // 회원 정보를 담을 Entity
 public class Member extends BaseEntity {
 

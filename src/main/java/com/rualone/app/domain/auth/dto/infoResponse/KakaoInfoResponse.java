@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rualone.app.domain.auth.application.OAuthProvider;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class KakaoInfoResponse implements OAuthInfoResponse {
 
