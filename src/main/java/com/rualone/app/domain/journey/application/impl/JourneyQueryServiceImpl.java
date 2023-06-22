@@ -5,6 +5,7 @@ import com.rualone.app.domain.journey.application.JourneyQueryService;
 import com.rualone.app.domain.journey.dao.JourneyQueryRepository;
 import com.rualone.app.domain.journey.dto.request.AttractionInfoPathRequest;
 import com.rualone.app.domain.journey.dto.response.AttractionInfoPathResponse;
+import com.rualone.app.domain.journey.dto.response.JourneyApplyResponse;
 import com.rualone.app.domain.journey.dto.response.JourneyDetailResponse;
 import com.rualone.app.domain.journey.dto.response.JourneyResponse;
 import com.rualone.app.global.util.MakeMapUtils;
@@ -51,5 +52,25 @@ public class JourneyQueryServiceImpl implements JourneyQueryService {
         journeyDetailResponse.setLeader(journeyQueryRepository.findLeaderInfo(journeyId));
         journeyDetailResponse.setFuddy(journeyQueryRepository.findFuddy(journeyId));
         return journeyDetailResponse;
+    }
+
+    @Override
+    public List<JourneyResponse> findAllByLeaderId(Long leaderId) {
+        List<JourneyResponse> journeyResponses = journeyQueryRepository.findAllByLeaderId(leaderId);
+        journeyResponses.forEach(journeyResponse -> {
+            journeyResponse.setTravelerCnt(journeyQueryRepository.findTravelerCnt(journeyResponse.getId()));
+            journeyResponse.setImage(journeyQueryRepository.findImage(journeyResponse.getId()));
+        });
+        return journeyResponses;
+    }
+
+    @Override
+    public List<JourneyApplyResponse> findAllByMyApply(Long memberId) {
+        List<JourneyApplyResponse> journeyResponses = journeyQueryRepository.findAllByMyApply(memberId);
+        journeyResponses.forEach(journeyResponse -> {
+            journeyResponse.setTravelerCnt(journeyQueryRepository.findTravelerCnt(journeyResponse.getId()));
+            journeyResponse.setImage(journeyQueryRepository.findImage(journeyResponse.getId()));
+        });
+        return journeyResponses;
     }
 }

@@ -7,6 +7,7 @@ import com.rualone.app.domain.journey.dto.request.AttractionInfoPathRequest;
 import com.rualone.app.domain.journey.dto.request.JourneyCreateRequest;
 import com.rualone.app.domain.journey.dto.request.JourneyJoinRequest;
 import com.rualone.app.domain.journey.dto.response.AttractionInfoPathResponse;
+import com.rualone.app.domain.journey.dto.response.JourneyApplyResponse;
 import com.rualone.app.domain.journey.dto.response.JourneyDetailResponse;
 import com.rualone.app.domain.journey.dto.response.JourneyResponse;
 import com.rualone.app.domain.member.application.MemberService;
@@ -64,6 +65,25 @@ public class JourneyApi {
         return OK(journeyQueryService.findJourneyById(journeyId, memberId));
     }
 
+    // TODO: 2023/06/22 KCH : api명 적절한가 고민하기
+    // 내가 리더인 여행 목록 보기
+    @Operation(summary = "내가 leader인 journey 전체 조회", description = "내가 leader인 journey들을 보는 API입니다")
+    @GetMapping("/leader")
+    public ApiResult<List<JourneyResponse>> findAllByLeaderId(){
+        // TODO: 2023/06/22 : 로그인 사용자로 바꿔야함
+        Long memberId = 1L;
+        return OK(journeyQueryService.findAllByLeaderId(memberId));
+    }
+
+    // 내가 신청한 여행 목록 보기
+    @Operation(summary = "내가 신청한 journey 전체 조회", description = "내가 신청한 journey들을 보는 API입니다")
+    @GetMapping("/apply")
+    public ApiResult<List<JourneyApplyResponse>> findAllByMyApply(){
+        // TODO: 2023/06/22 : 로그인 사용자로 바꿔야함
+        Long memberId = 2L;
+        return OK(journeyQueryService.findAllByMyApply(memberId));
+    }
+
     @Operation(summary = "동행 신청하는 API", description = "동행신청하는 API입니다.")
     @PostMapping("/apply")
     public ApiResult<Void> joinJourney(@RequestBody JourneyJoinRequest journeyJoinRequest, @Parameter(hidden = true) @AuthenticationPrincipal User user){
@@ -76,6 +96,9 @@ public class JourneyApi {
     @Operation(summary = "동행을 승인하는 API", description = "동행을 승인하는 API입니다")
     @PostMapping("/agree")
     public ApiResult<Void> agreeJourney(){
+        // TODO: 2023/06/22 : 로그인 사용자로 바꿔야함
+        Long memberId = 1L;
+        
         return OK(null);
     }
     @Operation(summary = "동행을 거절하는 API", description = "동행을 거절하는 API입니다")
