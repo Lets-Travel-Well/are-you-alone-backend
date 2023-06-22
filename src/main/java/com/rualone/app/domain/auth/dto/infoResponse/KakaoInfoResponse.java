@@ -17,24 +17,44 @@ public class KakaoInfoResponse implements OAuthInfoResponse {
     static class KakaoAccount {
         private KakaoProfile profile;
         private String email;
+        private String gender;
+        private String age_range;
+        private String birthday;
     }
 
     @Getter
     @JsonIgnoreProperties(ignoreUnknown = true)
     static class KakaoProfile {
         private String nickname;
+        private String profile_image;
     }
 
     @Override
     public String getEmail() {
         return kakaoAccount.email;
     }
-
     @Override
     public String getNickname() {
         return kakaoAccount.profile.nickname;
     }
 
+    @Override
+    public String getGender() {
+        return kakaoAccount.gender;
+    }
+    @Override
+
+    public String getAge_Range() {
+        return kakaoAccount.age_range;
+    }
+
+    @Override
+    public String getBirthday() {
+        return kakaoAccount.birthday;
+    }
+
+    @Override
+    public String getProfile_Image(){return kakaoAccount.profile.profile_image;}
     @Override
     public OAuthProvider getOAuthProvider() {
         return OAuthProvider.KAKAO;

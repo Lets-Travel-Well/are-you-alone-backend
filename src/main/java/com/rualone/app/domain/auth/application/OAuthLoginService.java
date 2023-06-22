@@ -38,7 +38,11 @@ public class OAuthLoginService {
     private Member newMember(OAuthInfoResponse oAuthInfoResponse) {
         Member member = Member.builder()
                 .email(oAuthInfoResponse.getEmail())
+                .gender(oAuthInfoResponse.getGender())
+                .age_range(oAuthInfoResponse.getAge_Range())
+                .birthday(oAuthInfoResponse.getBirthday())
                 .nickName(oAuthInfoResponse.getNickname())
+                .profileImg(oAuthInfoResponse.getProfile_Image())
                 .oAuthProvider(oAuthInfoResponse.getOAuthProvider())
                 .build();
         return memberRepository.save(member);
