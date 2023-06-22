@@ -4,6 +4,8 @@ import com.querydsl.core.types.*;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.rualone.app.domain.hotplace.dto.response.HotPlaceResponse;
+import com.rualone.app.domain.hotplace.dto.response.MyPlaceResponse;
+import com.rualone.app.domain.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -50,4 +52,20 @@ public class HotPlaceQueryRepository {
 
         return fetchOne != null;
     }
+
+    public List<MyPlaceResponse> findMyPlaceList(Long memberId) {
+        List<MyPlaceResponse> myPlaceResponses = jpaQueryFactory
+                .select(Projections.constructor(MyPlaceResponse.class,
+                        attractionInfo.contentId,
+                        attractionInfo.title,
+                        attractionInfo.firstImage))
+                .from(hotPlace)
+                .join(attractionInfo)
+                .on(hotPlace.attractionInfo.eq(attractionInfo))
+                .where(hotPlace.member.id.eq(memberId))
+                .fetch();
+
+        return myPlaceResponses;
+    }
+
 }
