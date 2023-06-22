@@ -36,8 +36,9 @@ public class HotPlaceApi {
     }
 
     @Operation(summary = "hotplace 보기", description = "hotplace 상위 10개 보여주는 API입니다.")
-    @GetMapping()
-    public ApiResult<List<HotPlaceResponse>> showHotPlace() {
+    @GetMapping("/my-place")
+    public ApiResult<List<HotPlaceResponse>> showHotPlace(){
+
         return OK(hotPlaceQueryService.findTopAttractionInfo());
     }
 

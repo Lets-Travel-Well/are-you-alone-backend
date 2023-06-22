@@ -3,6 +3,8 @@ package com.rualone.app.domain.member.api;
 import com.rualone.app.domain.member.application.MemberService;
 import com.rualone.app.domain.member.dto.request.MemberModifyRequest;
 import com.rualone.app.domain.member.dto.response.MemberResponse;
+import com.rualone.app.domain.member.dto.response.MyPageUserResponse;
+import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.api.ApiResult;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
@@ -65,5 +67,14 @@ public class MemberApi {
         HttpSession session = httpServletRequest.getSession();
         session.invalidate();
         return OK(null);
+    }
+
+    @GetMapping("/mypageuser")
+    public ApiResult<MyPageUserResponse> myPageUser(@RequestParam("userId") Long myPageUserId, @Parameter(hidden = true) @AuthenticationPrincipal User user) {
+        // TODO: 2023-06-23 YHJ : CQRS 패턴으로 변경 필요
+        if(myPageUserId == 0L) myPageUserId = Long.valueOf(user.getUsername());
+        Member findMember = memberService.findById(myPageUserId);
+        MyPageUserResponse result = new MyPageUserResponse(findMember);
+        return OK(result);
     }
 }
