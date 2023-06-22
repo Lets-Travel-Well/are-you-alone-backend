@@ -22,8 +22,10 @@ public class OAuthLoginService {
     @Transactional
     public AuthTokens login(OAuthLoginParams params) {
         OAuthInfoResponse oAuthInfoResponse = requestOAuthInfoService.request(params);
-
+        log.info(oAuthInfoResponse.toString());
+        log.info(oAuthInfoResponse.getProfile_Image());
         Member member = findOrCreateMember(oAuthInfoResponse);
+        log.info(member.toString());
 
         AuthTokens authTokens = authTokensGenerator.generate(member.getId());
         member.updateRefreshToken(authTokens.getRefreshToken());
@@ -38,6 +40,9 @@ public class OAuthLoginService {
     private Member newMember(OAuthInfoResponse oAuthInfoResponse) {
         Member member = Member.builder()
                 .email(oAuthInfoResponse.getEmail())
+                .gender(oAuthInfoResponse.getGender())
+                .age_range(oAuthInfoResponse.getAge_Range())
+                .birthday(oAuthInfoResponse.getBirthday())
                 .nickName(oAuthInfoResponse.getNickname())
                 .oAuthProvider(oAuthInfoResponse.getOAuthProvider())
                 .build();

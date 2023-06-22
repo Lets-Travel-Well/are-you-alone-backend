@@ -1,10 +1,11 @@
 name: Java CI with Gradle
 
-#on:
-#  push:
-#    branches: dev
+on:
+  push:
+    branches:
+      - dev
 #   pull_request:
-#     branches: dev
+#      branches: dev
 
 permissions:
   contents: read
@@ -25,31 +26,33 @@ jobs:
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
-
+      
       ## gradle build
       - name: Build with Gradle
         run: ./gradlew bootJar
-
+      
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: web docker build and push
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.BACKEND_PROJECT_NAME }} .
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.BACKEND_PROJECT_NAME }}
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_BACKEND_SERVER }} .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_BACKEND_SERVER }}
 
 
-      - name: executing remote ssh commands using password
+      - name: executing remote ssh commands using passphrase
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.BACKEND_HOST }}
-          username: ${{ secrets.BACKEND_USERNAME }}
-          key: ${{ secrets.BACKEND_KEY }}
+          host: ${{ secrets.BACKEND_SERVER_HOST }}
+          username: ${{ secrets.BACKEND_SERVER_USERNAME }}
+          key: ${{ secrets.BACKEND_SERVER_KEY }}
+          port: ${{ secrets.BACKEND_SERVER_PORT }}
+          passphrase: ${{ secrets.BACKEND_SERVER_PASSPHRASE }}
           script: |
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.BACKEND_PROJECT_NAME }}
-            sudo docker stop ${{ secrets.BACKEND_PROJECT_NAME }}
-            sudo docker run --name=${{ secrets.BACKEND_PROJECT_NAME }} -d --rm -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME  }}/${{ secrets.BACKEND_PROJECT_NAME }}
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_BACKEND_SERVER }}
+            sudo docker stop ${{ secrets.DOCKERHUB_BACKEND_SERVER }}
+            sudo docker run --name=${{ secrets.DOCKERHUB_BACKEND_SERVER }} -d --rm -p 8080:8080 -e JAVA_OPTS=-Dencrypt.key=${{ secrets.CONFIG_ENCRYPT_KEY }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_BACKEND_SERVER }}
             sudo docker image prune -f
