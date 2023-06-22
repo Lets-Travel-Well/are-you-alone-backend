@@ -2,10 +2,7 @@ package com.rualone.app.domain.journey.dao;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.rualone.app.domain.journey.dto.response.JourneyDetailResponse;
-import com.rualone.app.domain.journey.dto.response.JourneyParticipantResponse;
-import com.rualone.app.domain.journey.dto.response.JourneyPlaceResponse;
-import com.rualone.app.domain.journey.dto.response.JourneyResponse;
+import com.rualone.app.domain.journey.dto.response.*;
 import com.rualone.app.domain.journey.entity.ParticipationStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -121,5 +118,75 @@ public class JourneyQueryRepository {
                 .where(journeyApprove.journey.id.eq(journeyId))
                 .fetch();
         return journeyParticipantResponses;
+    }
+
+    public List<JourneyResponse> findAllByLeaderId(Long leaderId) {
+        List<JourneyResponse> journeyResponses = jpaQueryFactory
+                .select(Projections.constructor(JourneyResponse.class,
+                        journey.id,
+                        journey.leader.nickName.as("leaderName"),
+                        journey.subject,
+                        journey.content,
+                        journey.deadLine,
+                        journey.startDay,
+                        journey.travelerAllCnt
+                ))
+                .from(journey)
+                .where(journey.leader.id.eq(leaderId))
+                .fetch();
+        log.info(journeyResponses.toString());
+        return journeyResponses;
+    }
+
+    public List<JourneyApplyResponse> findAllByMyApply(Long memberId) {
+        List<JourneyApplyResponse> journeyResponses = jpaQueryFactory
+                .select(Projections.constructor(JourneyApplyResponse.class,
+                        journey.id,
+                        journey.leader.nickName.as("leaderName"),
+                        journey.subject,
+                        journey.content,
+                        journey.deadLine,
+                        journey.startDay,
+                        journey.travelerAllCnt,
+                        journeyApprove.status
+                ))
+                .from(journey)
+                .join(journeyApprove)
+                .on(journey.id.eq(journeyApprove.journey.id))
+                .where(journeyApprove.participant.id.eq(memberId))
+                .fetch();
+        log.info(journeyResponses.toString());
+        return journeyResponses;
+    }
+
+    public JourneyLeaderDetailResponse findLeaderJourneyById(Long journeyId, Long leaderId) {
+        JourneyLeaderDetailResponse journeyDetailResponse = jpaQueryFactory
+                .select(Projections.constructor(JourneyLeaderDetailResponse.class,
+                        journey.id,
+                        journey.subject,
+                        journey.content,
+                        journey.travelerAllCnt,
+                        journey.deadLine,
+                        journey.startDay
+                ))
+                .from(journey)
+                .where(journey.id.eq(journeyId))
+                .fetchOne();
+        return journeyDetailResponse;
+    }
+
+    public List<MemberApplyResponse> findApplyMember(Long journeyId) {
+        List<MemberApplyResponse> memberApplyResponseList = jpaQueryFactory
+                .select(Projections.constructor(MemberApplyResponse.class,
+                        journeyApprove.participant.id,
+                        journeyApprove.participant.nickName,
+                        journeyApprove.participant.email,
+                        journeyApprove.participant.footage,
+                        journeyApprove.status
+                ))
+                .from(journeyApprove)
+                .where(journeyApprove.journey.id.eq(journeyId))
+                .fetch();
+        return memberApplyResponseList;
     }
 }
