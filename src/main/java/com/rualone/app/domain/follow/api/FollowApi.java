@@ -85,7 +85,7 @@ public class FollowApi {
     @Operation(summary = "팔로우 여부 체크", description = "팔로우를 확인하는 api")
     @GetMapping("/followcheck")
     public ApiResult<Boolean> getFollowCheck(@Parameter(hidden = true) @AuthenticationPrincipal User user, @RequestParam(value="followeeId") Long followeeId){
-        log.info("아오");
+
         Member follower = memberValidator.findById(Long.valueOf(user.getUsername()));
         Member followee = memberValidator.findById(followeeId);
 //        Member follower = memberValidator.findById(Long.valueOf(4));
@@ -93,6 +93,26 @@ public class FollowApi {
         Follow check = followValidator.findByFollowerAndFollowee(follower, followee);
         log.info(check.toString());
         return OK(null);
+    }
+
+   @GetMapping("/getiscurrentuser")
+    public ApiResult<Boolean> isCurrentUser(@RequestParam("userId") Long myPageUserId, @Parameter(hidden = true) @AuthenticationPrincipal User user) {
+        log.info("isCurrent접속");
+        return OK(myPageUserId.equals(0L) ? true : myPageUserId.equals(user.getUsername()) ? true : false);
+   }
+
+   @GetMapping("/followercount")
+   public ApiResult<Integer> followerCount(@RequestParam("userId") Long myPageUserId) {
+        List<FollowerResponse> list = followQueryService.findByFollowee(myPageUserId);
+        log.info("팔로워 숫자" + String.valueOf(list.size()));
+        return OK(list.size());
+   }
+    @GetMapping("/followeecount")
+    public ApiResult<Integer> followeeCount(@RequestParam("userId") Long myPageUserId) {
+        log.info("followercount 접속");
+        List<FolloweeResponse> list = followQueryService.findByFollower(myPageUserId);
+        log.info("팔로잉 숫자" + String.valueOf(list.size()));
+        return OK(list.size());
     }
 
 }
