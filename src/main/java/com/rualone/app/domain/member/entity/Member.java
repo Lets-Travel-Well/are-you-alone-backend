@@ -27,9 +27,13 @@ public class Member extends BaseEntity {
 
     @Column(unique = true)
     private String email;
-
     private String nickName;
+
+    private String gender;
+    private String age_range;
+    private String birthday;
     private String profileImg;
+
     private OAuthProvider oAuthProvider;
     private String refreshToken;
     @ColumnDefault("0")
