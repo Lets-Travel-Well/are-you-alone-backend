@@ -9,6 +9,7 @@ import com.rualone.app.domain.journey.entity.ParticipationStatus;
 import com.rualone.app.domain.journey.error.OutOfNumberException;
 import com.rualone.app.domain.journey.validator.JourneyValidator;
 import com.rualone.app.domain.member.entity.Member;
+import com.rualone.app.domain.member.validator.MemberValidator;
 import com.rualone.app.global.error.AlreadyExistException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,9 +26,11 @@ import java.util.Optional;
 public class JourneyApproveServiceImpl implements JourneyApproveService {
     private final JourneyValidator journeyValidator;
     private final JourneyApproveRepository journeyApproveRepository;
+    private final MemberValidator memberValidator;
     @Override
-    public void save(JourneyJoinRequest journeyJoinRequest, Member member) {
+    public void save(JourneyJoinRequest journeyJoinRequest, Long memberId) {
         Journey journey = journeyValidator.findById(journeyJoinRequest.getJourneyId());
+        Member member = memberValidator.findById(memberId);
         // 인원 수 다 찾는가 확인하기
         List<JourneyApprove> journeyApproves = journeyApproveRepository.findByJourney(journey);
         if(journey.getTravelerAllCnt() <= journeyApproves.size()){

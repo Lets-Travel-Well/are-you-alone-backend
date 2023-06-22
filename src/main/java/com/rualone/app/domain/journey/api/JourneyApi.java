@@ -66,20 +66,19 @@ public class JourneyApi {
 
     @Operation(summary = "동행 신청하는 API", description = "동행신청하는 API입니다.")
     @PostMapping("/apply")
-    public ApiResult<Void> joinJourney(@RequestBody JourneyJoinRequest journeyJoinRequest){
-        Long memberId = 1L;
-        Member findMember = memberService.findById(memberId);
-        log.info(journeyJoinRequest.toString());
-        journeyApproveService.save(journeyJoinRequest, findMember);
+    public ApiResult<Void> joinJourney(@RequestBody JourneyJoinRequest journeyJoinRequest, @Parameter(hidden = true) @AuthenticationPrincipal User user){
+        log.info(user.getUsername());
+        Long memberId = Long.parseLong(user.getUsername());
+        journeyApproveService.save(journeyJoinRequest, memberId);
         return OK(null);
     }
 
-    @Operation(summary = "동행을 승인하는 API", description = "동행을 AGREE하는 API입니다")
+    @Operation(summary = "동행을 승인하는 API", description = "동행을 승인하는 API입니다")
     @PostMapping("/agree")
     public ApiResult<Void> agreeJourney(){
         return OK(null);
     }
-    @Operation(summary = "동행을 승인하는 API", description = "동행을 AGREE하는 API입니다")
+    @Operation(summary = "동행을 거절하는 API", description = "동행을 거절하는 API입니다")
     @PostMapping("/disagree")
     public ApiResult<Void> disAgreeJourney(){
         return OK(null);

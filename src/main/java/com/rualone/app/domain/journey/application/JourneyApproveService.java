@@ -4,5 +4,5 @@ import com.rualone.app.domain.journey.dto.request.JourneyJoinRequest;
 import com.rualone.app.domain.member.entity.Member;
 
 public interface JourneyApproveService {
-    void save(JourneyJoinRequest journeyJoinRequest, Member member);
+    void save(JourneyJoinRequest journeyJoinRequest, Long memberId);
 }
