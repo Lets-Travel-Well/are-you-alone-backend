@@ -158,4 +158,35 @@ public class JourneyQueryRepository {
         log.info(journeyResponses.toString());
         return journeyResponses;
     }
+
+    public JourneyLeaderDetailResponse findLeaderJourneyById(Long journeyId, Long leaderId) {
+        JourneyLeaderDetailResponse journeyDetailResponse = jpaQueryFactory
+                .select(Projections.constructor(JourneyLeaderDetailResponse.class,
+                        journey.id,
+                        journey.subject,
+                        journey.content,
+                        journey.travelerAllCnt,
+                        journey.deadLine,
+                        journey.startDay
+                ))
+                .from(journey)
+                .where(journey.id.eq(journeyId))
+                .fetchOne();
+        return journeyDetailResponse;
+    }
+
+    public List<MemberApplyResponse> findApplyMember(Long journeyId) {
+        List<MemberApplyResponse> memberApplyResponseList = jpaQueryFactory
+                .select(Projections.constructor(MemberApplyResponse.class,
+                        journeyApprove.participant.id,
+                        journeyApprove.participant.nickName,
+                        journeyApprove.participant.email,
+                        journeyApprove.participant.footage,
+                        journeyApprove.status
+                ))
+                .from(journeyApprove)
+                .where(journeyApprove.journey.id.eq(journeyId))
+                .fetch();
+        return memberApplyResponseList;
+    }
 }

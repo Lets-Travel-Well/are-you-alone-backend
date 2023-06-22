@@ -2,15 +2,19 @@ package com.rualone.app.domain.journey.application.impl;
 
 import com.rualone.app.domain.journey.application.JourneyApproveService;
 import com.rualone.app.domain.journey.dao.JourneyApproveRepository;
+import com.rualone.app.domain.journey.dto.request.JourneyAgreeRequest;
+import com.rualone.app.domain.journey.dto.request.JourneyDisAgreeRequest;
 import com.rualone.app.domain.journey.dto.request.JourneyJoinRequest;
 import com.rualone.app.domain.journey.entity.Journey;
 import com.rualone.app.domain.journey.entity.JourneyApprove;
 import com.rualone.app.domain.journey.entity.ParticipationStatus;
+import com.rualone.app.domain.journey.error.NotLeaderException;
 import com.rualone.app.domain.journey.error.OutOfNumberException;
 import com.rualone.app.domain.journey.validator.JourneyValidator;
 import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.domain.member.validator.MemberValidator;
 import com.rualone.app.global.error.AlreadyExistException;
+import com.rualone.app.global.error.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -48,5 +52,34 @@ public class JourneyApproveServiceImpl implements JourneyApproveService {
                 .journey(journey)
                 .status(ParticipationStatus.APPLY)
                 .build());
+    }
+
+    @Override
+    public void changeStatusAgree(JourneyAgreeRequest journeyAgreeRequest, Long leaderId) {
+        Member leader = memberValidator.findById(leaderId);
+        Member fuddy = memberValidator.findById(journeyAgreeRequest.getMemberId());
+        Journey journey = journeyValidator.findById(journeyAgreeRequest.getJourneyId());
+        log.info(journey.getLeader().getId().toString());
+        isLeaderOfJourney(journey, leader.getId());
+        JourneyApprove findJourneyApprove = journeyApproveRepository.findByJourneyAndParticipant(journey, fuddy)
+                .orElseThrow(() -> new NotFoundException(JourneyApproveService.class, 0L));
+        findJourneyApprove.changeToAgree();
+    }
+
+    @Override
+    public void changeStatusDisAgree(JourneyDisAgreeRequest journeyDisAgreeRequest, Long leaderId) {
+        Member leader = memberValidator.findById(leaderId);
+        Member fuddy = memberValidator.findById(journeyDisAgreeRequest.getMemberId());
+        Journey journey = journeyValidator.findById(journeyDisAgreeRequest.getJourneyId());
+        log.info(journey.getLeader().getId().toString());
+        isLeaderOfJourney(journey, leader.getId());
+        JourneyApprove findJourneyApprove = journeyApproveRepository.findByJourneyAndParticipant(journey, fuddy)
+                .orElseThrow(() -> new NotFoundException(JourneyApproveService.class, 0L));
+        findJourneyApprove.changeToDisAgree();
+    }
+    private void isLeaderOfJourney(Journey journey, Long loginUserId){
+        if(journey.getLeader().getId() != loginUserId){
+            throw new NotLeaderException(loginUserId, journey.getId());
+        }
     }
 }

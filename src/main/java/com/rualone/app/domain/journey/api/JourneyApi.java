@@ -3,15 +3,9 @@ package com.rualone.app.domain.journey.api;
 import com.rualone.app.domain.journey.application.JourneyApproveService;
 import com.rualone.app.domain.journey.application.JourneyQueryService;
 import com.rualone.app.domain.journey.application.JourneyService;
-import com.rualone.app.domain.journey.dto.request.AttractionInfoPathRequest;
-import com.rualone.app.domain.journey.dto.request.JourneyCreateRequest;
-import com.rualone.app.domain.journey.dto.request.JourneyJoinRequest;
-import com.rualone.app.domain.journey.dto.response.AttractionInfoPathResponse;
-import com.rualone.app.domain.journey.dto.response.JourneyApplyResponse;
-import com.rualone.app.domain.journey.dto.response.JourneyDetailResponse;
-import com.rualone.app.domain.journey.dto.response.JourneyResponse;
+import com.rualone.app.domain.journey.dto.request.*;
+import com.rualone.app.domain.journey.dto.response.*;
 import com.rualone.app.domain.member.application.MemberService;
-import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.global.api.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -22,7 +16,6 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.rualone.app.global.api.ApiResult.OK;
 
@@ -75,12 +68,21 @@ public class JourneyApi {
         return OK(journeyQueryService.findAllByLeaderId(memberId));
     }
 
+    // 내가 리더인 여행 상세 조회
+    @Operation(summary = "내가 리더인 journey 단건 조회", description = "내가 리더인 journey을 단건 조회하는 API입니다, id에는 여행 계획의 id가 들어갑니다")
+    @GetMapping("/leader/{id}")
+    public ApiResult<JourneyLeaderDetailResponse> findLeaderJourneyById(@PathVariable("id") Long journeyId){
+//        Long leaderId = Long.parseLong(user.getUsername());
+        Long leaderId = 1L;
+        return OK(journeyQueryService.findLeaderJourneyById(journeyId, leaderId));
+    }
+
     // 내가 신청한 여행 목록 보기
     @Operation(summary = "내가 신청한 journey 전체 조회", description = "내가 신청한 journey들을 보는 API입니다")
     @GetMapping("/apply")
     public ApiResult<List<JourneyApplyResponse>> findAllByMyApply(){
         // TODO: 2023/06/22 : 로그인 사용자로 바꿔야함
-        Long memberId = 2L;
+        Long memberId = 1L;
         return OK(journeyQueryService.findAllByMyApply(memberId));
     }
 
@@ -93,17 +95,20 @@ public class JourneyApi {
         return OK(null);
     }
 
+    // 동행 승인, 거부에 대하여 리턴 값을 생각해야함, frontend 팀장님과 논의 필요
     @Operation(summary = "동행을 승인하는 API", description = "동행을 승인하는 API입니다")
     @PostMapping("/agree")
-    public ApiResult<Void> agreeJourney(){
+    public ApiResult<Void> agreeJourney(@RequestBody JourneyAgreeRequest journeyAgreeRequest){
         // TODO: 2023/06/22 : 로그인 사용자로 바꿔야함
-        Long memberId = 1L;
-        
+        Long leaderId = 1L;
+        journeyApproveService.changeStatusAgree(journeyAgreeRequest, leaderId);
         return OK(null);
     }
     @Operation(summary = "동행을 거절하는 API", description = "동행을 거절하는 API입니다")
     @PostMapping("/disagree")
-    public ApiResult<Void> disAgreeJourney(){
+    public ApiResult<Void> disAgreeJourney(@RequestBody JourneyDisAgreeRequest journeyDisAgreeRequest){
+        Long leaderId = 1L;
+        journeyApproveService.changeStatusDisAgree(journeyDisAgreeRequest, leaderId);
         return OK(null);
     }
 }
