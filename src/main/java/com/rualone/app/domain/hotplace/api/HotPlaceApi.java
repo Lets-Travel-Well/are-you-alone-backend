@@ -41,7 +41,7 @@ public class HotPlaceApi {
         return OK(hotPlaceQueryService.findTopAttractionInfo());
     }
 
-    @Operation(summary = "내가 관심있는 관광지 조회", description = "내가 관심을 표시해놓은 관광지인지 조회하는 API입니다.")
+    @Operation(summary = "내가 좋아요 표시한 관광지 조회", description = "내가 좋아요 표시해놓은 관광지인지 조회하는 API입니다.")
     @GetMapping("/my-place")
     public ApiResult<List<MyPlaceResponse>> getMyPlace(@Parameter(hidden = true) @AuthenticationPrincipal User user) {
         return OK(hotPlaceQueryService.findMyPlaceList(Long.valueOf(user.getUsername())));
