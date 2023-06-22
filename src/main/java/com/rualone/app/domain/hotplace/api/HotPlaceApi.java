@@ -3,6 +3,7 @@ package com.rualone.app.domain.hotplace.api;
 import com.rualone.app.domain.hotplace.application.HotPlaceQueryService;
 import com.rualone.app.domain.hotplace.application.HotPlaceService;
 import com.rualone.app.domain.hotplace.dto.response.HotPlaceResponse;
+import com.rualone.app.domain.hotplace.dto.response.MyPlaceResponse;
 import com.rualone.app.global.api.ApiResult;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,21 +27,24 @@ import static com.rualone.app.global.api.ApiResult.OK;
 public class HotPlaceApi {
     private final HotPlaceService hotPlaceService;
     private final HotPlaceQueryService hotPlaceQueryService;
+
     @Operation(summary = "attractionInfo 좋아요", description = "attractionInfo 좋아요 API입니다. True시 좋아요를 누른 상태 False시 취소한 상태입니다.")
     @GetMapping("/{id}/like")
-    public ApiResult<Boolean> changeLike(@PathVariable("id") Integer contentId, @Parameter(hidden = true) @AuthenticationPrincipal User user){
+    public ApiResult<Boolean> changeLike(@PathVariable("id") Integer contentId, @Parameter(hidden = true) @AuthenticationPrincipal User user) {
         Long memberId = Long.parseLong(user.getUsername());
         return OK(hotPlaceService.changeHotPlace(memberId, contentId));
     }
-//    @Operation(summary = "hotplace 보기", description = "hotplace 상위 10개 보여주는 API입니다.")
-//    @GetMapping()
-//    public ApiResult<List<HotPlaceResponse>> showHotPlace(@Parameter(hidden = true) @AuthenticationPrincipal User user){
-//        Long memberId = Long.parseLong(user.getUsername());
-//        return OK(hotPlaceQueryService.findTopAttractionInfo(memberId));
-//    }
+
     @Operation(summary = "hotplace 보기", description = "hotplace 상위 10개 보여주는 API입니다.")
     @GetMapping("/my-place")
     public ApiResult<List<HotPlaceResponse>> showHotPlace(){
+
         return OK(hotPlaceQueryService.findTopAttractionInfo());
+    }
+
+    @Operation(summary = "내가 좋아요 표시한 관광지 조회", description = "내가 좋아요 표시해놓은 관광지인지 조회하는 API입니다.")
+    @GetMapping("/my-place")
+    public ApiResult<List<MyPlaceResponse>> getMyPlace(@Parameter(hidden = true) @AuthenticationPrincipal User user) {
+        return OK(hotPlaceQueryService.findMyPlaceList(Long.valueOf(user.getUsername())));
     }
 }
