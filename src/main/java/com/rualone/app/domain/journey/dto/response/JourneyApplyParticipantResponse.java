@@ -7,12 +7,12 @@ import lombok.Data;
 @Data
 public class JourneyApplyParticipantResponse {
     private Long id;
-    private String nickname;
+    private String nickName;
     private String email;
     private Long footage;
-    public JourneyApplyParticipantResponse(Long id, String nickname, String email, Long footage){
+    public JourneyApplyParticipantResponse(Long id, String nickName, String email, Long footage){
         this.id = id;
-        this.nickname = nickname;
+        this.nickName = nickName;
         this.email = email;
         this.footage = footage;
     }
