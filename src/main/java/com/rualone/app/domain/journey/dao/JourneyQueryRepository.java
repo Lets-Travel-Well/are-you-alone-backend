@@ -60,7 +60,8 @@ public class JourneyQueryRepository {
                         journey.content,
                         journey.travelerAllCnt,
                         journey.deadLine,
-                        journey.startDay
+                        journey.startDay,
+                        journey.complete
                         ))
                 .from(journey)
                 .where(journey.id.eq(journeyId))

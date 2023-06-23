@@ -16,19 +16,20 @@ public class JourneyDetailResponse {
     private Long travelerAllCnt;
     private LocalDate deadLine;
     private LocalDate startDay;
-
+    private Boolean complete;
     private Long travelerCnt;
     private Boolean myJourney;
     private List<JourneyPlaceResponse> journeyPlaceResponseList;
     private JourneyParticipantResponse leader;
     private List<JourneyParticipantResponse> fuddy;
     private ParticipationStatus status;
-    public JourneyDetailResponse(Long id, String subject, String content, Long travelerAllCnt, LocalDate deadLine, LocalDate startDay){
+    public JourneyDetailResponse(Long id, String subject, String content, Long travelerAllCnt, LocalDate deadLine, LocalDate startDay, Boolean complete){
         this.id = id;
         this.subject = subject;
         this.content = content;
         this.travelerAllCnt = travelerAllCnt;
         this.deadLine = deadLine;
         this.startDay = startDay;
+        this.complete = complete;
     }
 }
