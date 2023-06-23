@@ -81,7 +81,7 @@ public class JourneyQueryRepository {
                         journey.leader.id.eq(memberId)
                 )
                 .fetchOne();
-        return fetchOne == null;
+        return fetchOne != null;
     }
 
     public List<JourneyPlaceResponse> findJourneyPlace(Long journeyId) {
@@ -102,6 +102,7 @@ public class JourneyQueryRepository {
     public JourneyParticipantResponse findLeaderInfo(Long journeyId) {
         JourneyParticipantResponse journeyParticipantResponse = jpaQueryFactory
                 .select(Projections.constructor(JourneyParticipantResponse.class,
+                        journey.leader.id,
                         journey.leader.nickName,
                         journey.leader.footage
                         ))
