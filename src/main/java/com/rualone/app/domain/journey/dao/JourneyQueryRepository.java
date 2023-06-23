@@ -120,7 +120,9 @@ public class JourneyQueryRepository {
                         journeyApprove.participant.footage
                 ))
                 .from(journeyApprove)
-                .where(journeyApprove.journey.id.eq(journeyId))
+                .where(journeyApprove.journey.id.eq(journeyId),
+                        journeyApprove.status.eq(ParticipationStatus.AGREE)
+                )
                 .fetch();
         return journeyParticipantResponses;
     }
