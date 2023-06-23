@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class JourneyParticipantResponse {
+    private Long id;
     private String nickName;
     private Long footage;
 }

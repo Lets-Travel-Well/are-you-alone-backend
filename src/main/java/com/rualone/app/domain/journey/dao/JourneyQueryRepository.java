@@ -102,6 +102,7 @@ public class JourneyQueryRepository {
     public JourneyParticipantResponse findLeaderInfo(Long journeyId) {
         JourneyParticipantResponse journeyParticipantResponse = jpaQueryFactory
                 .select(Projections.constructor(JourneyParticipantResponse.class,
+                        journey.leader.id,
                         journey.leader.nickName,
                         journey.leader.footage
                         ))
