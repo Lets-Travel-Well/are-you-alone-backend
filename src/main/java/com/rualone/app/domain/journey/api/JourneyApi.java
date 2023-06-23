@@ -109,4 +109,14 @@ public class JourneyApi {
         journeyApproveService.changeStatusDisAgree(journeyDisAgreeRequest, leaderId);
         return OK(null);
     }
+
+    @Operation(summary = "여행 완료하는 API", description = "여행완료 시 요청하는 API입니다")
+    @PostMapping("/complete")
+    public ApiResult<Void> completeJourney(@RequestBody JourneyCompleteRequest journeyCompleteRequest, @Parameter(hidden = true) @AuthenticationPrincipal User user){
+        log.info("complete");
+        log.info(journeyCompleteRequest.toString());
+        Long leaderId = Long.parseLong(user.getUsername());
+        journeyService.completeJourney(journeyCompleteRequest.getJourneyId(), leaderId);
+        return OK(null);
+    }
 }

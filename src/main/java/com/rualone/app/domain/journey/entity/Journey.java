@@ -28,4 +28,8 @@ public class Journey extends BaseEntity {
     private Boolean visibility;
     private Boolean complete;
     private String review;
+
+    public void completeJourney(){
+        this.complete = true;
+    }
 }
