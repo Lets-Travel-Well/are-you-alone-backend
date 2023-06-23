@@ -52,7 +52,7 @@ public class JourneyQueryServiceImpl implements JourneyQueryService {
         journeyDetailResponse.setJourneyPlaceResponseList(journeyQueryRepository.findJourneyPlace(journeyId));
         journeyDetailResponse.setLeader(journeyQueryRepository.findLeaderInfo(journeyId));
         journeyDetailResponse.setFuddy(journeyQueryRepository.findFuddy(journeyId));
-
+        journeyDetailResponse.setApplyList(journeyQueryRepository.findJourneyApproveApply(journeyId));
         journeyDetailResponse.setStatus(journeyApproveRepository.findByJourney_IdAndParticipant_Id(journeyId, memberId).orElse(JourneyApprove.builder().status(ParticipationStatus.NOT_APPLY).build()).getStatus());
         return journeyDetailResponse;
     }
