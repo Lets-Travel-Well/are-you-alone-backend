@@ -115,6 +115,7 @@ public class JourneyQueryRepository {
     public List<JourneyParticipantResponse> findFuddy(Long journeyId) {
         List<JourneyParticipantResponse> journeyParticipantResponses = jpaQueryFactory
                 .select(Projections.constructor(JourneyParticipantResponse.class,
+                        journeyApprove.participant.id,
                         journeyApprove.participant.nickName,
                         journeyApprove.participant.footage
                 ))
