@@ -60,7 +60,8 @@ public class JourneyQueryRepository {
                         journey.content,
                         journey.travelerAllCnt,
                         journey.deadLine,
-                        journey.startDay
+                        journey.startDay,
+                        journey.complete
                         ))
                 .from(journey)
                 .where(journey.id.eq(journeyId))
@@ -80,7 +81,7 @@ public class JourneyQueryRepository {
                         journey.leader.id.eq(memberId)
                 )
                 .fetchOne();
-        return fetchOne != null;
+        return fetchOne == null;
     }
 
     public List<JourneyPlaceResponse> findJourneyPlace(Long journeyId) {

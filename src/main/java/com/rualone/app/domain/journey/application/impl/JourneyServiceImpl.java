@@ -11,8 +11,10 @@ import com.rualone.app.domain.journey.dto.request.JourneyPlaceCreateRequest;
 import com.rualone.app.domain.journey.entity.Journey;
 import com.rualone.app.domain.journey.entity.JourneyApprove;
 import com.rualone.app.domain.journey.entity.ParticipationStatus;
+import com.rualone.app.domain.journey.error.NotLeaderException;
 import com.rualone.app.domain.member.entity.Member;
 import com.rualone.app.domain.member.validator.MemberValidator;
+import com.rualone.app.global.error.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -48,5 +50,15 @@ public class JourneyServiceImpl implements JourneyService {
             AttractionInfo attractionInfo = attractionInfoValidator.findByContentId(journeyPlaceCreateRequest.getContentId());
             journeyPlaceRepository.save(journeyPlaceCreateRequest.toEntity(attractionInfo, saveJourney, i));
         }
+    }
+
+    @Override
+    public void completeJourney(Long journeyId, Long leaderId) {
+        Journey journey = journeyRepository.findById(journeyId)
+                .orElseThrow(() -> new NotFoundException(Journey.class, journeyId));
+        if(journey.getLeader().getId() != leaderId){
+            throw  new NotLeaderException(leaderId, journeyId);
+        }
+        journey.completeJourney();
     }
 }

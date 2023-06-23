@@ -5,4 +5,6 @@ import com.rualone.app.domain.member.entity.Member;
 
 public interface JourneyService {
     void save(JourneyCreateRequest journeyCreateRequest, Long memberId);
+
+    void completeJourney(Long journeyId, Long leaderId);
 }
