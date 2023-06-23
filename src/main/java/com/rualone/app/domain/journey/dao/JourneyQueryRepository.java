@@ -192,4 +192,20 @@ public class JourneyQueryRepository {
                 .fetch();
         return memberApplyResponseList;
     }
+
+    public List<JourneyApplyParticipantResponse> findJourneyApproveApply(Long journeyId) {
+        List<JourneyApplyParticipantResponse> journeyApplyParticipantResponses = jpaQueryFactory
+                .select(Projections.constructor(JourneyApplyParticipantResponse.class,
+                        journeyApprove.participant.id,
+                        journeyApprove.participant.nickName,
+                        journeyApprove.participant.email,
+                        journeyApprove.participant.footage
+                        ))
+                .from(journeyApprove)
+                .where(journeyApprove.journey.id.eq(journeyId),
+                        journeyApprove.status.eq(ParticipationStatus.APPLY)
+                        )
+                .fetch();
+        return journeyApplyParticipantResponses;
+    }
 }
